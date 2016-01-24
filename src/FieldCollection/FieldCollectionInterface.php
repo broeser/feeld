@@ -30,7 +30,7 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldCollection extends Wellid\Internal\InternalInterface {
+interface FieldCollectionInterface extends Wellid\Internal\InternalInterface {
     /**
      * Adds several Fields to the FieldCollection
      * 

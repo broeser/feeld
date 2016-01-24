@@ -30,7 +30,7 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class FieldCollection implements FieldCollection, \Iterator, \Countable {
+class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable {
     use FieldCollectionTrait;
     
     /**
