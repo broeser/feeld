@@ -44,14 +44,4 @@ interface RequiredInterface extends \Wellid\ValidatableInterface, \Sanitor\Sanit
      * @return boolean
      */
     public function isRequired();
-    
-    /**
-     * Returns the primitive data type that is used in the Required-validator of
-     * wellid when checking if this field was filled out
-     * 
-     * One of 'boolean', 'string', 'array', 'numeric', 'file', 'int', 'float'
-     * 
-     * @return string
-     */
-    public function getPrimitiveType();
 }

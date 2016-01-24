@@ -29,7 +29,9 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Button extends Element {
+class Button extends Element implements \Feeld\Display\DisplayInterface {
+    use DisplayHTMLTrait;
+    
     public function __construct() {
         parent::__construct('button');
     }

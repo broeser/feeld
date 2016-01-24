@@ -27,28 +27,45 @@
 namespace Feeld;
 
 /**
- * Interface for all Fields
+ * Classes that implement FieldInterface (short: Fields) define types of data
+ * entry (e. g. by selecting one of several values, by checking a box or by
+ * inputting a text). (Please note that this has nothing to do with the UI of
+ * the Field, "selecting one of several values" might be done by clicking on
+ * the value or typing it in; for the UI-component of Feeld, see DisplayInterface)
  * 
  * Currently all Fields have optional default values, an optional identifier and
  * may be mandatory. That's why this interface extends those interfaces.
  * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldInterface extends \Sanitor\SanitizableInterface, \Wellid\ValidatableInterface,
+interface FieldInterface extends \Wellid\SanitorBridgeInterface, \Wellid\ValidatableInterface,
  Field\CommonProperties\DefaultValueInterface, Field\CommonProperties\IdentifierInterface, Field\CommonProperties\RequiredInterface {
+     /**
+     * Returns the Display assigned to this Field. If no display was assigned
+     * to this Field, the class NoDisplay can be used.
+     * 
+     * @return \Feeld\Display\DisplayInterface
+     */
+    public function getDisplay();
     
     /**
-     * Use this method to obtain a field value from GET, POST, etc.
+     * Assigns a Display to this Field
      * 
-     * @param int $type INPUT_POST, INPUT_GET, INPUT_COOKIE, INPUT_SERVER, INPUT_ENV, INPUT_REQUEST or INPUT_SESSION
-     * @param string $variableName
+     * @param \Feeld\Display\DisplayInterface $display
+     * @return FieldInterface
      */
-    public function rawValueFromInput($type, $variableName);
+    public function setDisplay(\Feeld\Display\DisplayInterface $display);
     
     /**
-     * Use this method to obtain a field value from CLI, etc.
-     * 
-     * @param mixed $rawValue
+     * Informs the assigned Display (if any) of the current structure of this
+     * Field
      */
-    public function setRawValue($rawValue);
+    public function refreshDisplay();
+    
+    /**
+     * Returns the DataType of this Field
+     * 
+     * @return \Feeld\DataType\DataTypeInterface
+     */
+    public function getDataType();
 }

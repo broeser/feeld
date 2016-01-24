@@ -32,6 +32,8 @@ namespace Feeld\Field\CommonProperties;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 trait Field {
+    use \Wellid\ValidatorHolderTrait;
+    
     /**
      * Bundles traits that are often used together
      */
@@ -40,19 +42,37 @@ trait Field {
     /**
      * DataType of this field
      * 
-     * @var \Feeld\Field\DataType\DataTypeInterface
+     * @var \Feeld\DataType\DataTypeInterface
      */
     protected $dataType;
     
     /**
+     * Display of this field
+     * 
+     * @var \Feeld\Display\DisplayInterface
+     */
+    protected $display;
+    
+    /**
+     * Whether the associated Display (if any) has been refreshed at least once
+     * 
+     * @var boolean
+     */
+    private $hasRefreshedDisplayAtLeastOnce;
+    
+    /**
      * Constructor
      * 
-     * @param \Feeld\Field\DataType\DataTypeInterface $dataType
+     * @param \Feeld\DataType\DataTypeInterface $dataType
      * @param mixed $id
+     * @param \Feeld\Display\DisplayInterface $display
      */
-    public function __construct(\Feeld\Field\DataType\DataTypeInterface $dataType, $id = null) {
-        $this->setId($id);
+    public function __construct(\Feeld\DataType\DataTypeInterface $dataType, $id = null, \Feeld\Display\DisplayInterface $display = null) {
+        $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
+        
         $this->dataType = $dataType;
+        $this->setId($id);
+        
         foreach($dataType->getValidators() as $validator) {
             $this->addValidator($validator);
         }
@@ -62,21 +82,50 @@ trait Field {
     /**
      * Returns the DataType of this field
      * 
-     * @return \Feeld\Field\DataType\DataTypeInterface
+     * @return \Feeld\DataType\DataTypeInterface
      */
     public function getDataType() {
         return $this->dataType;
     }
 
     /**
-     * Returns the primitive data type that is used in the Required-validator of
-     * wellid when checking if this field was filled out
+     * Returns the Display assigned to this Field
      * 
-     * One of 'boolean', 'string', 'array', 'numeric', 'file', 'int', 'float'
+     * @return \Feeld\Display\DisplayInterface
+     */
+    public function getDisplay() {
+        return $this->display;
+    }
+    
+    /**
+     * Sets the Display
+     * 
+     * @param \Feeld\Display\DisplayInterface $display
+     */
+    public function setDisplay(\Feeld\Display\DisplayInterface $display) {
+        $this->display = $display;
+
+        return $this;
+    }
+    
+    /**
+     * Informs the assigned Display (if any) of the current structure of this
+     * Field
+     */
+    public function refreshDisplay() {
+        $this->getDisplay()->informAboutStructure($this);
+        $this->hasRefreshedDisplayAtLeastOnce = true;
+    }
+    
+    /**
+     * Returns a string representation of the Display assigned to this Field
      * 
      * @return string
      */
-    public function getPrimitiveType() {
-        return $this->dataType->getPrimitiveType();
-    }    
+    public function __toString() {
+        if(!$this->hasRefreshedDisplayAtLeastOnce) {
+            $this->refreshDisplay();
+        }
+        return (string)$this->getDisplay();
+    }
 }

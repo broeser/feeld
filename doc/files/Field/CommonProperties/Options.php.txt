@@ -59,7 +59,7 @@ trait Options {
         } else {
             $this->options[$value] = $text;
         }
-        
+
         return $this;
 	}
 	

@@ -24,6 +24,10 @@
  * THE SOFTWARE.
  */
 namespace Feeld\Display\HTML;
+
+use Feeld\Field\CommonProperties\RequiredInterface;
+use Feeld\Field\CommonProperties\IdentifierInterface;
+
 /**
  * HTML Element
  *

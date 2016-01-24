@@ -41,7 +41,7 @@ class Checkbox implements \Feeld\FieldInterface, CommonProperties\OptionsInterfa
      * @param DataType\DataTypeInterface $dataType
      * @param mixed $id
      */
-    public function __construct(DataType\DataTypeInterface $dataType = null, $options = array('yes' => 1, 'no' => 0), $id = null) {
+    public function __construct(DataType\DataTypeInterface $dataType = null, $options = array('yes' => 1, 'no' => 0), $id = null, \Feeld\Display\DisplayInterface $display = null) {
         if(count($options)!==2) {
             throw new \Wellid\Exception\DataType('options', 'array with two values', $options);
         }
@@ -51,7 +51,7 @@ class Checkbox implements \Feeld\FieldInterface, CommonProperties\OptionsInterfa
             $options = array('yes' => 1, 'no' => 0);
         }
         
-        parent::__construct($dataType, $id);
+        parent::__construct($dataType, $id, $display);
         
         foreach($options as $key => $value) {
             $this->addOption($key, $value);

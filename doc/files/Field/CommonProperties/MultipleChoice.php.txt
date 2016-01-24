@@ -44,7 +44,7 @@ trait MultipleChoice {
      */
     public function setMultipleChoice() {
         $this->multiple = true;
-        
+
         return $this;
     }     
     

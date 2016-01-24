@@ -29,7 +29,9 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Input extends Element {
+class Input extends Element implements \Feeld\Display\DisplayInterface {
+    use DisplayHTMLTrait;
+    
     /**
      * Constructor
      * 

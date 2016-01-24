@@ -29,7 +29,9 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Select extends Element {
+class Select extends Element implements \Feeld\Display\DisplayInterface {
+    use DisplayHTMLTrait;
+    
     public function __construct() {
         parent::__construct('select');
     }

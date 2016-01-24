@@ -25,8 +25,11 @@
 namespace Feeld\Field\CommonProperties;
 
 /**
- * Interface for everything that can be marked as required (e. g. field must
+ * Trait for everything that can be marked as required (e. g. field must
  * not be left blank)
+ * 
+ * No specific validator is enforced, because depending on data type, presentation
+ * and policy, the meaning of "required" might differ
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
@@ -45,9 +48,7 @@ trait Required {
      */
     public function setRequired() {
         $this->required = true;
-        
-        $this->addValidator(new \Wellid\Validator\Required($this->getPrimitiveType()));
-        
+
         return $this;
     }
     

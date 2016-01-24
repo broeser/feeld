@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>feeld</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">feeld</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Feeld.html">\Feeld</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">52</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1549505849"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1549505849" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-201729921"></a>
+                                <a href="../namespaces/Feeld.html" style="margin-left: 30px; padding-left: 0">Feeld</a>
+            </div>
+            <div id="namespace-201729921" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-222178420"></a>
+                                <a href="../namespaces/Feeld.DataType.html" style="margin-left: 30px; padding-left: 0">DataType</a>
+            </div>
+            <div id="namespace-222178420" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2003953259"></a>
+                                <a href="../namespaces/Feeld.DataType.Boundaries.html" style="margin-left: 30px; padding-left: 0">Boundaries</a>
+            </div>
+            <div id="namespace-2003953259" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Feeld.DataType.Boundaries.LengthBoundariesInterface.html">LengthBoundariesInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Feeld.DataType.Boundaries.NumericBoundariesInterface.html">NumericBoundariesInterface</a></li>
+                                                                            <li class="trait"><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html">LengthBoundaries</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.DataType.Boundaries.NumericBoundaries.html">NumericBoundaries</a></li>
+                                                                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Feeld.DataType.DataTypeInterface.html">DataTypeInterface</a></li>
+                                                                            <li class="trait"><a href="../classes/Feeld.DataType.DataTypeTrait.html">DataTypeTrait</a></li>
+                                                                            <li class="class"><a href="../classes/Feeld.DataType.Country.html">Country</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.Date.html">Date</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.Email.html">Email</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.Float.html">Float</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.Integer.html">Integer</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.String.html">String</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.DataType.URL.html">URL</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1751581285"></a>
+                                <a href="../namespaces/Feeld.Display.html" style="margin-left: 30px; padding-left: 0">Display</a>
+            </div>
+            <div id="namespace-1751581285" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1112220368"></a>
+                                <a href="../namespaces/Feeld.Display.HTML.html" style="margin-left: 30px; padding-left: 0">HTML</a>
+            </div>
+            <div id="namespace-1112220368" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                            <li class="trait"><a href="../classes/Feeld.Display.HTML.DisplayHTMLTrait.html">DisplayHTMLTrait</a></li>
+                                                                            <li class="class"><a href="../classes/Feeld.Display.HTML.Button.html">Button</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Display.HTML.Element.html">Element</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Display.HTML.Input.html">Input</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Display.HTML.Option.html">Option</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Display.HTML.Select.html">Select</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Display.HTML.Textarea.html">Textarea</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Feeld.Display.DisplayInterface.html">DisplayInterface</a></li>
+                                                                                                    <li class="class"><a href="../classes/Feeld.Display.NoDisplay.html">NoDisplay</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-83770162"></a>
+                                <a href="../namespaces/Feeld.Field.html" style="margin-left: 30px; padding-left: 0">Field</a>
+            </div>
+            <div id="namespace-83770162" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-89060325"></a>
+                                <a href="../namespaces/Feeld.Field.CommonProperties.html" style="margin-left: 30px; padding-left: 0">CommonProperties</a>
+            </div>
+            <div id="namespace-89060325" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Feeld.Field.CommonProperties.DefaultValueInterface.html">DefaultValueInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Feeld.Field.CommonProperties.IdentifierInterface.html">IdentifierInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Feeld.Field.CommonProperties.MultipleChoiceInterface.html">MultipleChoiceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Feeld.Field.CommonProperties.OptionsInterface.html">OptionsInterface</a></li>
+                                                    <li class="interface"><a href="../classes/Feeld.Field.CommonProperties.RequiredInterface.html">RequiredInterface</a></li>
+                                                                            <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.DefaultValue.html">DefaultValue</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.Field.html">Field</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.Identifier.html">Identifier</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.MultipleChoice.html">MultipleChoice</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.Options.html">Options</a></li>
+                                                    <li class="trait"><a href="../classes/Feeld.Field.CommonProperties.Required.html">Required</a></li>
+                                                                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Feeld.Field.Checkbox.html">Checkbox</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Field.CloakedEntry.html">CloakedEntry</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Field.Constant.html">Constant</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Field.Entry.html">Entry</a></li>
+                                                    <li class="class"><a href="../classes/Feeld.Field.Select.html">Select</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-93384580"></a>
+                                <a href="../namespaces/Feeld.FieldCollection.html" style="margin-left: 30px; padding-left: 0">FieldCollection</a>
+            </div>
+            <div id="namespace-93384580" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Feeld.FieldCollection.FieldCollection.html">FieldCollection</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Feeld.FieldInterface.html">FieldInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Feeld.DataType.html">\Feeld\DataType</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Feeld\DataType</small>File</h1>
+                    <p><em>Allows entering a filename</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Feeld.DataType.String.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#method_getSanitizer" class="">getSanitizer()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#method_setSanitizer" class="">setSanitizer()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#method_validateValue" class="">validateValue()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#method_getLastSanitizedValue" class="">getLastSanitizedValue()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_setMinLength" class="">setMinLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_setMaxLength" class="">setMaxLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_getMinLength" class="">getMinLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_getMaxLength" class="">getMaxLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_hasMaxLength" class="">hasMaxLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#method_hasMinLength" class="">hasMinLength()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_setAccept" class="">setAccept()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_getAccept" class="">getAccept()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_setMaxFilesize" class="">setMaxFilesize()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_getMaxFilesize" class="">getMaxFilesize()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_setMaxFilesizeKilobytes" class="">setMaxFilesizeKilobytes()</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#method_setMaxFilesizeMegabytes" class="">setMaxFilesizeMegabytes()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#property_sanitizer" class="">$sanitizer</a><br />
+                                                                    <a href="../classes/Feeld.DataType.DataTypeTrait.html#property_lastSanitizedValue" class="">$lastSanitizedValue</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#property_minLength" class="">$minLength</a><br />
+                                                                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html#property_maxLength" class="">$maxLength</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#property_accept" class="">$accept</a><br />
+                                                                    <a href="../classes/Feeld.DataType.File.html#property_maxFilesize" class="">$maxFilesize</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/DataType.File.html"><div class="path-wrapper">DataType/File.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/Feeld.DataType.String.html">\Feeld\DataType\String</a></div>
+                                                                                                    <div class="namespace-wrapper">\Feeld\DataType\File</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Benedict Roeser <a href="mailto:b-roeser@gmx.net">b-roeser@gmx.net</a></p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_sanitizer" name="property_sanitizer" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$sanitizer</h3>
+                <pre class="signature">$sanitizer : \Sanitor\Sanitizer</pre>
+                <p><em>Sanitizer</em></p>
+                
+
+                                <h4>Type</h4>
+                \Sanitor\Sanitizer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_lastSanitizedValue" name="property_lastSanitizedValue" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$lastSanitizedValue</h3>
+                <pre class="signature">$lastSanitizedValue : mixed</pre>
+                <p><em>Always contains the last value sanitized value from a call to
+validateValue()</em></p>
+                
+
+                                <h4>Type</h4>
+                mixed
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_minLength" name="property_minLength" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$minLength</h3>
+                <pre class="signature">$minLength : integer</pre>
+                <p><em>Minimum text length</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_maxLength" name="property_maxLength" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$maxLength</h3>
+                <pre class="signature">$maxLength : integer</pre>
+                <p><em>Maximum text length</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_accept" name="property_accept" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$accept</h3>
+                <pre class="signature">$accept : string</pre>
+                <p><em>The accept-attribute (contains the accepted mime-type, has wildcard
+support e.g. for text/*)</em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_maxFilesize" name="property_maxFilesize" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$maxFilesize</h3>
+                <pre class="signature">$maxFilesize : integer</pre>
+                <p><em>Maximum file size, if there is also a php.ini setting for file sizes
+and the php.ini-setting is lower then $maxFilesize, the php.ini-setting
+takes precedence</em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Sanitor\Sanitizer  <span class="argument">$sanitizer = null</span>) </pre>
+                <p><em>Constructor</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Sanitor\Sanitizer</td>
+                                <td>$sanitizer </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.String.html"><div class="path-wrapper">\Feeld\DataType\String</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getSanitizer" name="method_getSanitizer" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getSanitizer()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getSanitizer() : \Sanitor\Sanitizer</pre>
+                <p><em>Returns the default Sanitizer of this DataType</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \Sanitor\Sanitizer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setSanitizer" name="method_setSanitizer" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setSanitizer()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setSanitizer(\Sanitor\Sanitizer  <span class="argument">$sanitizer</span>) : \self</pre>
+                <p><em>Sets the Sanitizer</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Sanitor\Sanitizer</td>
+                                <td>$sanitizer </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \self
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_validateValue" name="method_validateValue" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">validateValue()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">validateValue(mixed  <span class="argument">$value</span>) : \Wellid\ValidationResultSet</pre>
+                <p><em>Validates a value against all given Validators</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Wellid\ValidationResultSet
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getLastSanitizedValue" name="method_getLastSanitizedValue" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getLastSanitizedValue()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getLastSanitizedValue() : mixed</pre>
+                <p><em>Returns the last value that has been sanitized in a call to validateValue()
+Useful for logging, error messages, debugging.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.DataTypeTrait.html"><div class="path-wrapper">\Feeld\DataType\DataTypeTrait</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMinLength" name="method_setMinLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMinLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMinLength(integer  <span class="argument">$min</span>) : \Feeld\DataType\Boundaries\LengthBoundariesInterface</pre>
+                <p><em>Sets the minimum number of characters that must be entered into this field</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$min </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundariesInterface.html">\Feeld\DataType\Boundaries\LengthBoundariesInterface</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMaxLength" name="method_setMaxLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMaxLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMaxLength(integer  <span class="argument">$max</span>) : \Feeld\DataType\Boundaries\LengthBoundariesInterface</pre>
+                <p><em>Sets the maximum number of characters that can be entered into this field</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$max </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.Boundaries.LengthBoundariesInterface.html">\Feeld\DataType\Boundaries\LengthBoundariesInterface</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getMinLength" name="method_getMinLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getMinLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getMinLength() : integer</pre>
+                <p><em>Returns the minimum number of characters that must be entered in this Field</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getMaxLength" name="method_getMaxLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getMaxLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getMaxLength() : integer</pre>
+                <p><em>Returns the maximum number of characters that can be entered into this field</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasMaxLength" name="method_hasMaxLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasMaxLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasMaxLength() : boolean</pre>
+                <p><em>Returns, whether a maximum length for this field is specified</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_hasMinLength" name="method_hasMinLength" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">hasMinLength()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">hasMinLength() : boolean</pre>
+                <p><em>Returns, whether a minimum length for this field is specified</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Feeld.DataType.Boundaries.LengthBoundaries.html"><div class="path-wrapper">\Feeld\DataType\Boundaries\LengthBoundaries</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setAccept" name="method_setAccept" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setAccept()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setAccept(string  <span class="argument">$mime</span>) : \Feeld\DataType\File</pre>
+                <p><em>Sets the accepted MIME-Type(s) for the file
+Has wildcard support (e. g. text/*)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$mime </td>
+                                <td><p>MIME-Type</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.File.html">\Feeld\DataType\File</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAccept" name="method_getAccept" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAccept()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAccept() : string</pre>
+                <p><em>Returns accepted MIME-Type</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMaxFilesize" name="method_setMaxFilesize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMaxFilesize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMaxFilesize(integer  <span class="argument">$size</span>) : \Feeld\DataType\File</pre>
+                <p><em>Sets a maximum file size for files (in bytes)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$size </td>
+                                <td><p>Filesize in bytes</p></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Feeld\DataType\DataType</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.File.html">\Feeld\DataType\File</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getMaxFilesize" name="method_getMaxFilesize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getMaxFilesize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getMaxFilesize() : integer</pre>
+                <p><em>Returns maximum file size (in bytes)</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMaxFilesizeKilobytes" name="method_setMaxFilesizeKilobytes" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMaxFilesizeKilobytes()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMaxFilesizeKilobytes(integer  <span class="argument">$size</span>) : \Feeld\DataType\File</pre>
+                <p><em>Sets a maximum file size for files (in KB / KiB)
+In this context, Kilobyte means &quot;1024-byte long Kibibyte&quot;</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$size </td>
+                                <td><p>Filesize in KiB</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.File.html">\Feeld\DataType\File</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setMaxFilesizeMegabytes" name="method_setMaxFilesizeMegabytes" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setMaxFilesizeMegabytes()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setMaxFilesizeMegabytes(integer  <span class="argument">$size</span>) : \Feeld\DataType\File</pre>
+                <p><em>Sets a maximum file size for files uploaded with this Field (in MB / MiB)
+In this context, Megabyte means &quot;1024²-byte long Mebibyte&quot;</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$size </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/Feeld.DataType.File.html">\Feeld\DataType\File</a>
+                                            &mdash; <p>Returns itself for daisy-chaining</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">File.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/DataType/File.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Feeld.html">\Feeld</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on January 24th, 2016 at 16:34.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
