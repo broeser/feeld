@@ -8,7 +8,7 @@ namespace Feeld\DataType;
 class FloatTest extends \PHPUnit_Framework_TestCase {
 
     /**
-     * @var Float
+     * @var FloatingPoint
      */
     protected $object;
 
@@ -17,7 +17,7 @@ class FloatTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new Float;
+        $this->object = new FloatingPoint;
     }
 
     /**

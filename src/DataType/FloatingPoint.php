@@ -29,7 +29,7 @@ namespace Feeld\DataType;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Float implements DataTypeInterface, Boundaries\LengthBoundariesInterface, Boundaries\NumericBoundariesInterface {
+class FloatingPoint implements DataTypeInterface, Boundaries\LengthBoundariesInterface, Boundaries\NumericBoundariesInterface {
     use DataTypeTrait;
     
     /* Floats may have numeric (max 6) and length (max 2 digits) boundaries */
@@ -42,6 +42,6 @@ class Float implements DataTypeInterface, Boundaries\LengthBoundariesInterface, 
      */
     public function __construct(\Sanitor\Sanitizer $sanitizer = null) {       
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_NUMBER_FLOAT):$sanitizer);
-        $this->addValidator(new \Wellid\Validator\Float());
+        $this->addValidator(new \Wellid\Validator\FloatingPoint());
     }
 }
