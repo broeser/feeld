@@ -42,7 +42,7 @@ These DataTypes are supplied with feeld:
  - Date
  - Email
  - File
- - Float
+ - FloatingPoint
  - Integer
  - String
  - URL
