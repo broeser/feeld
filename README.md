@@ -1,4 +1,7 @@
 # Feeld
+
+/ This is a very early work-in-progress without releases and with a broken build /
+
 Feeld provides typed field objects that can be used as building blocks to create 
 the data model for CLI questionnaires, HTML forms, and much more. Includes 
 sanitization and validation and example UI implementations.
