@@ -30,7 +30,7 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldCollectionInterface extends Wellid\Internal\InternalInterface {
+interface FieldCollectionInterface {
     /**
      * Adds several Fields to the FieldCollection
      * 
@@ -59,4 +59,11 @@ interface FieldCollectionInterface extends Wellid\Internal\InternalInterface {
      * @param string $id
      */    
     public function getFieldById($id);
+    
+    /**
+     * Validates all Fields against the assigned Validators
+     * 
+     * @return ValidationResultSet
+     */
+    public function validate();   
 }

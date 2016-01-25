@@ -29,9 +29,7 @@ namespace Feeld\Field;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Checkbox implements \Feeld\FieldInterface, CommonProperties\OptionsInterface {
-    use \Wellid\SanitorBridgeTrait, CommonProperties\Field;
-    
+class Checkbox extends \Feeld\AbstractField implements CommonProperties\OptionsInterface {   
     use CommonProperties\Options;
 
 
@@ -47,7 +45,7 @@ class Checkbox implements \Feeld\FieldInterface, CommonProperties\OptionsInterfa
         }
         
         if(is_null($dataType)) {
-            $dataType = (new Integer())->setMax(1)->setMin(0);
+            $dataType = (new \Feeld\DataType\Integer())->setMax(1)->setMin(0);
             $options = array('yes' => 1, 'no' => 0);
         }
         

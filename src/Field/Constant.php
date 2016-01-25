@@ -30,9 +30,7 @@ namespace Feeld\Field;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Constant implements \Feeld\FieldInterface {
-    use \Wellid\SanitorBridgeTrait, CommonProperties\Field;
-
+class Constant extends \Feeld\AbstractField {
     /**
      * On setting a default value, the (unfiltered) value of this field is
      * also set to the same value

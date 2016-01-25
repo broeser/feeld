@@ -75,7 +75,7 @@ is recommended.
 ### Fields
 
 Fields are instances of classes that implement **FieldInterface**. Those classes
-are are located in src/Field/…
+are located in src/Field/…
 
 They define types of data entry (e. g. "selecting one of several values", 
 "checking a box" or "inputting text". Please note that this has nothing to do 
@@ -122,6 +122,11 @@ These Fields are supplied with feeld:
  - Constant     – user input (if any) is ignored and a constant value is used instead
  - Entry        – default data entry
  - Select       – data entry by selecting one (or more) of several values
+
+If you want to create your own Fields, you can either use the 
+**CommonProperties\Field**-trait (in combination with the 
+\Wellid\SanitorBridgeTrait if your field shall be sanitizable and validatable)
+or extend the abstract class **AbstractField** which uses those traits.
 
 ### Displays
 

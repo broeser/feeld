@@ -17,7 +17,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new Select;
+        $this->object = new Select(new \Feeld\DataType\URL());
     }
 
     /**
@@ -286,17 +286,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase {
      * @todo   Implement testIsRequired().
      */
     public function testIsRequired() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\Field\Select::getPrimitiveType
-     * @todo   Implement testGetPrimitiveType().
-     */
-    public function testGetPrimitiveType() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
                 'This test has not been implemented yet.'

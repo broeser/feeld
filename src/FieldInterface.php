@@ -38,7 +38,7 @@ namespace Feeld;
  * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldInterface extends \Wellid\SanitorBridgeInterface, \Wellid\ValidatableInterface,
+interface FieldInterface extends \Wellid\SanitorBridgeInterface,
  Field\CommonProperties\DefaultValueInterface, Field\CommonProperties\IdentifierInterface, Field\CommonProperties\RequiredInterface {
      /**
      * Returns the Display assigned to this Field. If no display was assigned

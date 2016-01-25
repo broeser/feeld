@@ -23,12 +23,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-namespace Feeld\Field;
-
+namespace Feeld;
 /**
- * Field that allows entering text
+ * Base class for all Fields
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Entry extends \Feeld\AbstractField {}
+abstract class AbstractField implements FieldInterface {
+    use \Wellid\SanitorBridgeTrait, Field\CommonProperties\Field;
+}

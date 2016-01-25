@@ -29,9 +29,7 @@ namespace Feeld\Field;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Select implements CommonProperties\OptionsInterface, CommonProperties\MultipleChoiceInterface, \Feeld\FieldInterface {    
-    use \Wellid\SanitorBridgeTrait, CommonProperties\Field;
-    
+class Select extends \Feeld\AbstractField implements CommonProperties\OptionsInterface, CommonProperties\MultipleChoiceInterface {    
     /* Select fields can have options and multiple choices */
     use CommonProperties\Options, CommonProperties\MultipleChoice;
 }

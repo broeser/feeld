@@ -30,9 +30,7 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-trait FieldCollectionTrait {
-    use \Wellid\Internal\InternalTrait;
-    
+trait FieldCollectionTrait {   
     /**
      * Array of Fields in this FieldCollection
      * 

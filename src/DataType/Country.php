@@ -37,8 +37,8 @@ class Country extends String {
      */
     public function __construct(\Sanitor\Sanitizer $sanitizer = null) {
         parent::__construct($sanitizer);
-        $allCountries = self::allCountries();
-        $this->addOptions(array_combine($allCountries, $allCountries));
+
+        //$this->addValidator(new \Wellid\Validator\OneOfThese(self::allCountries());
     }
     
     /**

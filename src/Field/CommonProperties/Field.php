@@ -32,8 +32,6 @@ namespace Feeld\Field\CommonProperties;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 trait Field {
-    use \Wellid\ValidatorHolderTrait;
-    
     /**
      * Bundles traits that are often used together
      */

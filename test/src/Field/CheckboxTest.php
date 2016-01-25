@@ -238,17 +238,6 @@ class CheckboxTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers Feeld\Field\Checkbox::getPrimitiveType
-     * @todo   Implement testGetPrimitiveType().
-     */
-    public function testGetPrimitiveType() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers Feeld\Field\Checkbox::getOptions
      * @todo   Implement testGetOptions().
      */
