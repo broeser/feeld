@@ -59,25 +59,6 @@ trait Field {
     private $hasRefreshedDisplayAtLeastOnce;
     
     /**
-     * Constructor
-     * 
-     * @param \Feeld\DataType\DataTypeInterface $dataType
-     * @param mixed $id
-     * @param \Feeld\Display\DisplayInterface $display
-     */
-    public function __construct(\Feeld\DataType\DataTypeInterface $dataType, $id = null, \Feeld\Display\DisplayInterface $display = null) {
-        $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
-        
-        $this->dataType = $dataType;
-        $this->setId($id);
-        
-        foreach($dataType->getValidators() as $validator) {
-            $this->addValidator($validator);
-        }
-        $this->setSanitizer($dataType->getSanitizer());
-    }
-    
-    /**
      * Returns the DataType of this field
      * 
      * @return \Feeld\DataType\DataTypeInterface

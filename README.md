@@ -126,6 +126,12 @@ These Fields are supplied with feeld:
  - Entry        – default data entry
  - Select       – data entry by selecting one (or more) of several values
 
+These Fields are supplied with feeld, if you are also using symfony/console:
+
+ - SymfonyConsoleEntry
+ - SymfonyConsoleCheckbox _planned, coming soon_
+ - SymfonyConsoleSelect _planned, coming soon_
+
 If you want to create your own Fields, you can either use the 
 **CommonProperties\Field**-trait (in combination with the 
 \Wellid\SanitorBridgeTrait if your field shall be sanitizable and validatable)

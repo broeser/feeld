@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b8e7d5ab433a06ea03cb7ec19ed04c12",
-    "content-hash": "bfb19950c127848fae639408da270d55",
+    "hash": "c18969781c8b477ac67bc2f45c62846e",
+    "content-hash": "44a0bb2b734aa4d5d19421b7397a8ff6",
     "packages": [
         {
             "name": "broeser/sanitor",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/sanitor.git",
-                "reference": "25e546bf79aa1a20540cf9f32830c26e1ba9aa87"
+                "reference": "54c1bca7d1c01e44ade53ff540ec983392339dde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/sanitor/zipball/25e546bf79aa1a20540cf9f32830c26e1ba9aa87",
-                "reference": "25e546bf79aa1a20540cf9f32830c26e1ba9aa87",
+                "url": "https://api.github.com/repos/broeser/sanitor/zipball/54c1bca7d1c01e44ade53ff540ec983392339dde",
+                "reference": "54c1bca7d1c01e44ade53ff540ec983392339dde",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,7 @@
                 "filter",
                 "sanitization"
             ],
-            "time": "2016-01-25 16:13:56"
+            "time": "2016-01-25 18:34:21"
         },
         {
             "name": "broeser/wellid",
@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/wellid.git",
-                "reference": "a4938c667224d002aa96e8bc5100d6d64365828f"
+                "reference": "2005e9f63f2726c4f9cd352084d18f87254089e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/wellid/zipball/a4938c667224d002aa96e8bc5100d6d64365828f",
-                "reference": "a4938c667224d002aa96e8bc5100d6d64365828f",
+                "url": "https://api.github.com/repos/broeser/wellid/zipball/2005e9f63f2726c4f9cd352084d18f87254089e8",
+                "reference": "2005e9f63f2726c4f9cd352084d18f87254089e8",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,8 @@
             "autoload": {
                 "psr-4": {
                     "Wellid\\": "src/",
-                    "WellidUsageExamples\\": "examples/"
+                    "WellidUsageExamples\\": "examples/",
+                    "Rtablada\\LiteratePhp\\": "literatephp/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -79,10 +80,130 @@
             "keywords": [
                 "validation"
             ],
-            "time": "2016-01-25 16:14:21"
+            "time": "2016-01-26 15:28:12"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "symfony/console",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/console.git",
+                "reference": "ebcdc507829df915f4ca23067bd59ee4ef61f6c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/ebcdc507829df915f4ca23067bd59ee4ef61f6c3",
+                "reference": "ebcdc507829df915f4ca23067bd59ee4ef61f6c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/event-dispatcher": "~2.8|~3.0",
+                "symfony/process": "~2.8|~3.0"
+            },
+            "suggest": {
+                "psr/log": "For using the console logger",
+                "symfony/event-dispatcher": "",
+                "symfony/process": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Console\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-12-22 10:39:06"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-01-20 09:13:37"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {

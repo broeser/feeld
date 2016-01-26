@@ -23,31 +23,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Feeld;
+
+namespace Feeld\Display\CLI;
+use Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Field\CommonProperties\OptionsInterface;
 /**
- * Base class for all Fields
+ * Description of SymfonyConsoleDisplay
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-abstract class AbstractField implements FieldInterface {
-    use \Wellid\SanitorBridgeTrait, Field\CommonProperties\Field;
-    
+class SymfonyConsoleDisplay extends DefaultCLI {
     /**
-     * Constructor
+     * Returns a string representation of the display
      * 
-     * @param \Feeld\DataType\DataTypeInterface $dataType
-     * @param mixed $id
-     * @param \Feeld\Display\DisplayInterface $display
+     * @return string
      */
-    public function __construct(\Feeld\DataType\DataTypeInterface $dataType, $id = null, \Feeld\Display\DisplayInterface $display = null) {
-        $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
-        
-        $this->dataType = $dataType;
-        $this->setId($id);
-        
-        foreach($dataType->getValidators() as $validator) {
-            $this->addValidator($validator);
-        }
-        $this->setSanitizer($dataType->getSanitizer());
-    }    
+    public function __toString() {
+        return $this->question.'? '.(is_null($this->hint)?'':'<fg=white;options=bold>['.$this->hint.']</> ');
+    }
 }
