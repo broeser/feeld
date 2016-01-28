@@ -23,6 +23,8 @@
  * THE SOFTWARE.
  */
 namespace Feeld\Display\HTML;
+use Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Field\CommonProperties\IdentifierInterface;
 
 /**
  * Description of Button
@@ -30,9 +32,29 @@ namespace Feeld\Display\HTML;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Button extends Element implements \Feeld\Display\DisplayInterface {
-    use DisplayHTMLTrait;
-    
+    /**
+     * Constructor
+     */
     public function __construct() {
         parent::__construct('button');
     }
+    
+    /**
+     * Takes information from the Field and uses it in this display
+     * 
+     * @param \Feeld\FieldInterface $field
+     */
+    public function informAboutStructure(\Feeld\FieldInterface $field) {
+        /**
+         * Use the Field identifier (if given) as default id-attribute for
+         * this HTML element
+         */
+        if($field instanceof IdentifierInterface && $field->hasId()) {
+            $this->setAttribute('id', $field->getId());
+        }
+
+        if($field instanceof DefaultValueInterface && $field->hasDefault()) {
+            $this->setAttribute('value', $field->getDefault());
+        }
+    }    
 }

@@ -27,7 +27,7 @@ easier to use then Feeld.
 
 The package is called broeser/feeld and can be installed via composer:
 
-`composer require broeser/feeld`
+``composer require broeser/feeld``
 
 ## How to use
 

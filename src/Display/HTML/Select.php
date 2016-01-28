@@ -23,16 +23,54 @@
  * THE SOFTWARE.
  */
 namespace Feeld\Display\HTML;
-
+use Feeld\Field\CommonProperties\OptionsInterface;
+use Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Field\CommonProperties\IdentifierInterface;
+use Feeld\Field\CommonProperties\RequiredInterface;
+use Feeld\Field\CommonProperties\MultipleChoiceInterface;
 /**
  * Description of Select
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Select extends Element implements \Feeld\Display\DisplayInterface {
-    use DisplayHTMLTrait;
-    
     public function __construct() {
         parent::__construct('select');
     }
+    
+    /**
+     * Takes information from the Field and uses it in this display
+     * 
+     * @param \Feeld\FieldInterface $field
+     */
+    public function informAboutStructure(\Feeld\FieldInterface $field) {
+        /**
+         * Use the Field identifier (if given) as default id-attribute for
+         * this HTML element
+         */
+        if($field instanceof IdentifierInterface && $field->hasId()) {
+            $this->setAttribute('id', $field->getId());
+        }
+               
+        if($field instanceof RequiredInterface && $field->isRequired()) {
+            $this->setAttribute('required', 'required');
+        }
+        
+        if($field instanceof MultipleChoiceInterface && $field->isMultipleChoice()) {
+            $this->setAttribute('multiple', 'multiple');
+        }
+        
+        if($field instanceof OptionsInterface) {
+            $options = array();
+            foreach($field->getOptions() as $value => $label) {
+                $newOption = new Option($label, $value);
+                
+                if($field instanceof DefaultValueInterface && $field->hasDefault() && $field->getDefault()===$value) {
+                    $newOption->setDefault();
+                }
+                $options[] = $newOption;
+            }
+            $this->setContent(implode('', $options));
+        }
+    }    
 }

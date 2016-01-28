@@ -30,7 +30,24 @@ namespace Feeld\Display\HTML;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Option extends Element {
-    public function __construct() {
+    /**
+     * <option>-Element
+     * 
+     * @param string $label
+     * @param string $value
+     */
+    public function __construct($label, $value=null) {
         parent::__construct('option');
+        $this->setContent($label);
+        if(!is_null($value)) {
+            $this->setAttribute('value', $value);
+        }
+    }
+    
+    /**
+     * Sets this as default option
+     */
+    public function setDefault() {
+        $this->setAttribute('selected', 'selected');
     }
 }

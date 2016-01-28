@@ -24,14 +24,13 @@
  */
 namespace Feeld\Display\HTML;
 
+use \Feeld\Field\CommonProperties\DefaultValueInterface;
 /**
  * Description of Input
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Input extends Element implements \Feeld\Display\DisplayInterface {
-    use DisplayHTMLTrait;
-    
     /**
      * Constructor
      * 
@@ -40,5 +39,28 @@ class Input extends Element implements \Feeld\Display\DisplayInterface {
     public function __construct($type) {
         parent::__construct('input');
         $this->setAttribute('type', $type);
+    }
+    
+    /**
+     * Takes information from the Field and uses it in this display
+     * 
+     * @param \Feeld\FieldInterface $field
+     */
+    public function informAboutStructure(\Feeld\FieldInterface $field) {
+        /**
+         * Use the Field identifier (if given) as default id-attribute for
+         * this HTML element
+         */
+        if($field instanceof IdentifierInterface && $field->hasId()) {
+            $this->setAttribute('id', $field->getId());
+        }
+               
+        if($field instanceof RequiredInterface && $field->isRequired()) {
+            $this->setAttribute('required', 'required');
+        }
+
+        if($field instanceof DefaultValueInterface && $field->hasDefault()) {
+            $this->setAttribute('value', $field->getDefault());
+        }
     }
 }
