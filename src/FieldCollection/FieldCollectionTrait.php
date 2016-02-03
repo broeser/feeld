@@ -30,7 +30,9 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-trait FieldCollectionTrait {   
+trait FieldCollectionTrait {
+    use \Wellid\Cache\CacheValidationResultSetTrait;
+    
     /**
      * Array of Fields in this FieldCollection
      * 
@@ -91,4 +93,25 @@ trait FieldCollectionTrait {
         
         return null;
     }
+    
+    /**
+     * Validates all Fields and returns a ValidationResultSet
+     * 
+     * @return \Wellid\ValidationResultSet
+     */
+    public function validate() {
+        if($this->isValidationCacheEnabled() && $this->lastValidationResult instanceof ValidationResultSet) {
+            return $this->lastValidationResult;
+        }
+        
+        $validationResultSet = new \Wellid\ValidationResultSet();
+        foreach($this->fields as $field) {
+            $validationResultSet->addSet($field->validate());
+        }
+        
+        $this->lastValidationResult = $validationResultSet;
+        
+        return $validationResultSet;
+    }
+        
 }

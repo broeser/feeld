@@ -80,19 +80,6 @@ class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable
         return $retCollection;
     }
     
-    /**
-     * Validates all Fields and returns a ValidationResultSet
-     * 
-     * @return \Wellid\ValidationResultSet
-     */
-    public function validate() {
-        $validationResultSet = new \Wellid\ValidationResultSet();
-        foreach($this->fields as $field) {
-            $validationResultSet->addSet($field->validate());
-        }
-        return $validationResultSet;
-    }
-    
     /*
      * Iterator-methods
      */
@@ -148,12 +135,4 @@ class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable
     public function count() {
         return count($this->fields);
     }
-
-    /**
-     * @throws Exception
-     */
-    public function getValue() {
-        throw new Exception('This should have never been called');
-    }
-
 }
