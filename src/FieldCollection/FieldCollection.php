@@ -30,17 +30,17 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable {
+class FieldCollection implements FieldCollectionInterface, \Iterator {
     use FieldCollectionTrait;
     
     /**
      * Returns all Fields of a certain class
      * 
      * @param string $class
-     * @return \self
+     * @return FieldCollection
      */
     public function getFieldsByClass($class) {
-        $retCollection = new self();
+        $retCollection = new FieldCollection();
         foreach($this->getFields() as $field) {
             if(get_class($field)===$class) {
                 $retCollection->addField($field);
@@ -50,28 +50,12 @@ class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable
     }
     
     /**
-     * Returns all Fields of a certain data type
-     * 
-     * @param string $class
-     * @return \self
-     */
-    public function getFieldsByDataType($class) {
-        $retCollection = new self();
-        foreach($this->getFields() as $field) {
-            if(get_class($field->getDataType())===$class) {
-                $retCollection->addField($field);
-            }
-        }
-        return $retCollection;        
-    }
-    
-    /**
      * Returns all required/mandatory Fields
      * 
-     * @return \self
+     * @return FieldCollection
      */
     public function getMandatoryFields() {
-        $retCollection = new self();
+        $retCollection = new FieldCollection();
         foreach($this->getFields() as $field) {
             if($field instanceof Field\CommonProperties\RequiredInterface && $field->isRequired()) {
                 $retCollection->addField($field);
@@ -123,16 +107,5 @@ class FieldCollection implements FieldCollectionInterface, \Iterator, \Countable
      */
     public function valid() {
         return isset($this->fields[$this->position]);
-    }
-    
-    /* Countable-methods */
-    
-    /**
-     * Returns the number of fields in this collection
-     * 
-     * @return int
-     */
-    public function count() {
-        return count($this->fields);
     }
 }

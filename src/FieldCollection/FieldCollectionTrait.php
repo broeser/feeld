@@ -113,5 +113,31 @@ trait FieldCollectionTrait {
         
         return $validationResultSet;
     }
-        
+
+    /**
+     * Returns all Fields of a certain data type
+     * 
+     * @param string $class
+     * @return FieldCollection
+     */
+    public function getFieldsByDataType($class) {
+        $retCollection = new FieldCollection();
+        foreach($this->getFields() as $field) {
+            if(get_class($field->getDataType())===$class) {
+                $retCollection->addField($field);
+            }
+        }
+        return $retCollection;        
+    }
+    
+    /* Countable-methods */
+    
+    /**
+     * Returns the number of fields in this collection
+     * 
+     * @return int
+     */
+    public function count() {
+        return count($this->fields);
+    }    
 }

@@ -30,7 +30,7 @@ namespace Feeld\FieldCollection;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldCollectionInterface {
+interface FieldCollectionInterface extends \Countable {
     /**
      * Adds several Fields to the FieldCollection
      * 
@@ -65,5 +65,13 @@ interface FieldCollectionInterface {
      * 
      * @return ValidationResultSet
      */
-    public function validate();   
+    public function validate();
+    
+    /**
+     * Returns all Fields of a certain data type in a FieldCollection
+     * 
+     * @param string $class
+     * @return FieldCollection
+     */
+    public function getFieldsByDataType($class);    
 }
