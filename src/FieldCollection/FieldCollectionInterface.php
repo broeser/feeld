@@ -34,22 +34,22 @@ interface FieldCollectionInterface extends \Countable {
     /**
      * Adds several Fields to the FieldCollection
      * 
-     * @param FieldInterface ...$fields
+     * @param Feeld\FieldInterface ...$fields
      * @return FieldCollection Returns itself for daisy-chaining
      */
-    public function addFields(FieldInterface ...$fields);
+    public function addFields(\Feeld\FieldInterface ...$fields);
     
     /**
      * Adds a Field to the FieldCollection
      * 
-     * @param FieldInterface $field
+     * @param Feeld\FieldInterface $field
      */
-    public function addField(FieldInterface $field);
+    public function addField(\Feeld\FieldInterface $field);
     
     /**
      * Returns all fields
      * 
-     * @return FieldInterface[]
+     * @return Feeld\FieldInterface[]
      */
     public function getFields();
     
@@ -63,7 +63,7 @@ interface FieldCollectionInterface extends \Countable {
     /**
      * Validates all Fields against the assigned Validators
      * 
-     * @return ValidationResultSet
+     * @return \Wellid\ValidationResultSet
      */
     public function validate();
     

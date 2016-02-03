@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 namespace Feeld\FieldCollection;
-
+use Feeld\FieldInterface;
 /**
  * Description of FieldCollection
  *
@@ -100,7 +100,7 @@ trait FieldCollectionTrait {
      * @return \Wellid\ValidationResultSet
      */
     public function validate() {
-        if($this->isValidationCacheEnabled() && $this->lastValidationResult instanceof ValidationResultSet) {
+        if($this->isValidationCacheEnabled() && $this->lastValidationResult instanceof \Wellid\ValidationResultSet) {
             return $this->lastValidationResult;
         }
         
