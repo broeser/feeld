@@ -62,6 +62,8 @@ trait DefaultValue {
             throw new \Exception('Default value could not be set: '.$result->getMessage(), $result->getCode());
         }
         $this->default = $defaultValue;
+        
+        return $this;
     }
     
     /**
