@@ -41,6 +41,8 @@ class HTMLForm extends Interview {
     
     /**
      * Constructor
+     * 
+     * @param \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections
      */
     public function __construct(\Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
         $i = 0;
@@ -54,6 +56,11 @@ class HTMLForm extends Interview {
         $this->method = INPUT_POST;
     }
     
+    /**
+     * One of the INPUT_GET or INPUT_POST constants
+     * 
+     * @return int
+     */
     public function getMethod() {
         return $this->method;
     }
