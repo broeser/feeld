@@ -74,5 +74,13 @@ interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDat
      * @param string $class
      * @return FieldCollection
      */
-    public function getFieldsByDataType($class);    
+    public function getFieldsByDataType($class);   
+    
+    /**
+     * Returns an object containing all valid answers as public properties
+     * identified by the id of the corresponding Field
+     * 
+     * @return object
+     */
+    public function getValidAnswers();
 }
