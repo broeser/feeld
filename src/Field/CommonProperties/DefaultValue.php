@@ -56,12 +56,12 @@ trait DefaultValue {
      * @return DefaultValueInterface
      */
     public function setDefault($value) {
-        $defaultValue = $this->getSanitizer()->filter($value);
-        $result = $this->validateValue($defaultValue)->firstError();
+        $copyDataType = clone $this->getDataType();
+        $result = $copyDataType->validateValue($value)->firstError();
         if($result instanceof \Wellid\ValidationResult) {
-            throw new \Exception('Default value could not be set: '.$result->getMessage(), $result->getCode());
+            throw new \Exception('Default value of type '.gettype($value).' could not be set: '.$result->getMessage(), $result->getCode());
         }
-        $this->default = $defaultValue;
+        $this->default = $copyDataType->getLastSanitizedValue();
         
         return $this;
     }
