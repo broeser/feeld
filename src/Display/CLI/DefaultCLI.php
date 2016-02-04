@@ -73,9 +73,9 @@ class DefaultCLI implements \Feeld\Display\DisplayInterface {
      * The display changes its hint (string between square brackets []) 
      * accordingly
      * 
-     * @param \Feeld\FieldInterface $field
+     * @param DisplayDataSourceInterface $field
      */
-    public function informAboutStructure(\Feeld\FieldInterface $field) {
+    public function informAboutStructure(DisplayDataSourceInterface $field) {
         if($field instanceof DefaultValueInterface && $field->hasDefault()) {
             $this->hint = $field->getDefault();
         }

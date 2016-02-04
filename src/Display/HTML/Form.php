@@ -24,7 +24,7 @@
  */
 namespace Feeld\Display\HTML;
 
-use \Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Display\DisplayDataSourceInterface;
 /**
  * Description of Form
  *

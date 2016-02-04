@@ -25,8 +25,6 @@
  */
 
 namespace Feeld\Display\CLI;
-use Feeld\Field\CommonProperties\DefaultValueInterface;
-use Feeld\Field\CommonProperties\OptionsInterface;
 /**
  * Description of SymfonyConsoleDisplay
  *

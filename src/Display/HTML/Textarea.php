@@ -26,6 +26,7 @@ namespace Feeld\Display\HTML;
 use Feeld\Field\CommonProperties\DefaultValueInterface;
 use Feeld\Field\CommonProperties\IdentifierInterface;
 use Feeld\Field\CommonProperties\RequiredInterface;
+use Feeld\Display\DisplayDataSourceInterface;
 /**
  * Description of Textarea
  *
@@ -39,9 +40,9 @@ class Textarea extends Element implements \Feeld\Display\DisplayInterface {
     /**
      * Takes information from the Field and uses it in this display
      * 
-     * @param \Feeld\FieldInterface $field
+     * @param DisplayDataSourceInterface $field
      */
-    public function informAboutStructure(\Feeld\FieldInterface $field) {
+    public function informAboutStructure(DisplayDataSourceInterface $field) {
         /**
          * Use the Field identifier (if given) as default id-attribute for
          * this HTML element
