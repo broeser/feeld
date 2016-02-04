@@ -1,6 +1,7 @@
 # Feeld
 
-/ This is a very early work-in-progress without releases and with a broken build /
+/ This is a very early work-in-progress without any releases, any tests and
+  without proper documentation /
 
 Feeld provides typed field objects that can be used as building blocks to create 
 the data model for CLI questionnaires, HTML forms, and much more. Includes 
@@ -23,12 +24,6 @@ and not in predefined data types and form building blocks, it might be a better
 choice to use broeser/sanitor and broeser/wellid – both packages are a little bit
 easier to use then Feeld.
 
-## Installation
-
-The package is called broeser/feeld and can be installed via composer:
-
-``composer require broeser/feeld``
-
 ## How to use
 
 ### DataTypes _– A wrapper around sanitization and validation_
@@ -36,7 +31,7 @@ The package is called broeser/feeld and can be installed via composer:
 A DataType is a combination of a default sanitizer, default validators and some 
 basic methods to specify boundaries (e.g. setMinLength() and setMaxLength()).
 
-These DataTypes are supplied with feeld:
+These DataTypes are supplied with feeld in the src/DataType-directory:
 
  - Country
  - Date
@@ -86,13 +81,15 @@ with the UI of the Field, though: "selecting one of several values" might be
 done by clicking on the value or typing it in; for the UI-component of Feeld, 
 see [Displays](#displays).
 
-Each Field must be assigned a DataType on construction.
+Each Field must be assigned a DataType on construction. It is optional but
+recommended to also assign a string identifier to each field upon construction.
+That way it is easier to distinguish different Fields.
 
 Example:
 
 ```PHP
 <?php
-$myStringSelector = new Feeld\Field\Select(new Feeld\DataType\URL());
+$myStringSelector = new Feeld\Field\Select(new Feeld\DataType\URL(), 'myFunnyField1');
 $myStringSelector->setRawValue('http://example.org');
 if($myStringSelector->validateBool()) {
     print($myStringSelector->getFilteredValue().' is a valid url!');
@@ -144,13 +141,13 @@ classes are located in src/Display/…
 
 They can be used to display the UI for Fields (of the field itself, not necessarily
 of field values). This can be in form of a question string ('Are you sure [y/N]?'),
-in form of HTML ('<input type="checkbox" name="sure" value="y">'), a 
+in form of HTML ('\<input type="checkbox" name="sure" value="y">'), a 
 GtkEntry-widget or any other form you can think of.
 
 Note, that one Display instance only displays one Field, so for a form with two
 Fields you'll also need two Displays.
 
-You can stringify Displays (**__toString()**, e. g. echo (string)$myDisplay;).
+You can stringify Displays ( **\__toString()**, e. g. echo (string)$myDisplay;).
 For Displays where a string representation does not make sense, something like
 a var_dump may be returned.
 
@@ -164,7 +161,7 @@ While not very useful, Displays can be used completely without Fields:
 
 Usually, Displays are used as UI for Fields though. Setting up an existing 
 Display as UI for a Field can be done by calling the 
-**informAboutStructure()**-method:
+**setDisplay()**-method:
 
 ```PHP
 <?php
@@ -173,11 +170,15 @@ Display as UI for a Field can be done by calling the
 
    $myField = new Feeld\Field\Entry(new Feeld\DataType\Email());
    $myField->setRequired();
+   $myField->setDisplay($myDisplay);
 
-   $myDisplay->informAboutStructure($myField);
    print($myDisplay); // will – hopefully – print something like 
                       // <input type="email" required>
 ```
+
+If you prefer an approach that does not couple the Field with the Display at all
+you can use **$myDisplay->informAboutStructure($myField)** in the example above
+instead of the setDisplay-call.
 
 You can also specify the Display as parameter when constructing a Field:
 
@@ -199,24 +200,68 @@ if($myStringSelector->validateBool()) {
 ```
 
 The example defines that the user can select one of multiple URLs. To display
-this selection, <input type="radio">-HTML-tags are used.
+this selection, \<input type="radio">-HTML-tags are used.
 
-Notice, that in the last example, there is no call to **informAboutStructure()**.
-You can either manually trigger that call by calling **refreshDisplay()** on the 
-Field. The call to informAboutStructure() is also made _the first time_ the 
-**\__toString()**-method of a Field is called – but only in case you did never
-manually call refreshDisplay(). This saves you one line of code in case you
-are using Displays that have a string representation.
-
-
-
-The whole Display-part of Feeld is still very much work in progress.
 
 ### FieldCollections
 
 Fields can be grouped in a **FieldCollection**. If you want to write your own
 collection of Fields, make sure to implement **FieldCollectionInterface**. You
 can use the **FieldCollectionTrait** to have some basic code.
+
+Fields can be added to a FieldCollection on construction or with the 
+**addField()** / **addFields()**-methods. It is possible to retrieve collections
+ of mandatory/required Fields ( **getMandatoryFields()**), get a certain Field 
+by id ( **getFieldById()**), by class name of its DataType 
+( **getFieldsByDataType()**) or by class name of the Field itself.
+
+FieldCollections are Countable and Iterable.
+
+If you also use UI (Displays), you can use the method 
+**setFieldDisplay($fieldId, $fieldDisplay)** to specify a Display for a Field
+in the collection with the given field-identifier.
+
+It is possible to **validate()** the whole FieldCollection at once. The values
+of the validated fields will be stored in an object (\stdClass() by default, but
+configurable with **setAnswerContainer($object)**) and can be retrieved after
+validation with **getValidAnswers()**. As the name of the method says, only
+values that have passed validation will be contained in the answer container.
+
+### Interview
+
+Interviews build upon FieldCollections. At least one FieldCollection has to be
+assigned to an Interview. After construction the main entry point of the
+Interview is the **execute()**-method.
+
+As soon as an Interview-class is **execute()**ed, it manages the logic behind:
+ - inviting an user to answer questions ( **inviteAnswers()**)
+ - retrieving the answers from the user ( **retrieveAnswers()**)
+ - sanitizing and validating these answers ( **handleAnswers()**, but might be 
+   done differently in your own implementation)
+ - doing different things **onValidationError()** and **onValidationSuccess()**
+ - setting a status code, depending on whether the answers were valid or not
+ - optionally branch to another set of answers or conclude the interview
+
+You can use the **InterviewInterface** in conjunction with the **InterviewTrait**
+(or the abstract class **AbstractInterview**) to create your own logic how those
+steps shall work exactly.
+
+One example implementation currently available is Interview/HTMLForm. It poses
+questions in the context of an HTML5 form. It handles the above steps in the
+following way:
+ - inviting an user to answer questions: by displaying them in the source code
+ - retrieving the answers from the user: by using filter_input()
+ - sanitizing and validating these answers: by using the Fields (and their
+   assigned validators/sanitizer) in the FieldCollection that is assigned to the
+   Interview
+ - onValidationError: All error messages are displayed in an unordered list
+   onValidationSuccess: A success message is displayed
+ - The status code can be retrieved with **getStatus()** and is one of
+   STATUS_VALIDATION_ERROR (invalid data), STATUS_AFTER_INTERVIEW (success) or 
+   STATUS_BEFORE_INTERVIEW (form was not submitted yet)
+
+You can find a working example of the HTMLForm-Interview in examples.php
+
 
 ## Feeld?
 
