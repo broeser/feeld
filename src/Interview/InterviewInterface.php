@@ -23,38 +23,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-namespace Feeld\Field\CommonProperties;
-
+namespace Feeld\Interview;
 /**
- * Used in all Fields
- *
+ * Interface for classes that offer FieldCollections to an user for data entry
+ * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-trait Field {
+interface InterviewInterface {
     /**
-     * Bundles traits that are often used together
-     */
-    use DefaultValue, Identifier, Required;
-    
-    /*
-     * A Field can be a data source for a Display
-     */
-    use \Feeld\Display\DisplayDataSourceTrait;
-    
-    /**
-     * DataType of this field
+     * Retrieves at least one answer to at least one question
      * 
-     * @var \Feeld\DataType\DataTypeInterface
-     */
-    protected $dataType;
+     * @return boolean Return true, if at least one answer was retrieved, false
+     * otherwise
+     */    
+    public function retrieveAnswers();
     
     /**
-     * Returns the DataType of this field
+     * Invites the user to answer at least one question.
      * 
-     * @return \Feeld\DataType\DataTypeInterface
+     * This could be done by simple displaying the question(s).
      */
-    public function getDataType() {
-        return $this->dataType;
-    }
+    public function inviteAnswers();
+    
+    /**
+     * Called when an invalid value exists
+     * 
+     * @param \Feeld\FieldInterface $lastField the field that caused a
+     * validation error; NULL if the FieldCollection's ValidationResultSet shall
+     * be used instead
+     */
+    public function onValidationError(\Feeld\FieldInterface $lastField = null);
+    
+    /**
+     * Called when an invalid value does not exist
+     * 
+     * @param \Feeld\FieldInterface $lastField the valid field; NULL if the 
+     * whole FieldCollection is valid
+     */
+    public function onValidationSuccess(\Feeld\FieldInterface $lastField = null);
 }

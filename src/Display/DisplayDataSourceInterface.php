@@ -24,37 +24,33 @@
  * THE SOFTWARE.
  */
 
-namespace Feeld\Field\CommonProperties;
+namespace Feeld\Display;
 
 /**
- * Used in all Fields
- *
+ * Interface for everything that can be the data source of a display
+ * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-trait Field {
+interface DisplayDataSourceInterface {
     /**
-     * Bundles traits that are often used together
-     */
-    use DefaultValue, Identifier, Required;
-    
-    /*
-     * A Field can be a data source for a Display
-     */
-    use \Feeld\Display\DisplayDataSourceTrait;
-    
-    /**
-     * DataType of this field
+     * Returns the Display assigned to this data source. If no display was 
+     * assigned to this data source, the class NoDisplay can be used.
      * 
-     * @var \Feeld\DataType\DataTypeInterface
+     * @return DisplayInterface
      */
-    protected $dataType;
+    public function getDisplay();
     
     /**
-     * Returns the DataType of this field
+     * Assigns a Display to this Field
      * 
-     * @return \Feeld\DataType\DataTypeInterface
+     * @param DisplayInterface $display
+     * @return DisplayDataSourceInterface
      */
-    public function getDataType() {
-        return $this->dataType;
-    }
+    public function setDisplay(DisplayInterface $display);
+    
+    /**
+     * Informs the assigned Display (if any) of the current structure of this
+     * Field
+     */
+    public function refreshDisplay();
 }

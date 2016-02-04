@@ -38,30 +38,11 @@ namespace Feeld;
  * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
+use Feeld\Field\CommonProperties;
+
 interface FieldInterface extends \Wellid\SanitorBridgeInterface,
- Field\CommonProperties\DefaultValueInterface, Field\CommonProperties\IdentifierInterface, Field\CommonProperties\RequiredInterface {
-     /**
-     * Returns the Display assigned to this Field. If no display was assigned
-     * to this Field, the class NoDisplay can be used.
-     * 
-     * @return \Feeld\Display\DisplayInterface
-     */
-    public function getDisplay();
-    
-    /**
-     * Assigns a Display to this Field
-     * 
-     * @param \Feeld\Display\DisplayInterface $display
-     * @return FieldInterface
-     */
-    public function setDisplay(\Feeld\Display\DisplayInterface $display);
-    
-    /**
-     * Informs the assigned Display (if any) of the current structure of this
-     * Field
-     */
-    public function refreshDisplay();
-    
+ CommonProperties\DefaultValueInterface, CommonProperties\IdentifierInterface, 
+ CommonProperties\RequiredInterface, Display\DisplayDataSourceInterface {
     /**
      * Returns the DataType of this Field
      * 

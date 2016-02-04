@@ -23,56 +23,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-namespace Feeld\FieldCollection;
+
+namespace Feeld\Display;
 
 /**
- * Description of FieldCollection
+ * Used by data sources for Displays (Fields and FieldCollections)
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDataSourceInterface {
+trait DisplayDataSourceTrait {    
     /**
-     * Adds several Fields to the FieldCollection
+     * Display of this data source
      * 
-     * @param Feeld\FieldInterface ...$fields
-     * @return FieldCollection Returns itself for daisy-chaining
+     * @var DisplayInterface
      */
-    public function addFields(\Feeld\FieldInterface ...$fields);
+    protected $display;
     
     /**
-     * Adds a Field to the FieldCollection
+     * Whether the associated Display (if any) has been refreshed at least once
      * 
-     * @param Feeld\FieldInterface $field
+     * @var boolean
      */
-    public function addField(\Feeld\FieldInterface $field);
+    private $hasRefreshedDisplayAtLeastOnce = false;
+
+    /**
+     * Returns the Display assigned to this data source
+     * 
+     * @return DisplayInterface
+     */
+    public function getDisplay() {
+        return $this->display;
+    }
     
     /**
-     * Returns all fields
+     * Sets the Display
      * 
-     * @return Feeld\FieldInterface[]
+     * @param DisplayInterface $display
      */
-    public function getFields();
+    public function setDisplay(DisplayInterface $display) {
+        $this->display = $display;
+
+        return $this;
+    }
     
     /**
-     * Retrieves a Field by unique identifier
-     * 
-     * @param string $id
-     * @return \Feeld\FieldInterface
-     */    
-    public function getFieldById($id);
+     * Informs the assigned Display (if any) of the current structure of this
+     * Field
+     */
+    public function refreshDisplay() {
+        $this->getDisplay()->informAboutStructure($this);
+        $this->hasRefreshedDisplayAtLeastOnce = true;
+    }
     
     /**
-     * Validates all Fields against the assigned Validators
+     * Returns a string representation of the Display assigned to this data
+     * source
      * 
-     * @return \Wellid\ValidationResultSet
+     * @return string
      */
-    public function validate();
-    
-    /**
-     * Returns all Fields of a certain data type in a FieldCollection
-     * 
-     * @param string $class
-     * @return FieldCollection
-     */
-    public function getFieldsByDataType($class);    
+    public function __toString() {
+        if(!$this->hasRefreshedDisplayAtLeastOnce) {
+            $this->refreshDisplay();
+        }
+        return (string)$this->getDisplay();
+    }
 }

@@ -34,6 +34,18 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
     use FieldCollectionTrait;
     
     /**
+     * Constructor
+     *
+     * @param \Feeld\Display\DisplayInterface $display
+     * @param object $objectForAnswers All valid answers will be assigned to this
+     * object while validating the FieldCollection
+     */
+    public function __construct(\Feeld\Display\DisplayInterface $display = null, $objectForAnswers = null) {
+        $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
+        $this->validAnswers = is_null($objectForAnswers)?new \stdClass():$objectForAnswers;
+    }
+    
+    /**
      * Returns all Fields of a certain class
      * 
      * @param string $class

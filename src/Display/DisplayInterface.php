@@ -46,9 +46,9 @@ interface DisplayInterface {
      * Each time the Field structure changes for some reason, this method shall
      * be called.
      * 
-     * @param \Feeld\FieldInterface $field
+     * @param DisplayDataSourceInterface $field
      */
-    public function informAboutStructure(\Feeld\FieldInterface $field);
+    public function informAboutStructure(DisplayDataSourceInterface $field);
     
     /**
      * Returns a string representation of the display

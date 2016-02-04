@@ -1,5 +1,4 @@
 <?php
-
 /*
  * The MIT License
  *
@@ -23,38 +22,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+namespace Feeld\Display\HTML;
 
-namespace Feeld\Field\CommonProperties;
-
+use \Feeld\Field\CommonProperties\DefaultValueInterface;
 /**
- * Used in all Fields
+ * Description of Form
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-trait Field {
+class Form extends Element  implements \Feeld\Display\DisplayInterface {
     /**
-     * Bundles traits that are often used together
+     * Constructor
      */
-    use DefaultValue, Identifier, Required;
-    
-    /*
-     * A Field can be a data source for a Display
-     */
-    use \Feeld\Display\DisplayDataSourceTrait;
+    public function __construct() {
+        parent::__construct('form');
+    }
     
     /**
-     * DataType of this field
+     * Takes information from the FieldCollection and uses it in this display
      * 
-     * @var \Feeld\DataType\DataTypeInterface
+     * @param DisplayDataSourceInterface $field
      */
-    protected $dataType;
-    
-    /**
-     * Returns the DataType of this field
-     * 
-     * @return \Feeld\DataType\DataTypeInterface
-     */
-    public function getDataType() {
-        return $this->dataType;
+    public function informAboutStructure(DisplayDataSourceInterface $field) {
+        if(count($field->getFieldsByDataType(get_class(new \Feeld\DataType\File())))>0) {
+            $this->setAttribute('enctype', 'multipart/form-data');
+        }
+        $this->setContent(implode('', $field->getFields()));
     }
 }

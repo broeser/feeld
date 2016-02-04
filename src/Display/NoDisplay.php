@@ -45,9 +45,9 @@ class NoDisplay implements DisplayInterface {
     /**
      * Information about the Field is ignored.
      * 
-     * @param \Feeld\FieldInterface $field
+     * @param DisplayDataSourceInterface $field
      */
-    public function informAboutStructure(\Feeld\FieldInterface $field) {
+    public function informAboutStructure(DisplayDataSourceInterface $field) {
         
     }
 }

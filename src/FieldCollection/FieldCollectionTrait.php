@@ -25,13 +25,15 @@
  */
 namespace Feeld\FieldCollection;
 use Feeld\FieldInterface;
+use Feeld\Field\CommonProperties\IdentifierInterface;
+use Wellid\ValidationResultSet;
 /**
  * Description of FieldCollection
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 trait FieldCollectionTrait {
-    use \Wellid\Cache\CacheValidationResultSetTrait;
+    use \Wellid\Cache\CacheValidationResultSetTrait, \Feeld\Display\DisplayDataSourceTrait;
     
     /**
      * Array of Fields in this FieldCollection
@@ -39,6 +41,13 @@ trait FieldCollectionTrait {
      * @var FieldInterface[]
      */
     protected $fields;
+    
+    /**
+     * An object containing all valid answers of this FieldCollection
+     * 
+     * @var object
+     */
+    protected $validAnswers;
     
     /**
      * Internal Iterator index
@@ -83,10 +92,11 @@ trait FieldCollectionTrait {
      * Retrieves a Field by unique identifier
      * 
      * @param string $id
+     * @return FieldInterface
      */    
     public function getFieldById($id) {
         foreach($this->getFields() as $field) {
-            if($field instanceof Field\CommonProperties\IdentifierInterface && $field->hasId() && $field->getId()===$id) {
+            if($field instanceof IdentifierInterface && $field->hasId() && $field->getId()===$id) {
                 return $field;
             }
         }
@@ -97,21 +107,38 @@ trait FieldCollectionTrait {
     /**
      * Validates all Fields and returns a ValidationResultSet
      * 
-     * @return \Wellid\ValidationResultSet
+     * @return ValidationResultSet
      */
     public function validate() {
-        if($this->isValidationCacheEnabled() && $this->lastValidationResult instanceof \Wellid\ValidationResultSet) {
+        if($this->isValidationCacheEnabled() && $this->lastValidationResult instanceof ValidationResultSet) {
             return $this->lastValidationResult;
         }
         
-        $validationResultSet = new \Wellid\ValidationResultSet();
+        $validationResultSet = new ValidationResultSet();
         foreach($this->fields as $field) {
-            $validationResultSet->addSet($field->validate());
+            $set = $field->validate();
+            $validationResultSet->addSet($set);
+            if($set->hasPassed() && $field instanceof IdentifierInterface && $field->hasId()) {
+                $fieldId = $field->getId();
+                $this->validAnswers->$fieldId = $field->getFilteredValue();
+            }
         }
         
         $this->lastValidationResult = $validationResultSet;
         
         return $validationResultSet;
+    }
+    
+    /**
+     * Returns an object containing all valid answers as public properties
+     * identified by the id of the corresponding Field
+     * 
+     * NOTE: Won't work if called before validate()
+     * 
+     * @return object
+     */
+    public function getValidAnswers() {
+        return $this->validAnswers;
     }
 
     /**
