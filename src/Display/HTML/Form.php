@@ -34,8 +34,9 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct($method = 'post') {
         parent::__construct('form');
+        $this->setAttribute('method', $method);
     }
     
     /**
@@ -47,6 +48,7 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
         if(count($field->getFieldsByDataType(get_class(new \Feeld\DataType\File())))>0) {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
-        $this->setContent(implode('', $field->getFields()));
+        
+        $this->setContent(implode('', $field->getFields()).'<input type="submit" value="tmpSubmit">');
     }
 }
