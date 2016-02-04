@@ -44,4 +44,14 @@ class FloatingPoint implements DataTypeInterface, Boundaries\LengthBoundariesInt
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_NUMBER_FLOAT):$sanitizer);
         $this->addValidator(new \Wellid\Validator\FloatingPoint());
     }
+
+    /**
+     * Returns the last sanitized value in a type fitting this DataType
+     * 
+     * @return float
+     */
+    public function transformSanitizedValue() {
+        return $this->lastSanitizedValue = (float)$this->getLastSanitizedValue();
+    }
+
 }

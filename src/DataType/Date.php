@@ -142,4 +142,14 @@ class Date implements DataTypeInterface {
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW):$sanitizer);
         $this->addValidator(new DateValidator());
     }
+
+    /**
+     * Returns the last sanitized value in a type fitting this DataType
+     * 
+     * @return \DateTime
+     */
+    public function transformSanitizedValue() {
+        return new \DateTime($this->getLastSanitizedValue());
+    }
+
 }

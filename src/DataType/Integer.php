@@ -46,4 +46,14 @@ class Integer implements DataTypeInterface, Boundaries\LengthBoundariesInterface
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_NUMBER_INT):$sanitizer);
         $this->addValidator(new \Wellid\Validator\Integer());
     }
+
+    /**
+     * Returns the last sanitized value in a type fitting this DataType
+     * 
+     * @return int
+     */
+    public function transformSanitizedValue() {
+        return  (int)$this->getLastSanitizedValue();
+    }
+
 }

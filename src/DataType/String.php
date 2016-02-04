@@ -44,4 +44,12 @@ class String implements DataTypeInterface, Boundaries\LengthBoundariesInterface 
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW):$sanitizer);
     }
 
+    /**
+     * Returns the last sanitized value in a type fitting this DataType
+     * 
+     * @return string
+     */
+    public function transformSanitizedValue() {
+        return (string)$this->getLastSanitizedValue();
+    }
 }

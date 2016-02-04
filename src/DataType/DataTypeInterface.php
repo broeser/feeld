@@ -54,4 +54,11 @@ interface DataTypeInterface extends \Wellid\ValidatorHolderInterface {
      * @return mixed
      */
     public function getLastSanitizedValue();
+    
+    /**
+     * Returns the last sanitized value in a type fitting this DataType
+     * 
+     * @return mixed
+     */
+    public function transformSanitizedValue();
 }
