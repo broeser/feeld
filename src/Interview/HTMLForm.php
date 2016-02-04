@@ -27,7 +27,7 @@
 namespace Feeld\Interview;
 
 /**
- * Example implementation of InterviewInterface, a HTML form handler
+ * Example implementation of InterviewInterface: a HTML form handler
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
@@ -127,7 +127,7 @@ class HTMLForm extends Interview {
      * 
      * @return boolean
      */
-    public function pageMatches() {
+    protected function pageMatches() {
         return $this->getCurrentCollection()->getFieldById('page_'.$this->getId())->getDataType()->transformSanitizedValue()===$this->currentCollectionId;
     }
     
