@@ -51,6 +51,7 @@ class Select extends Element implements \Feeld\Display\DisplayInterface {
          */
         if($field instanceof IdentifierInterface && $field->hasId()) {
             $this->setAttribute('id', $field->getId());
+            $this->setAttribute('name', $field->getId());
         }
                
         if($field instanceof RequiredInterface && $field->isRequired()) {

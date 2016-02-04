@@ -24,7 +24,9 @@
  */
 namespace Feeld\Display\HTML;
 
-use \Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Field\CommonProperties\DefaultValueInterface;
+use Feeld\Field\CommonProperties\IdentifierInterface;
+use Feeld\Field\CommonProperties\RequiredInterface;
 use Feeld\Display\DisplayDataSourceInterface;
 /**
  * Description of Input
@@ -54,6 +56,7 @@ class Input extends Element implements \Feeld\Display\DisplayInterface {
          */
         if($field instanceof IdentifierInterface && $field->hasId()) {
             $this->setAttribute('id', $field->getId());
+            $this->setAttribute('name', $field->getId());
         }
                
         if($field instanceof RequiredInterface && $field->isRequired()) {
