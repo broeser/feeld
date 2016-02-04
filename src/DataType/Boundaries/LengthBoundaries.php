@@ -37,7 +37,7 @@ trait LengthBoundaries {
      * 
      * @var integer
      */
-    protected $minLength = 0;
+    protected $minLength;
     
     /**
      * Maximum text length
