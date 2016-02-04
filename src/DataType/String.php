@@ -47,9 +47,14 @@ class String implements DataTypeInterface, Boundaries\LengthBoundariesInterface 
     /**
      * Returns the last sanitized value in a type fitting this DataType
      * 
+     * @param string $value
      * @return string
      */
-    public function transformSanitizedValue() {
-        return (string)$this->getLastSanitizedValue();
+    public function transformSanitizedValue($value = null) {
+        if(is_null($value)) {
+            $value = $this->getLastSanitizedValue();
+        }
+        
+        return (string)$value;
     }
 }

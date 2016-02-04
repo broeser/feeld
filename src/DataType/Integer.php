@@ -50,10 +50,15 @@ class Integer implements DataTypeInterface, Boundaries\LengthBoundariesInterface
     /**
      * Returns the last sanitized value in a type fitting this DataType
      * 
+     * @param string $value
      * @return int
      */
-    public function transformSanitizedValue() {
-        return  (int)$this->getLastSanitizedValue();
+    public function transformSanitizedValue($value = null) {
+        if(is_null($value)) {
+            $value = $this->getLastSanitizedValue();
+        }
+        
+        return (int)$value;
     }
 
 }

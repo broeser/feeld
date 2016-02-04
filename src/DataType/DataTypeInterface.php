@@ -56,9 +56,11 @@ interface DataTypeInterface extends \Wellid\ValidatorHolderInterface {
     public function getLastSanitizedValue();
     
     /**
-     * Returns the last sanitized value in a type fitting this DataType
+     * Returns the value transformed to a type fitting this DataType
+     * If value is NULL, the last sanitized value is used
      * 
+     * @param string $value
      * @return mixed
      */
-    public function transformSanitizedValue();
+    public function transformSanitizedValue($value = null);
 }

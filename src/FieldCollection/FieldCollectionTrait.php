@@ -120,7 +120,7 @@ trait FieldCollectionTrait {
             $validationResultSet->addSet($set);
             if($set->hasPassed() && $field instanceof IdentifierInterface && $field->hasId()) {
                 $fieldId = $field->getId();
-                $this->validAnswers->$fieldId = $field->getDataType()->transformSanitizedValue();
+                $this->validAnswers->$fieldId = $field->getDataType()->transformSanitizedValue($field->getFilteredValue());
             }
         }
         

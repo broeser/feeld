@@ -48,10 +48,15 @@ class FloatingPoint implements DataTypeInterface, Boundaries\LengthBoundariesInt
     /**
      * Returns the last sanitized value in a type fitting this DataType
      * 
+     * @param string $value
      * @return float
      */
-    public function transformSanitizedValue() {
-        return $this->lastSanitizedValue = (float)$this->getLastSanitizedValue();
+    public function transformSanitizedValue($value = null) {
+        if(is_null($value)) {
+            $value = $this->getLastSanitizedValue();
+        }
+        
+        return (float)$value;
     }
 
 }

@@ -146,10 +146,15 @@ class Date implements DataTypeInterface {
     /**
      * Returns the last sanitized value in a type fitting this DataType
      * 
+     * @param string $value
      * @return \DateTime
      */
-    public function transformSanitizedValue() {
-        return new \DateTime($this->getLastSanitizedValue());
+    public function transformSanitizedValue($value = null) {
+        if(is_null($value)) {
+            $value = $this->getLastSanitizedValue();
+        }
+        
+        return new \DateTime($value);
     }
 
 }
