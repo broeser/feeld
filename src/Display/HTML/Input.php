@@ -61,7 +61,7 @@ class Input extends Element implements \Feeld\Display\DisplayInterface {
             $this->setAttribute('name', $field->getId());
         }
                
-        if($field instanceof RequiredInterface && $field->isRequired()) {
+        if($field instanceof RequiredInterface && $field->isRequired() && !in_array($this->attributes['type'], array('hidden', 'image', 'submit', 'reset', 'button'))) {
             $this->setAttribute('required', 'required');
         }
 
@@ -69,17 +69,17 @@ class Input extends Element implements \Feeld\Display\DisplayInterface {
             $this->setAttribute('value', $field->getDefault());
         }
         
-        if($field->getDataType() instanceof LengthBoundariesInterface) {
+        if($field->getDataType() instanceof LengthBoundariesInterface && in_array($this->attributes['type'], array('text', 'email', 'search', 'password', 'tel', 'url'))) {
             if($field->getDataType()->hasMaxLength()) {
                 $this->setAttribute('maxlength', $field->getDataType()->getMaxLength());
             }
             
-            if($field->getDataType()->hasMinLength()) {
+            if($field->getDataType()->hasMinLength() && ($field->getDataType()->getMinLength()>0 || !$field instanceof RequiredInterface || !$field->isRequired())) {
                 $this->setAttribute('minlength', $field->getDataType()->getMinLength());
             }
         }
         
-        if($field->getDataType() instanceof NumericBoundariesInterface) {
+        if($field->getDataType() instanceof NumericBoundariesInterface && in_array($this->attributes['type'], array('number', 'range', 'date', 'datetime', 'datetime-local', 'month', 'time', 'week'))) {
             if($field->getDataType()->hasMax()) {
                 $this->setAttribute('max', $field->getDataType()->getMax());
             }
