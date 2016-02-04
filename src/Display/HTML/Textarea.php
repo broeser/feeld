@@ -61,13 +61,13 @@ class Textarea extends Element implements \Feeld\Display\DisplayInterface {
             $this->setContent($field->getDefault());
         }
         
-        if($field instanceof LengthBoundariesInterface) {
-            if($field->hasMaxLength()) {
-                $this->setAttribute('maxlength', $field->getMaxLength());
+        if($field->getDataType() instanceof LengthBoundariesInterface) {
+            if($field->getDataType()->hasMaxLength()) {
+                $this->setAttribute('maxlength', $field->getDataType()->getMaxLength());
             }
             
-            if($field->hasMinLength()) {
-                $this->setAttribute('minlength', $field->getMinLength());
+            if($field->getDataType()->hasMinLength()) {
+                $this->setAttribute('minlength', $field->getDataType()->getMinLength());
             }
         }
     }    

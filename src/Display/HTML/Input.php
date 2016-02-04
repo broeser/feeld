@@ -69,27 +69,27 @@ class Input extends Element implements \Feeld\Display\DisplayInterface {
             $this->setAttribute('value', $field->getDefault());
         }
         
-        if($field instanceof LengthBoundariesInterface) {
-            if($field->hasMaxLength()) {
-                $this->setAttribute('maxlength', $field->getMaxLength());
+        if($field->getDataType() instanceof LengthBoundariesInterface) {
+            if($field->getDataType()->hasMaxLength()) {
+                $this->setAttribute('maxlength', $field->getDataType()->getMaxLength());
             }
             
-            if($field->hasMinLength()) {
-                $this->setAttribute('minlength', $field->getMinLength());
+            if($field->getDataType()->hasMinLength()) {
+                $this->setAttribute('minlength', $field->getDataType()->getMinLength());
             }
         }
         
-        if($field instanceof NumericBoundariesInterface) {
-            if($field->hasMax()) {
-                $this->setAttribute('max', $field->getMax());
+        if($field->getDataType() instanceof NumericBoundariesInterface) {
+            if($field->getDataType()->hasMax()) {
+                $this->setAttribute('max', $field->getDataType()->getMax());
             }
             
-            if($field->hasMin()) {
-                $this->setAttribute('min', $field->getMin());
+            if($field->getDataType()->hasMin()) {
+                $this->setAttribute('min', $field->getDataType()->getMin());
             }
             
-            if($field->hasStep()) {
-                $this->setAttribute('step', $field->getStep());
+            if($field->getDataType()->hasStep()) {
+                $this->setAttribute('step', $field->getDataType()->getStep());
             }
         }
     }
