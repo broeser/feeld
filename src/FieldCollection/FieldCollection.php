@@ -37,12 +37,29 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
      * Constructor
      *
      * @param \Feeld\Display\DisplayInterface $display
-     * @param object $objectForAnswers All valid answers will be assigned to this
+     * @param object $answerContainer All valid answers will be assigned to this
      * object while validating the FieldCollection
      */
-    public function __construct(\Feeld\Display\DisplayInterface $display = null, $objectForAnswers = null) {
+    public function __construct(\Feeld\Display\DisplayInterface $display = null, $answerContainer = null) {
         $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
-        $this->validAnswers = is_null($objectForAnswers)?new \stdClass():$objectForAnswers;
+        $this->setAnswerContainer(is_null($answerContainer)?new \stdClass():$answerContainer);
+    }
+    
+    /**
+     * Sets the container object for saving answers into
+     * 
+     * @param object $answerContainer
+     * @throws \Wellid\Exception\DataType
+     * @return FieldCollection Returns itself for daisy-chaining
+     */
+    public function setAnswerContainer($answerContainer) {
+        if(!is_object($answerContainer)) {
+            throw new \Wellid\Exception\DataType('answerContainer', 'object', $answerContainer);
+        }
+        
+        $this->validAnswers = $answerContainer;
+        
+        return $this;
     }
     
     /**
@@ -119,5 +136,18 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
      */
     public function valid() {
         return isset($this->fields[$this->position]);
+    }
+    
+    /**
+     * Shorthand method for $fieldCollection->getFieldById('abc')->setDisplay($abcDisplay);
+     * 
+     * @param mixed $fieldId
+     * @param \Feeld\Display\DisplayInterface $display
+     * @return \Feeld\FieldCollection\FieldCollection
+     */
+    public function setFieldDisplay($fieldId, \Feeld\Display\DisplayInterface $display) {
+        $this->getFieldById($fieldId)->setDisplay($display);
+        
+        return $this;
     }
 }

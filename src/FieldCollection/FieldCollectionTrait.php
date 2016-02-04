@@ -74,9 +74,12 @@ trait FieldCollectionTrait {
      * Adds a Field to the FieldCollection
      * 
      * @param FieldInterface $field
+     * @return FieldCollection Returns itself for daisy-chaining
      */
     public function addField(FieldInterface $field) {
         $this->fields[] = $field;
+        
+        return $this;
     }
     
     /**
@@ -86,7 +89,7 @@ trait FieldCollectionTrait {
      */
     public function getFields() {
         return $this->fields;
-    }    
+    }
     
     /**
      * Retrieves a Field by unique identifier

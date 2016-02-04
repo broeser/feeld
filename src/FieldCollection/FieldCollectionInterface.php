@@ -43,6 +43,7 @@ interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDat
      * Adds a Field to the FieldCollection
      * 
      * @param Feeld\FieldInterface $field
+     * @return FieldCollection Returns itself for daisy-chaining
      */
     public function addField(\Feeld\FieldInterface $field);
     
