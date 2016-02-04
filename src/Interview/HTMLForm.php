@@ -72,6 +72,15 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldInterface $lastField
      */
     public function onValidationError(\Feeld\FieldInterface $lastField = null) {
+        $errMessageContainer = new \Feeld\Display\HTML\Element('ul');
+        $errMessage = array();
+        foreach($this->getCurrentCollection()->validate()->getErrorMessages() as $message) {
+            $errMessage[] = (new \Feeld\Display\HTML\Element('li'))->setContent($message);
+        }
+        $errMessageContainer->setContent(implode('', $errMessage));
+        $errMessageIntro = (new \Feeld\Display\HTML\Element('p'))->setContent('An error occurred:')->addCssClass('error');
+        
+        print($errMessageIntro.$errMessageContainer);
         $this->inviteAnswers();
     }
 
@@ -106,12 +115,24 @@ class HTMLForm extends Interview {
     }
     
     /**
+     * Return whether the current collection matches a field that holds the page
+     * number of the submitted collection
+     * 
+     * @return boolean
+     */
+    public function pageMatches() {
+        return $this->getCurrentCollection()->getFieldById('page_'.$this->getId())->getDataType()->transformSanitizedValue()===$this->currentCollectionId;
+    }
+    
+    /**
      * Retrieves answers and returns whether there are any
      * 
      * @return boolean
      */
     public function retrieveAnswers() {
-        if(!$this->methodMatches() || $this->getCurrentCollection()->getFieldById('page_'.$this->getId())->getFilteredValue()!==$this->currentCollectionId) return false;
+        if(!$this->methodMatches() || !$this->pageMatches()) {
+            return false;
+        }
         
         foreach($this->getCurrentCollection()->getFields() as $field) {
             if($field instanceof \Feeld\Field\CommonProperties\IdentifierInterface && $field->hasId()) {
