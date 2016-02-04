@@ -27,6 +27,7 @@
 namespace Feeld\Display\CLI;
 use Feeld\Field\CommonProperties\DefaultValueInterface;
 use Feeld\Field\CommonProperties\OptionsInterface;
+use Feeld\Display\DisplayDataSourceInterface;
 /**
  * Description of Default-CLI-Display
  *
