@@ -28,12 +28,11 @@ require_once __DIR__.'/vendor/autoload.php';
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>qTest</title>
+        <title>Blog Example</title>
     </head>
     <body>
         <h1>Blog Example</h1>
 <?php
-
 class BlogPost {
     public $nickname;
     public $email;
@@ -44,15 +43,29 @@ class BlogPost {
     }
 }
 
-$fields = new \Feeld\FieldCollection\FieldCollection(new Feeld\Display\HTML\Form(), new BlogPost());
-$fields->addFields(
-    (new Feeld\Field\Entry((new Feeld\DataType\String())->setMinLength(3), 'nickname', (new Feeld\Display\HTML\Input('text'))->setAttribute('placeholder', 'Your username')))->setRequired(),
-    (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email', new Feeld\Display\HTML\Input('email')))->setDefault('mail@example.org'),
-    (new Feeld\Field\Entry(new Feeld\DataType\String(), 'text', new Feeld\Display\HTML\Textarea()))->setRequired()
+// Data model
+$formForBlogPost = new \Feeld\FieldCollection\FieldCollection(null, new BlogPost());
+$formForBlogPost->addFields(
+    (new Feeld\Field\Entry((new Feeld\DataType\String())->setMinLength(3), 'nickname'))->setRequired(),
+    (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email'))->setDefault('mail@example.org'),
+    (new Feeld\Field\Entry(new Feeld\DataType\String(), 'text'))->setRequired()
 );
-$htmlForm = new \Feeld\Interview\HTMLForm($fields);
-$htmlForm->execute();
 
+// UI
+$nicknameUI = (new Feeld\Display\HTML\Input('text'))->setAttribute('placeholder', 'Your username');
+$emailUI = new Feeld\Display\HTML\Input('email');
+$textUI = new Feeld\Display\HTML\Textarea();
+$formUI = new Feeld\Display\HTML\Form('post');
+
+// Putting data model and UI together
+$formForBlogPost->setDisplay($formUI);
+$formForBlogPost->setFieldDisplay('nickname', $nicknameUI);
+$formForBlogPost->setFieldDisplay('email', $emailUI);
+$formForBlogPost->setFieldDisplay('text', $textUI);
+
+// "Business" logic: The Interviewer "HTMLForm" is executed
+$htmlForm = new \Feeld\Interview\HTMLForm($formForBlogPost);
+$htmlForm->execute();
 if($htmlForm->getStatus()===Feeld\Interview\Interview::STATUS_AFTER_INTERVIEW) {
     print('<h1>Most recent blog post</h1>');
     print(nl2br($htmlForm->getCurrentCollection()->getValidAnswers()));
