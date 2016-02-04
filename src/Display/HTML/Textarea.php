@@ -27,6 +27,7 @@ use Feeld\Field\CommonProperties\DefaultValueInterface;
 use Feeld\Field\CommonProperties\IdentifierInterface;
 use Feeld\Field\CommonProperties\RequiredInterface;
 use Feeld\Display\DisplayDataSourceInterface;
+use Feeld\DataType\Boundaries\LengthBoundariesInterface;
 /**
  * Description of Textarea
  *
@@ -58,6 +59,16 @@ class Textarea extends Element implements \Feeld\Display\DisplayInterface {
 
         if($field instanceof DefaultValueInterface && $field->hasDefault()) {
             $this->setContent($field->getDefault());
+        }
+        
+        if($field instanceof LengthBoundariesInterface) {
+            if($field->hasMaxLength()) {
+                $this->setAttribute('maxlength', $field->getMaxLength());
+            }
+            
+            if($field->hasMinLength()) {
+                $this->setAttribute('minlength', $field->getMinLength());
+            }
         }
     }    
 }
