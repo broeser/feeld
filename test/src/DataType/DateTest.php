@@ -39,8 +39,9 @@ class DateTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(1, $this->object->getValidators());
         $this->assertInstanceOf(get_class($this->object), $this->object->setMin('2011-12-01'));
         $this->assertEquals('2011-12-01', $this->object->getMin());
-        $this->assertCount(2, $this->object->getValidators());
-        $lastValidator = end($this->object->getValidators());
+        $validators = $this->object->getValidators();
+        $this->assertCount(2, $validators);
+        $lastValidator = end($validators);
         $this->assertInstanceOf('\Wellid\Validator\MinDate', $lastValidator);
         $this->assertTrue($this->object->validateValue('2011-12-01')->hasPassed());
         $this->assertFalse($this->object->validateValue('2010-01-08')->hasPassed());
@@ -58,8 +59,9 @@ class DateTest extends \PHPUnit_Framework_TestCase {
         $this->assertCount(1, $this->object->getValidators());
         $this->assertInstanceOf(get_class($this->object), $this->object->setMax('2011-12-01'));
         $this->assertEquals('2011-12-01', $this->object->getMax());
-        $this->assertCount(2, $this->object->getValidators());
-        $lastValidator = end($this->object->getValidators());
+        $validators = $this->object->getValidators();
+        $this->assertCount(2, $validators);
+        $lastValidator = end($validators);
         $this->assertInstanceOf('\Wellid\Validator\MaxDate', $lastValidator);
         $this->assertTrue($this->object->validateValue('2011-12-01')->hasPassed());
         $this->assertTrue($this->object->validateValue('2010-01-08')->hasPassed());
