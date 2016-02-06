@@ -1,7 +1,12 @@
 # Feeld
 
-/ This is a very early work-in-progress without any releases, any tests and
-  without proper documentation /
+/ This is a very early work-in-progress without any releases, hardly any tests 
+  and without proper documentation /
+
+[![Build Status](https://travis-ci.org/broeser/feeld.svg?branch=master)](https://travis-ci.org/broeser/feeld)
+[![codecov.io](https://codecov.io/github/broeser/feeld/coverage.svg?branch=master)](https://codecov.io/github/broeser/feeld?branch=master)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://mit-license.org)
+[![SemVer 2.0.0](https://img.shields.io/badge/semver-2.0.0-blue.svg)](http://semver.org/spec/v2.0.0.html)
 
 Feeld provides typed field objects that can be used as building blocks to create 
 the data model for CLI questionnaires, HTML forms, and much more. Includes 
@@ -23,6 +28,14 @@ If your are only interested in the "sanitization and validation" aspect of Feeld
 and not in predefined data types and form building blocks, it might be a better
 choice to use broeser/sanitor and broeser/wellid – both packages are a little bit
 easier to use then Feeld.
+
+## Installation
+
+Feeld works with PHP 5.6 and 7.0.
+
+The package can be installed via composer:
+
+``composer require broeser/feeld``
 
 ## How to use
 
