@@ -56,7 +56,7 @@ class Date implements DataTypeInterface {
     protected $step = 1;
     
     /**
-     * Sets the HTML-min-attribute of this Date-field
+     * Sets the earliest possible Date
      * 
      * @param string $min
      * @return Date Returns itself for daisy-chaining
@@ -73,7 +73,7 @@ class Date implements DataTypeInterface {
     }
     
     /**
-     * Sets the HTML-max-attribute of this Date-field
+     * Sets the latest possible Date
      * 
      * @param string $max
      * @return Date Returns itself for daisy-chaining
@@ -90,7 +90,7 @@ class Date implements DataTypeInterface {
     }
     
     /**
-     * Sets the HTML-step-attribute of this Date-field
+     * Sets the stepping of this Date-field (usually 1 day)
      * 
      * @param integer $step
      * @return Date Returns itself for daisy-chaining
