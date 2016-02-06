@@ -52,7 +52,7 @@ These DataTypes are supplied with feeld in the src/DataType-directory:
  - File
  - FloatingPoint
  - Integer
- - String
+ - Str
  - URL
 
 #### Sanitization and validation with data types
