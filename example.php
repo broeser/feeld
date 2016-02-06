@@ -46,9 +46,9 @@ class BlogPost {
 // Data model
 $formForBlogPost = new \Feeld\FieldCollection\FieldCollection(null, new BlogPost());
 $formForBlogPost->addFields(
-    (new Feeld\Field\Entry((new Feeld\DataType\String())->setMinLength(3), 'nickname'))->setRequired(),
+    (new Feeld\Field\Entry((new Feeld\DataType\Str())->setMinLength(3), 'nickname'))->setRequired(),
     (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email'))->setDefault('mail@example.org'),
-    (new Feeld\Field\Entry(new Feeld\DataType\String(), 'text'))->setRequired()
+    (new Feeld\Field\Entry(new Feeld\DataType\Str(), 'text'))->setRequired()
 );
 
 // UI

@@ -8,7 +8,7 @@ use Wellid\Exception\DataType as DataTypeException;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class File extends String {   
+class File extends Str {   
     /**
      * The accept-attribute (contains the accepted mime-type, has wildcard 
      * support e.g. for text/*)

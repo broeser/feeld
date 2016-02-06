@@ -29,7 +29,7 @@ namespace Feeld\DataType;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Country extends String {
+class Country extends Str {
     /**
      * Constructor
      * 

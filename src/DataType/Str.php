@@ -29,7 +29,7 @@ namespace Feeld\DataType;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class String implements DataTypeInterface, Boundaries\LengthBoundariesInterface {
+class Str implements DataTypeInterface, Boundaries\LengthBoundariesInterface {
     use DataTypeTrait;
     
     /* Text fields can have a minimum and maximum length */

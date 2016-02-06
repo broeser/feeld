@@ -29,7 +29,7 @@ namespace Feeld\DataType;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class URL extends String {
+class URL extends Str {
     /**
      * Constructor
      * 
