@@ -35,6 +35,14 @@ class Date implements DataTypeInterface {
     use DataTypeTrait;
     
     /**
+     * Date format, default is YYYY-MM-DD (Y-m-d)
+     * 
+     * @link http://php.net/manual/en/function.date.php
+     * @var string
+     */
+    protected $format = 'Y-m-d';
+    
+    /**
      * Minimum value, format YYYY-MM-DD
      * 
      * @var string 
@@ -62,12 +70,9 @@ class Date implements DataTypeInterface {
      * @return Date Returns itself for daisy-chaining
      * @throws DataType
      */
-    public function setMin($min) {
-        if((new DateValidator())->validate($min)->isError()) {
-            throw new DataTypeException('min', 'date', $min);
-        }
-        
+    public function setMin($min) {       
         $this->min = $min;
+        $this->addValidator(new \Wellid\Validator\MinDate($min, $this->format));
         
         return $this;
     }
@@ -80,11 +85,8 @@ class Date implements DataTypeInterface {
      * @throws DataType
      */
     public function setMax($max) {
-        if((new DateValidator())->validate($max)->isError()) {
-            throw new DataTypeException('max', 'date', $max);
-        }
-        
         $this->max = $max;
+        $this->addValidator(new \Wellid\Validator\MaxDate($max, $this->format));
         
         return $this;
     }
@@ -137,10 +139,17 @@ class Date implements DataTypeInterface {
      * Constructor
      * 
      * @param \Sanitor\Sanitizer $sanitizer
+     * @param string $format Expected (input) date format
      */
-    public function __construct(\Sanitor\Sanitizer $sanitizer = null) {
+    public function __construct(\Sanitor\Sanitizer $sanitizer = null, $format = null) {
+        if(is_string($format)) {
+            $this->format = $format;
+        } elseif(!is_null($format)) {
+            throw new DataTypeException('format', 'string', $format);
+        }
+        
         $this->setSanitizer(is_null($sanitizer)?new \Sanitor\Sanitizer(FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW):$sanitizer);
-        $this->addValidator(new DateValidator());
+        $this->addValidator(new DateValidator($this->format));
     }
 
     /**
@@ -154,7 +163,7 @@ class Date implements DataTypeInterface {
             $value = $this->getLastSanitizedValue();
         }
         
-        return new \DateTime($value);
+        return \DateTime::createFromFormat($this->format, $value);
     }
 
 }

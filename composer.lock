@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/wellid.git",
-                "reference": "0a3476dfc4941b105ea518b386cf209d90be9348"
+                "reference": "291b502ca12b70045cba03600bbde8fa0fb4cc76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/wellid/zipball/0a3476dfc4941b105ea518b386cf209d90be9348",
-                "reference": "0a3476dfc4941b105ea518b386cf209d90be9348",
+                "url": "https://api.github.com/repos/broeser/wellid/zipball/291b502ca12b70045cba03600bbde8fa0fb4cc76",
+                "reference": "291b502ca12b70045cba03600bbde8fa0fb4cc76",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
             "keywords": [
                 "validation"
             ],
-            "time": "2016-02-05 14:38:48"
+            "time": "2016-02-06 14:14:42"
         }
     ],
     "packages-dev": [

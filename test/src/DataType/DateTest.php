@@ -30,24 +30,40 @@ class DateTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Date::setMin
-     * @todo   Implement testSetMin().
+     * @covers Feeld\DataType\Date::getMin
+     * @covers Feeld\DataType\Date::getValidators
+     * @covers Feeld\DataType\Date::validateValue
      */
     public function testSetMin() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getMin());
+        $this->assertCount(1, $this->object->getValidators());
+        $this->assertInstanceOf(get_class($this->object), $this->object->setMin('2011-12-01'));
+        $this->assertEquals('2011-12-01', $this->object->getMin());
+        $this->assertCount(2, $this->object->getValidators());
+        $lastValidator = end($this->object->getValidators());
+        $this->assertInstanceOf('\Wellid\Validator\MinDate', $lastValidator);
+        $this->assertTrue($this->object->validateValue('2011-12-01')->hasPassed());
+        $this->assertFalse($this->object->validateValue('2010-01-08')->hasPassed());
+        $this->assertTrue($this->object->validateValue('2014-12-01')->hasPassed());
     }
 
     /**
      * @covers Feeld\DataType\Date::setMax
-     * @todo   Implement testSetMax().
+     * @covers Feeld\DataType\Date::getMax
+     * @covers Feeld\DataType\Date::getValidators
+     * @covers Feeld\DataType\Date::validateValue
      */
     public function testSetMax() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getMax());
+        $this->assertCount(1, $this->object->getValidators());
+        $this->assertInstanceOf(get_class($this->object), $this->object->setMax('2011-12-01'));
+        $this->assertEquals('2011-12-01', $this->object->getMax());
+        $this->assertCount(2, $this->object->getValidators());
+        $lastValidator = end($this->object->getValidators());
+        $this->assertInstanceOf('\Wellid\Validator\MaxDate', $lastValidator);
+        $this->assertTrue($this->object->validateValue('2011-12-01')->hasPassed());
+        $this->assertTrue($this->object->validateValue('2010-01-08')->hasPassed());
+        $this->assertFalse($this->object->validateValue('2014-12-01')->hasPassed());
     }
 
     /**
@@ -55,39 +71,6 @@ class DateTest extends \PHPUnit_Framework_TestCase {
      * @todo   Implement testSetStep().
      */
     public function testSetStep() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Date::getMin
-     * @todo   Implement testGetMin().
-     */
-    public function testGetMin() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Date::getMax
-     * @todo   Implement testGetMax().
-     */
-    public function testGetMax() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Date::getStep
-     * @todo   Implement testGetStep().
-     */
-    public function testGetStep() {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(
                 'This test has not been implemented yet.'
@@ -118,13 +101,14 @@ class DateTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Date::getLastSanitizedValue
-     * @todo   Implement testGetLastSanitizedValue().
+     * @covers Feeld\DataType\Date::validateValue
      */
     public function testGetLastSanitizedValue() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getLastSanitizedValue());
+        $this->assertTrue($this->object->validateValue('2009-'.PHP_EOL.'10-10')->hasPassed());
+        $this->assertEquals('2009-10-10', $this->object->getLastSanitizedValue());
+        $this->assertFalse($this->object->validateValue('2009-02-30')->hasPassed());
+        $this->assertEquals('2009-02-30', $this->object->getLastSanitizedValue());
     }
 
     /**
@@ -148,27 +132,4 @@ class DateTest extends \PHPUnit_Framework_TestCase {
                 'This test has not been implemented yet.'
         );
     }
-
-    /**
-     * @covers Feeld\DataType\Date::getValidators
-     * @todo   Implement testGetValidators().
-     */
-    public function testGetValidators() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Date::validateValue
-     * @todo   Implement testValidateValue().
-     */
-    public function testValidateValue() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }
