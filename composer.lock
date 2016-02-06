@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/sanitor.git",
-                "reference": "375195567a79e5a53fdad50a5b02ee644e6eac55"
+                "reference": "580e539a2747e3d66527cbbde968004743481a5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/sanitor/zipball/375195567a79e5a53fdad50a5b02ee644e6eac55",
-                "reference": "375195567a79e5a53fdad50a5b02ee644e6eac55",
+                "url": "https://api.github.com/repos/broeser/sanitor/zipball/580e539a2747e3d66527cbbde968004743481a5c",
+                "reference": "580e539a2747e3d66527cbbde968004743481a5c",
                 "shasum": ""
             },
             "require": {
@@ -39,7 +39,7 @@
                 "filter",
                 "sanitization"
             ],
-            "time": "2016-02-04 14:12:05"
+            "time": "2016-02-05 14:38:20"
         },
         {
             "name": "broeser/wellid",
@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/wellid.git",
-                "reference": "39d97c48c14636e58fa2d5bb3f528c6bc9e9e82e"
+                "reference": "0a3476dfc4941b105ea518b386cf209d90be9348"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/wellid/zipball/39d97c48c14636e58fa2d5bb3f528c6bc9e9e82e",
-                "reference": "39d97c48c14636e58fa2d5bb3f528c6bc9e9e82e",
+                "url": "https://api.github.com/repos/broeser/wellid/zipball/0a3476dfc4941b105ea518b386cf209d90be9348",
+                "reference": "0a3476dfc4941b105ea518b386cf209d90be9348",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
             "keywords": [
                 "validation"
             ],
-            "time": "2016-02-04 16:28:30"
+            "time": "2016-02-05 14:38:48"
         }
     ],
     "packages-dev": [
