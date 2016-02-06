@@ -1,0 +1,12 @@
+# Ignore tests and test configuration
+/.travis.yml        export-ignore
+/test               export-ignore
+
+# Ignore git configuration
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+
+# Ignore auto-generated documentation as well as generation scripts
+/doc                   export-ignore
+/phpdoc.sh             export-ignore
+
