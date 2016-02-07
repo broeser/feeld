@@ -36,8 +36,9 @@ class Button extends Element implements \Feeld\Display\DisplayInterface {
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct($type = 'submit') {
         parent::__construct('button');
+        $this->setAttribute('type', $type);
     }
     
     /**
