@@ -46,23 +46,6 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
     }
     
     /**
-     * Sets the container object for saving answers into
-     * 
-     * @param object $answerContainer
-     * @throws \Wellid\Exception\DataType
-     * @return FieldCollection Returns itself for daisy-chaining
-     */
-    public function setAnswerContainer($answerContainer) {
-        if(!is_object($answerContainer)) {
-            throw new \Wellid\Exception\DataType('answerContainer', 'object', $answerContainer);
-        }
-        
-        $this->validAnswers = $answerContainer;
-        
-        return $this;
-    }
-    
-    /**
      * Returns all Fields of a certain class
      * 
      * @param string $class
@@ -149,5 +132,14 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
         $this->getFieldById($fieldId)->setDisplay($display);
         
         return $this;
+    }
+    
+    /**
+     * Adds all Fields from another FieldCollection to this FieldCollection
+     * 
+     * @param \Feeld\FieldCollection\FieldCollectionInterface $collection
+     */
+    public function addCollection(FieldCollectionInterface $collection) {
+        $this->addFields(...$collection->getFields());
     }
 }
