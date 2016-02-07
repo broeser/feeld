@@ -227,9 +227,13 @@ abstract class Interview implements InterviewInterface{
      *   e.g. by displaying them to the user
      * - In either case the current status of the Interview is returned
      * 
+     * @param int $pageNumber Set the number of the page you want to execute for
+     *  multi-page-forms; NOTE: first page is number 0
      * @return int
      */
-    public function execute() {
+    public function execute($pageNumber = 0) {
+        $this->skipToCollection($pageNumber);
+        
         if($this->retrieveAnswers()) {
             $this->handleAnswers();
         } else {
