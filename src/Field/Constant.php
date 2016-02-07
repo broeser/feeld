@@ -36,9 +36,12 @@ class Constant extends \Feeld\AbstractField {
      * also set to the same value
      * 
      * @param mixed $value
+     * @return Constant
      */
     public function setDefault($value) {
         parent::setDefault($value);
         $this->setRawValue($value);
+        
+        return $this;
     }
 }
