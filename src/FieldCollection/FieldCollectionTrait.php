@@ -160,6 +160,23 @@ trait FieldCollectionTrait {
         return $retCollection;        
     }
     
+    /**
+     * Sets the container object for saving answers into
+     * 
+     * @param object $answerContainer
+     * @throws \Wellid\Exception\DataType
+     * @return FieldCollection Returns itself for daisy-chaining
+     */
+    public function setAnswerContainer($answerContainer) {
+        if(!is_object($answerContainer)) {
+            throw new \Wellid\Exception\DataType('answerContainer', 'object', $answerContainer);
+        }
+        
+        $this->validAnswers = $answerContainer;
+        
+        return $this;
+    }    
+    
     /* Countable-methods */
     
     /**

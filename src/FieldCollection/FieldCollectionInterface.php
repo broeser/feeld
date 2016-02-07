@@ -84,4 +84,13 @@ interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDat
      * @return object
      */
     public function getValidAnswers();
+    
+    /**
+     * Sets the container object for saving answers into
+     * 
+     * @param object $answerContainer
+     * @throws \Wellid\Exception\DataType
+     * @return FieldCollection Returns itself for daisy-chaining
+     */
+    public function setAnswerContainer($answerContainer);    
 }
