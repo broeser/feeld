@@ -70,11 +70,11 @@ class HTMLForm extends Interview {
      * @param mixed $id If several forms are on one page, use this id to differentiate them
      * @param \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections
      */
-    public function __construct($id = 0, ErrorContainer $errorContainer, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
+    public function __construct($id = 0, ErrorContainer $errorContainer = null, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
         parent::__construct(parent::VALIDATE_PER_COLLECTION, ...$fieldCollections);
         $this->setId(self::PREFIX_FIELD_FORM.$id);
         $this->addInternalFields();
-        $this->errorContainer = $errorContainer;
+        $this->errorContainer = is_null($errorContainer)?new ErrorContainer():$errorContainer;
         $this->method = INPUT_POST;
     }
     
