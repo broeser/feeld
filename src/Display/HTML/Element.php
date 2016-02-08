@@ -136,4 +136,28 @@ class Element {
         
         return $this;
     }
+    
+    /**
+     * Appends content
+     * 
+     * @param string $content
+     * @return Element
+     */
+    public function appendContent($content) {
+        $this->content .= $content;
+        
+        return $this;        
+    }
+    
+    /**
+     * Prepends content
+     * 
+     * @param string $content
+     * @return Element
+     */
+    public function prependContent($content) {
+        $this->content = $content.$this->content;
+        
+        return $this;        
+    }
 }
