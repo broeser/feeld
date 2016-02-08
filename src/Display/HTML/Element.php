@@ -25,7 +25,6 @@
  */
 namespace Feeld\Display\HTML;
 
-
 /**
  * HTML Element
  *
