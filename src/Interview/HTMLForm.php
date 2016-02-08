@@ -71,10 +71,11 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections
      */
     public function __construct($id = 0, ErrorContainer $errorContainer, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
-        $this->addInternalFields();
         parent::__construct(parent::VALIDATE_PER_COLLECTION, ...$fieldCollections);
-        $this->method = INPUT_POST;
         $this->setId(self::PREFIX_FIELD_FORM.$id);
+        $this->addInternalFields();
+        $this->errorContainer = $errorContainer;
+        $this->method = INPUT_POST;
     }
     
     /**
@@ -161,7 +162,7 @@ class HTMLForm extends Interview {
             $answers = $this->getCurrentCollection()->getValidAnswers();
             $key = $this->getId();
             $this->uniqueID = $answers->$key;
-        } elseif(is_null($this->uniqueID())) {
+        } elseif(is_null($this->uniqueID)) {
             $this->uniqueID = uniqid();
         }
         
