@@ -45,7 +45,7 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
      * @param DisplayDataSourceInterface $field
      */
     public function informAboutStructure(DisplayDataSourceInterface $field) {
-        if(count($field->getFieldsByDataType(get_class(new \Feeld\DataType\File())))>0) {
+        if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
         
