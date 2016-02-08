@@ -53,4 +53,13 @@ trait DisplayTrait {
     public function setVisible() {
         $this->visible = true;
     }
+    
+    /**
+     * Returns whether this Display is visible
+     * 
+     * @return boolean
+     */
+    public function isVisible() {
+        return $this->visible;
+    }
 }

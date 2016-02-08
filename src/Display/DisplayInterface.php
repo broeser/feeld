@@ -63,6 +63,13 @@ interface DisplayInterface {
     public function setVisible();
     
     /**
+     * Returns whether this Display is visible
+     * 
+     * @return boolean
+     */
+    public function isVisible();
+    
+    /**
      * Returns a string representation of the display
      * 
      * @return string

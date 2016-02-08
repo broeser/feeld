@@ -100,6 +100,10 @@ class Element {
      * Returns a string representation of this element (HTML)
      */
     public function __toString() {
+        if($this instanceof \Feeld\Display\DisplayInterface && !$this->isVisible()) {
+            return '';
+        }
+        
         $attributes = '';
         foreach($this->attributes as $key => $value) {
             $attributes .= ' '.$key.'="'.htmlspecialchars($value).'"';
