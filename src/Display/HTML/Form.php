@@ -42,9 +42,14 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
     /**
      * Takes information from the FieldCollection and uses it in this display
      * 
-     * @param DisplayDataSourceInterface $field
+     * @param \Feeld\FieldCollection\FieldCollectionInterface $field
+     * @throws \Wellid\Exception\DataType
      */
     public function informAboutStructure(DisplayDataSourceInterface $field) {
+        if(!$field instanceof \Feeld\FieldCollection\FieldCollectionInterface) {
+            throw new \Wellid\Exception\DataType('field', 'FieldCollectionInterface', $field);
+        }
+        
         if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
