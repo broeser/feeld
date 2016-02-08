@@ -100,7 +100,7 @@ abstract class Interview implements InterviewInterface{
      * e.g. "Are you between the age of 20 and 30?", if yes skip to 
      * FieldCollection 2, otherwise skip to FieldCollection 3
      * 
-     * @var Feeld\FieldCollectionInterface[]
+     * @var FieldCollectionInterface[]
      */
     protected $fieldCollections = array();
     

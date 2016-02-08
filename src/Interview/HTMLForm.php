@@ -47,6 +47,20 @@ class HTMLForm extends Interview {
      */
     protected $uniqueID;
     
+    /**
+     * Container to store validation errors in
+     * 
+     * @var ErrorContainer
+     */
+    protected $errorContainer;
+    
+    /**
+     * Optional Display that success messages are displayed on
+     * 
+     * @var \Feeld\Display\DisplayInterface
+     */
+    protected $successDisplay = null;
+    
     const PREFIX_FIELD_PAGE = 'page_';
     const PREFIX_FIELD_FORM = 'form_';
     
@@ -56,11 +70,44 @@ class HTMLForm extends Interview {
      * @param mixed $id If several forms are on one page, use this id to differentiate them
      * @param \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections
      */
-    public function __construct($id = 0, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
+    public function __construct($id = 0, ErrorContainer $errorContainer, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
         $this->addInternalFields();
         parent::__construct(parent::VALIDATE_PER_COLLECTION, ...$fieldCollections);
         $this->method = INPUT_POST;
         $this->setId(self::PREFIX_FIELD_FORM.$id);
+    }
+    
+    /**
+     * Returns the ErrorContainer
+     * 
+     * @return ErrorContainer
+     */
+    public function getErrorContainer() {
+        return $this->errorContainer;
+    }
+    
+    /**
+     * Returns the Display success messages shall be displayed on
+     * 
+     * @return \Feeld\Display\DisplayInterface
+     */
+    public function getSuccessDisplay() {
+        if($this->successDisplay instanceof \Feeld\Display\DisplayInterface) {
+            return $this->successDisplay;
+        }
+        
+        $this->successDisplay = new \Feeld\Display\NoDisplay();
+            
+        return $this->successDisplay;
+    }
+    
+    /**
+     * Sets the display success messages shall be displayed on
+     * 
+     * @param \Feeld\Display\DisplayInterface $successDisplay
+     */
+    public function setSuccessDisplay(\Feeld\Display\DisplayInterface $successDisplay) {
+        $this->successDisplay = $successDisplay;
     }
     
     /**
@@ -90,6 +137,8 @@ class HTMLForm extends Interview {
     private function addInternalFields() {
         $i = 0;
         foreach($this->fieldCollections as $collection) {
+            $collection->getDisplay()->setInvisible();
+            
             $pageNumber = new \Feeld\Field\Constant(new \Feeld\DataType\Integer(), self::PREFIX_FIELD_PAGE.$this->getId(), new \Feeld\Display\HTML\Input('hidden'));
             $pageNumber->setDefault($i);
             $collection->addField($pageNumber);
@@ -132,7 +181,8 @@ class HTMLForm extends Interview {
      * Invites the user to answer the questions by displaying them
      */
     public function inviteAnswers() {
-        print($this->getCurrentCollection());
+        $this->getCurrentCollection()->getDisplay()->setVisible();
+        $this->getSuccessDisplay()->setInvisible();
     }
 
     /**
@@ -142,26 +192,9 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldInterface $lastField
      */
     public function onValidationError(\Feeld\FieldInterface $lastField = null) {
-        $this->listErrors();
+        $this->errorContainer->clear();
+        $this->errorContainer->addSet($this->getCurrentCollection()->validate());
         $this->inviteAnswers();
-    }
-    
-    /**
-     * Example.
-     * 
-     * Lists validation errors
-     * You should probably override this method
-     */
-    public function listErrors() {
-        $errMessageContainer = new \Feeld\Display\HTML\Element('ul');
-        $errMessage = array();
-        foreach($this->getCurrentCollection()->validate()->getErrorMessages() as $message) {
-            $errMessage[] = (new \Feeld\Display\HTML\Element('li'))->setContent($message);
-        }
-        $errMessageContainer->setContent(implode('', $errMessage));
-        $errMessageIntro = (new \Feeld\Display\HTML\Element('p'))->setContent('An error occurred:')->addCssClass('error');
-        
-        print($errMessageIntro.$errMessageContainer);
     }
 
     /**
@@ -171,21 +204,9 @@ class HTMLForm extends Interview {
      */
     public function onValidationSuccess(\Feeld\FieldInterface $lastField = null) {
         $this->getUniqueID();
-        $this->thankYouNote();
-    }
-    
-    /**
-     * Example.
-     * 
-     * Prints a thank you for answering the questions
-     * You should probably override this method with your own.
-     * 
-     * @param string $text
-     */
-    public function thankYouNote($text = 'Thank you for answering all the questions!') {
-        $thankYou = new \Feeld\Display\HTML\Element('p');
-        $thankYou->setContent($text);
-        print($thankYou);
+        $this->errorContainer->clear();
+        $this->getSuccessDisplay()->setVisible();
+        $this->getCurrentCollection()->getDisplay()->setInvisible();
     }
 
     /**
