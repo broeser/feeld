@@ -31,12 +31,20 @@ use Feeld\Display\DisplayDataSourceInterface;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Form extends Element  implements \Feeld\Display\DisplayInterface {
+    protected $prefix = '';
+    protected $suffix = '';
+    
     /**
      * Constructor
      */
     public function __construct($method = 'post') {
         parent::__construct('form');
         $this->setAttribute('method', $method);
+    }
+    
+    public function surround(Element $before = null, Element $after = null) {
+        if(!is_null($before)) $this->prefix = $before;
+        if(!is_null($after)) $this->suffix = $after;
     }
     
     /**
@@ -54,6 +62,6 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
         
-        $this->setContent(implode('', $field->getFields()));
+        $this->setContent($this->prefix.implode('', $field->getFields()).$this->suffix);
     }
 }

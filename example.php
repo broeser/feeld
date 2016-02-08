@@ -50,22 +50,39 @@ $formForBlogPost->addFields(
     (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email'))->setDefault('mail@example.org'),
     (new Feeld\Field\Entry(new Feeld\DataType\Str(), 'text'))->setRequired()
 );
+$validationErrors = new \Feeld\Interview\ErrorContainer();
 
 // UI
 $nicknameUI = (new Feeld\Display\HTML\Input('text'))->setAttribute('placeholder', 'Your username');
 $emailUI = new Feeld\Display\HTML\Input('email');
 $textUI = new Feeld\Display\HTML\Textarea();
 $formUI = new Feeld\Display\HTML\Form('post');
+$formUI->surround(null, (new \Feeld\Display\HTML\Button('submit'))->setContent('Publish!'));
+$errorDiv = new Feeld\Display\HTML\ErrorContainer();
+$successDiv = (new Feeld\Display\HTML\Div())->addCssClass('has-success')->setContent('<p>Your blog entry was submitted!</p>');
 
 // Putting data model and UI together
 $formForBlogPost->setDisplay($formUI);
 $formForBlogPost->setFieldDisplay('nickname', $nicknameUI);
 $formForBlogPost->setFieldDisplay('email', $emailUI);
 $formForBlogPost->setFieldDisplay('text', $textUI);
+$validationErrors->setDisplay($errorDiv);
 
 // "Business" logic: The Interviewer "HTMLForm" is executed
-$htmlForm = new \Feeld\Interview\HTMLForm($formForBlogPost);
+$htmlForm = new \Feeld\Interview\HTMLForm(0, $validationErrors, $formForBlogPost);
+$htmlForm->setSuccessDisplay($successDiv);
 $htmlForm->execute();
+
+// Display error messages first, in case something goes wrong
+print($validationErrors);
+
+// Display success message on successful form submission
+print($successDiv);
+
+// Display form fields (if applicable)
+print($htmlForm->getCurrentCollection());
+
+// Proof that it worked (not really necessary)
 if($htmlForm->getStatus()===Feeld\Interview\Interview::STATUS_AFTER_INTERVIEW) {
     print('<h1>Most recent blog post</h1>');
     print(nl2br($htmlForm->getCurrentCollection()->getValidAnswers()));
