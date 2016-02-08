@@ -24,23 +24,33 @@
  * THE SOFTWARE.
  */
 
-namespace Feeld\Display\CLI;
+namespace Feeld\Display;
+
 /**
- * Description of SymfonyConsoleDisplay
+ * Description of DisplayTrait
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class SymfonyConsoleDisplay extends DefaultCLI {
+trait DisplayTrait {
     /**
-     * Returns a string representation of the display
+     * Whether this Display is visible
      * 
-     * @return string
+     * @var boolean
      */
-    public function __toString() {
-        if(!$this->visible) {
-            return '';
-        }
-        
-        return $this->question.'? '.(is_null($this->hint)?'':'<fg=white;options=bold>['.$this->hint.']</> ');
+    protected $visible = true;
+    
+    /**
+     * Makes this display invisible
+     */
+    public function setInvisible() {
+        $this->visible = false;
+    }
+
+    /**
+     * Makes this display visible
+     * Displays are visible by default
+     */
+    public function setVisible() {
+        $this->visible = true;
     }
 }

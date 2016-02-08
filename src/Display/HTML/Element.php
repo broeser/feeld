@@ -32,6 +32,8 @@ namespace Feeld\Display\HTML;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class Element {
+    use \Feeld\Display\DisplayTrait;
+    
     /**
      * Attributes as key => value pairs, e. g. accesskey, tabindex, spellcheck,
      * autofocus, disabled, style etc.

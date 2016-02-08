@@ -34,6 +34,8 @@ use Feeld\Display\DisplayDataSourceInterface;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class DefaultCLI implements \Feeld\Display\DisplayInterface {
+    use \Feeld\Display\DisplayTrait;
+    
     /**
      * A short question to be asked
      * 
@@ -62,6 +64,10 @@ class DefaultCLI implements \Feeld\Display\DisplayInterface {
      * @return string
      */
     public function __toString() {
+        if(!$this->visible) {
+            return '';
+        }
+        
         return $this->question.'? '.(is_null($this->hint)?'':'['.$this->hint.'] ');
     }
 

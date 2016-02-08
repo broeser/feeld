@@ -49,6 +49,18 @@ interface DisplayInterface {
      * @param DisplayDataSourceInterface $field
      */
     public function informAboutStructure(DisplayDataSourceInterface $field);
+        
+    /**
+     * Makes this display invisible
+     */
+    public function setInvisible();
+    
+    
+    /**
+     * Makes this display visible
+     * Displays are visible by default
+     */
+    public function setVisible();
     
     /**
      * Returns a string representation of the display

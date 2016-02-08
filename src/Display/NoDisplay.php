@@ -33,6 +33,8 @@ namespace Feeld\Display;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 class NoDisplay implements DisplayInterface {
+    use DisplayTrait;
+    
     /**
      * An empty string is returned.
      * 
