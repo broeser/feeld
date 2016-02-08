@@ -31,9 +31,7 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Div extends Element implements \Feeld\Display\DisplayInterface {
-    use \Feeld\Display\DisplayTrait;
-    
+class Div extends Element implements \Feeld\Display\DisplayInterface {   
     public function __construct() {
         parent::__construct('div');
     }
