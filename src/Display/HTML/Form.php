@@ -49,6 +49,6 @@ class Form extends Element  implements \Feeld\Display\DisplayInterface {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
         
-        $this->setContent(implode('', $field->getFields()).'<input type="submit" value="tmpSubmit">');
+        $this->setContent(implode('', $field->getFields()));
     }
 }
