@@ -255,6 +255,18 @@ abstract class Interview implements InterviewInterface{
                 $this->onValidationSuccess();
                 $this->status = self::STATUS_AFTER_INTERVIEW;                
             } else {
+                /*  If there is at least one validation error and validation
+                    is done per collection, let's assume that all passing fields
+                    that can have a default value should use the passing value
+                    that has just been entered as new default value
+                 */
+                foreach($this->getCurrentCollection()->getFields() as $field) {
+                    if(!$field instanceof \Feeld\Field\CommonProperties\DefaultValueInterface || !$field->validateBool() || $field instanceof \Feeld\Field\CloakedEntry) {
+                        continue;
+                    }
+                    
+                    $field->setDefault($field->getFilteredValue());
+                }
                 $this->onValidationError();
                 $this->status = self::STATUS_VALIDATION_ERROR;
                 return $this->status;
