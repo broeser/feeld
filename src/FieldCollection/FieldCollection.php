@@ -36,13 +36,14 @@ class FieldCollection implements FieldCollectionInterface, \Iterator {
     /**
      * Constructor
      *
-     * @param \Feeld\Display\DisplayInterface $display
-     * @param object $answerContainer All valid answers will be assigned to this
-     * object while validating the FieldCollection
-     */
-    public function __construct(\Feeld\Display\DisplayInterface $display = null, $answerContainer = null) {
+     * @param \Feeld\Display\DisplayInterface $display Optional Display to display this Field on
+     * @param \Feeld\FieldCollection\ValueMapper $valueMapper On validation all valid values will be passed to this ValueMapper
+     */    
+    public function __construct(\Feeld\Display\DisplayInterface $display = null, ValueMapper $valueMapper = null) {
         $this->setDisplay(is_null($display)?new \Feeld\Display\NoDisplay():$display);
-        $this->setAnswerContainer(is_null($answerContainer)?new \stdClass():$answerContainer);
+        if(!is_null($valueMapper)) {
+            $this->addValueMapper($valueMapper);
+        }
     }
     
     /**

@@ -43,11 +43,11 @@ trait FieldCollectionTrait {
     protected $fields;
     
     /**
-     * An object containing all valid answers of this FieldCollection
+     * ValueMapper
      * 
-     * @var object
+     * @var ValueMapper[]
      */
-    protected $validAnswers;
+    protected $valueMapper = array();
     
     /**
      * Internal Iterator index
@@ -108,6 +108,25 @@ trait FieldCollectionTrait {
     }
     
     /**
+     * Sets a ValueMapper defaulting to mapping all Fields of this FieldCollection
+     * with the same ValueMapStrategy
+     * 
+     * @param object $object
+     * @param int $strategy
+     */
+    public function addDefaultValueMapper($object, $strategy = ValueMapStrategy::MAP_PUBLIC) {
+        $mappedProperties = array();
+        foreach($this->getFields() as $field) {
+            if($field instanceof IdentifierInterface && $field->hasId()) {
+                $mappedProperties[$field->getId()] = FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID;
+            }
+        }
+        $vm = new ValueMapper($object, $mappedProperties, $strategy);
+        $vm->setId(FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID);
+        $this->addValueMapper($vm);
+    }
+    
+    /**
      * Validates all Fields and returns a ValidationResultSet
      * 
      * @return ValidationResultSet
@@ -117,13 +136,20 @@ trait FieldCollectionTrait {
             return $this->lastValidationResult;
         }
         
+        if(count($this->valueMapper)<1) {
+            $this->addDefaultValueMapper(new \stdClass());
+        }
+        
         $validationResultSet = new ValidationResultSet();
         foreach($this->fields as $field) {
             $set = $field->validate();
             $validationResultSet->addSet($set);
-            if($set->hasPassed() && $field instanceof IdentifierInterface && $field->hasId()) {
+            if($set->hasPassed()) {
                 $fieldId = $field->getId();
-                $this->validAnswers->$fieldId = $field->getDataType()->transformSanitizedValue($field->getFilteredValue());
+                $value = $field->getDataType()->transformSanitizedValue($field->getFilteredValue());
+                foreach($this->valueMapper as $vm) {
+                    $vm->set($fieldId, $value);
+                }
             }
         }
         
@@ -135,13 +161,29 @@ trait FieldCollectionTrait {
     /**
      * Returns an object containing all valid answers as public properties
      * identified by the id of the corresponding Field
+     * If more then one ValueMapper is assigned, an array of objects will be
+     * returned
      * 
      * NOTE: Won't work if called before validate()
      * 
-     * @return object
+     * @return object|object[]
      */
     public function getValidAnswers() {
-        return $this->validAnswers;
+        if(count($this->valueMapper)===1) {
+            $vm = end($this->valueMapper);
+            return $vm->getObject();
+        }
+        
+        $retArray = array();
+        foreach($this->valueMapper as $vm) {
+            if($vm->hasId()) {
+                $retArray[$vm->getId()] = $vm->getObject();
+            } else {
+                $retArray[] = $vm->getObject();    
+            }
+        }
+        
+        return $retArray;
     }
 
     /**
@@ -160,22 +202,19 @@ trait FieldCollectionTrait {
         return $retCollection;        
     }
     
+    
     /**
-     * Sets the container object for saving answers into
+     * Sets a ValueMapper
      * 
-     * @param object $answerContainer
-     * @throws \Wellid\Exception\DataType
-     * @return FieldCollection Returns itself for daisy-chaining
+     * @param \Feeld\FieldCollection\ValueMapper $valueMapper
      */
-    public function setAnswerContainer($answerContainer) {
-        if(!is_object($answerContainer)) {
-            throw new \Wellid\Exception\DataType('answerContainer', 'object', $answerContainer);
+    public function addValueMapper(ValueMapper $valueMapper) {
+        if(!$valueMapper->hasId()) {
+            $this->valueMapper[] = $valueMapper;
+        } else {
+            $this->valueMapper[$valueMapper->getId()] = $valueMapper;
         }
-        
-        $this->validAnswers = $answerContainer;
-        
-        return $this;
-    }    
+    }   
     
     /* Countable-methods */
     

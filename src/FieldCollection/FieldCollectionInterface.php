@@ -31,6 +31,8 @@ namespace Feeld\FieldCollection;
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
 interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDataSourceInterface {
+    const VALUE_MAPPER_DEFAULT_ID = 'default';    
+    
     /**
      * Adds several Fields to the FieldCollection
      * 
@@ -81,16 +83,17 @@ interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDat
      * Returns an object containing all valid answers as public properties
      * identified by the id of the corresponding Field
      * 
-     * @return object
+     * If more then one ValueMappers are assigned, an array of objects is
+     * returned
+     * 
+     * @return object|object[]
      */
     public function getValidAnswers();
     
     /**
-     * Sets the container object for saving answers into
+     * Sets a ValueMapper
      * 
-     * @param object $answerContainer
-     * @throws \Wellid\Exception\DataType
-     * @return FieldCollection Returns itself for daisy-chaining
+     * @param \Feeld\FieldCollection\ValueMapper $valueMapper
      */
-    public function setAnswerContainer($answerContainer);    
+    public function addValueMapper(ValueMapper $valueMapper);    
 }

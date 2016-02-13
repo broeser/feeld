@@ -26,6 +26,9 @@
 
 namespace Feeld\Interview;
 
+use Feeld\FieldCollection\ValueMapper;
+use Feeld\FieldCollection\ValueMapStrategy;
+
 /**
  * Example implementation of InterviewInterface: a HTML form handler
  *
@@ -61,6 +64,7 @@ class HTMLForm extends Interview {
      */
     protected $successDisplay = null;
     
+    const PREFIX_VALUE_MAPPER = 'valuemapper_';
     const PREFIX_FIELD_PAGE = 'page_';
     const PREFIX_FIELD_FORM = 'form_';
     
@@ -143,13 +147,25 @@ class HTMLForm extends Interview {
             $pageNumber = new \Feeld\Field\Constant(new \Feeld\DataType\Integer(), self::PREFIX_FIELD_PAGE.$this->getId(), new \Feeld\Display\HTML\Input('hidden'));
             $pageNumber->setDefault($i);
             $collection->addField($pageNumber);
-            $collection->addField((new \Feeld\Field\Constant(new \Feeld\DataType\Str(new \Sanitor\Sanitizer(FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH)), $this->getId(), new \Feeld\Display\HTML\Input('hidden')))->setDefault($this->getUniqueID()));
+            $collection->addField((new \Feeld\Field\Constant(new \Feeld\DataType\Str(new \Sanitor\Sanitizer(FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH)), $this->getId(), new \Feeld\Display\HTML\Input('hidden')))->setDefault($this->getUniqueID())->addValidator(new \Wellid\Validator\MinLength(13)));
             $lastCollection = $collection;
             if($i>0) {
                 $collection->addCollection($this->transformToConstants($lastCollection));
             }
             $i++;
-        }      
+            
+            $valueMapper = new ValueMapper(
+                                new HTMLFormInternalFields(),
+                                array(
+                                    self::PREFIX_FIELD_PAGE.$this->getId() => new ValueMapStrategy(ValueMapStrategy::MAP_SETTERS, 'setPageNumber'),
+                                    $this->getId() => new ValueMapStrategy(ValueMapStrategy::MAP_SETTERS, 'setUID')
+                                )
+                           );
+            
+            $valueMapper->setId(self::PREFIX_VALUE_MAPPER.$this->getId());
+            
+            $collection->addValueMapper($valueMapper);
+        }
     }
     
     /**
@@ -160,8 +176,7 @@ class HTMLForm extends Interview {
     protected function getUniqueID() {  
         if($this->getStatus()===self::STATUS_AFTER_INTERVIEW && !is_null($this->uniqueID())) {
             $answers = $this->getCurrentCollection()->getValidAnswers();
-            $key = $this->getId();
-            $this->uniqueID = $answers->$key;
+            $this->uniqueID = $answers[self::PREFIX_VALUE_MAPPER.$this->getId()]->{$this->getId()};
         } elseif(is_null($this->uniqueID)) {
             $this->uniqueID = uniqid();
         }

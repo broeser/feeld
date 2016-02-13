@@ -37,19 +37,26 @@ class BlogPost {
     public $nickname;
     public $email;
     public $text;
+    public $hasNothingToDoWithTheForm;
     
     public function __toString() {
         return $this->nickname.' ('.$this->email.') wrote:'.PHP_EOL.$this->text.PHP_EOL;
     }
 }
 
-// Data model
-$formForBlogPost = new \Feeld\FieldCollection\FieldCollection(null, new BlogPost());
+// Data model:
+// A FieldCollection that holds all the Fields:
+$formForBlogPost = new \Feeld\FieldCollection\FieldCollection();
 $formForBlogPost->addFields(
     (new Feeld\Field\Entry((new Feeld\DataType\Str())->setMinLength(3), 'nickname'))->setRequired(),
     (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email'))->setDefault('mail@example.org'),
     (new Feeld\Field\Entry(new Feeld\DataType\Str(), 'text'))->setRequired()
 );
+// A ValueMapper to map Fields to properties of an object:
+// All Fields of the FieldCollection will use the same ValueMapStrategy and their ID as object's property ("DefaultValueMapper"); form data will be inserted into a new BlogPost() – properties are public, therefore the MAP_PUBLIC-strategy can be used
+$formForBlogPost->addDefaultValueMapper(new BlogPost(), Feeld\FieldCollection\ValueMapStrategy::MAP_PUBLIC);
+
+// An ErrorContainer for validation errors:
 $validationErrors = new \Feeld\Interview\ErrorContainer();
 
 // UI
@@ -85,6 +92,6 @@ print($htmlForm->getCurrentCollection());
 // Proof that it worked (not really necessary)
 if($htmlForm->getStatus()===Feeld\Interview\Interview::STATUS_AFTER_INTERVIEW) {
     print('<h1>Most recent blog post</h1>');
-    print(nl2br($htmlForm->getCurrentCollection()->getValidAnswers()));
+    print(nl2br($htmlForm->getCurrentValidAnswers()));
 }
 ?></body></html>

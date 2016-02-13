@@ -244,6 +244,20 @@ abstract class Interview implements InterviewInterface{
     }
     
     /**
+     * Return current valid answers
+     * 
+     * @return object|object[]
+     */
+    public function getCurrentValidAnswers() {
+        $answers = $this->getCurrentCollection()->getValidAnswers();
+        if(isset($answers[FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID])) {
+            return $answers[FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID];
+        }
+        
+        return $answers;
+    }
+    
+    /**
      * Filters (sanitizes) data and validates it, sets the Interview status
      * accordingly and returns it
      * 
