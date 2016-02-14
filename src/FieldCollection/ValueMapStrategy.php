@@ -46,6 +46,11 @@ class ValueMapStrategy {
      * Use a setter method with the name $name
      */
     const MAP_SETTERS = 2;
+    
+    /**
+     * Use reflection to set value
+     */
+    const MAP_REFLECTION = 4;
  
     /**
      * One of the MAP_PUBLIC or MAP_SETTERS constants
@@ -67,10 +72,15 @@ class ValueMapStrategy {
      * @param int $type
      * @param string $name
      * @throws \Wellid\Exception\DataType
+     * @throws \Wellid\Exception\DataFormat
      */
     public function __construct($type, $name) {
         if(!is_int($type)) {
             throw new \Wellid\Exception\DataType('type', 'int', $type);
+        }
+        
+        if(!in_array($type, self::getSupportedStrategies())) {
+            throw new \Wellid\Exception\DataFormat('type', 'supported MAP_-constant', $type);
         }
         
         if(!is_string($name)) {
@@ -96,6 +106,21 @@ class ValueMapStrategy {
             break;
             case self::MAP_SETTERS:
                 $object->{$this->name}($value);
+            break;
+            case self::MAP_REFLECTION:
+                $reflect = new \ReflectionClass($object);
+                $property = $reflect->getProperty($this->name);
+                $property->setAccessible($this->name);
+                $property->setValue($object, $value);
         }
+    }
+
+    /**
+     * Returns an array of supported mapping strategies
+     * 
+     * @return int[]
+     */
+    public static function getSupportedStrategies() {
+        return array(self::MAP_IGNORE, self::MAP_PUBLIC, self::MAP_SETTERS, self::MAP_REFLECTION);
     }
 }
