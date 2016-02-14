@@ -235,10 +235,67 @@ If you also use UI (Displays), you can use the method
 in the collection with the given field-identifier.
 
 It is possible to **validate()** the whole FieldCollection at once. The values
-of the validated fields will be stored in an object (\stdClass() by default, but
-configurable with **setAnswerContainer($object)**) and can be retrieved after
+of the validated fields will be stored in an object (\stdClass() by default, by
+assigning a ValueMapper (see below). Answers can be retrieved after 
 validation with **getValidAnswers()**. As the name of the method says, only
-values that have passed validation will be contained in the answer container.
+values that have passed validation will be contained in the answer object.
+
+#### ValueMapper
+
+The ValueMapper defines how validated values from a FieldCollection shall be
+stored. It can be assigned by calling **addValueMapper($valueMapper)** on a 
+FieldCollection. This should be done before validation.
+
+If all properties of the object that shall contain the validated answers are
+accessed in the same way (e.g. by setters or by reflection), a new ValueManager
+can be created like this:
+
+```PHP
+<?php
+class MyClass {
+   private $email;
+}
+
+$valueMapper = new Feeld\FieldCollection\ValueMapper(new MyClass(), array('email' => 'this string does not matter'), FieldCollection\ValueMapStrategy::MAP_REFLECTION);
+```
+
+The third parameter is the default ValueMapStrategy, that is used on all Fields
+that do not have a specific ValueMapStrategy assigned.
+These are the ValueMapStrategies that can be used:
+ 1. MAP_REFLECTION: Uses Reflection, can be used to set private/protected properties
+ 2. MAP_PUBLIC: Can be used to set public properties
+ 3. MAP_SETTER: Uses a setter method (the default for this example would be setEmail, can be configured)
+
+By assigning specific ValueMapStrategies instead of using the default, it is possible to
+ - Use a different strategy for each Field
+ - Use a different Field id then the property name within the class
+
+Example:
+
+```PHP
+<?php
+class MyClass {
+   private $email;
+   public $homepage;
+   public $name;
+
+   public function saveEmailAndStuff($mail) {
+      $this->email = $mail;
+
+      if($mail==='red_flag@donotuse.example.org') {
+         $message = new InformManager('Someone used the secret email!');
+         $message->send();
+      }
+   }
+
+}
+
+$valueMapper = new Feeld\FieldCollection\ValueMapper(new MyClass(), array(
+    'name' => 'xyz',
+    'emailaddress' => new FieldCollection\ValueMapStrategy(FieldCollection\ValueMapStrategy::MAP_SETTER, 'saveEmailAndStuff'),
+    'url' => new FieldCollection\ValueMapStrategy(FieldCollection\ValueMapStrategy::MAP_PUBLIC, 'homepage')
+));
+```
 
 ### Interview
 
