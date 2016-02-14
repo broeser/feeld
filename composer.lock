@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c18969781c8b477ac67bc2f45c62846e",
-    "content-hash": "44a0bb2b734aa4d5d19421b7397a8ff6",
+    "hash": "7b64c748c732f25716be679f11a4be7d",
+    "content-hash": "09d5765a9c254cbae3e5636fd145d835",
     "packages": [
         {
             "name": "broeser/sanitor",
@@ -43,16 +43,16 @@
         },
         {
             "name": "broeser/wellid",
-            "version": "dev-master",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/broeser/wellid.git",
-                "reference": "291b502ca12b70045cba03600bbde8fa0fb4cc76"
+                "reference": "0de2e6119382530221f4f7285158f19d45c78704"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/broeser/wellid/zipball/291b502ca12b70045cba03600bbde8fa0fb4cc76",
-                "reference": "291b502ca12b70045cba03600bbde8fa0fb4cc76",
+                "url": "https://api.github.com/repos/broeser/wellid/zipball/0de2e6119382530221f4f7285158f19d45c78704",
+                "reference": "0de2e6119382530221f4f7285158f19d45c78704",
                 "shasum": ""
             },
             "require": {
@@ -80,7 +80,7 @@
             "keywords": [
                 "validation"
             ],
-            "time": "2016-02-06 14:14:42"
+            "time": "2016-02-14 13:56:22"
         }
     ],
     "packages-dev": [
@@ -207,8 +207,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "broeser/sanitor": 20,
-        "broeser/wellid": 20
+        "broeser/sanitor": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
