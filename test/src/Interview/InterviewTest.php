@@ -3,6 +3,7 @@
 namespace Feeld\Interview;
 
 class InterviewImplementation extends Interview {
+
     public function inviteAnswers() {
         print('What is the answer?');
     }
@@ -16,10 +17,11 @@ class InterviewImplementation extends Interview {
     }
 
     public function retrieveAnswers() {
-        foreach($this->getCurrentCollection()->getFields() as $field) {
+        foreach ($this->getCurrentCollection()->getFields() as $field) {
             $field->setRawValue(42);
         }
     }
+
 }
 
 /**

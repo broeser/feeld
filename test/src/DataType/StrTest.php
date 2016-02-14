@@ -29,25 +29,14 @@ class StrTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers Feeld\DataType\String::getSanitizer
-     * @todo   Implement testGetSanitizer().
+     * @covers Feeld\DataType\Str::getSanitizer
+     * @covers Feeld\DataType\Str::setSanitizer
      */
     public function testGetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\String::setSanitizer
-     * @todo   Implement testSetSanitizer().
-     */
-    public function testSetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf(get_class(new \Sanitor\Sanitizer(FILTER_DEFAULT)), $this->object->getSanitizer());
+        $this->assertNotEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
+        $this->object->setSanitizer(new \Sanitor\Sanitizer(FILTER_SANITIZE_URL));
+        $this->assertEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
     }
 
     /**

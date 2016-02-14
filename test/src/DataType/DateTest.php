@@ -81,24 +81,13 @@ class DateTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Date::getSanitizer
-     * @todo   Implement testGetSanitizer().
+     * @covers Feeld\DataType\Date::setSanitizer
      */
     public function testGetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Date::setSanitizer
-     * @todo   Implement testSetSanitizer().
-     */
-    public function testSetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf(get_class(new \Sanitor\Sanitizer(FILTER_DEFAULT)), $this->object->getSanitizer());
+        $this->assertNotEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
+        $this->object->setSanitizer(new \Sanitor\Sanitizer(FILTER_SANITIZE_URL));
+        $this->assertEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
     }
 
     /**
@@ -107,7 +96,7 @@ class DateTest extends \PHPUnit_Framework_TestCase {
      */
     public function testGetLastSanitizedValue() {
         $this->assertNull($this->object->getLastSanitizedValue());
-        $this->assertTrue($this->object->validateValue('2009-'.PHP_EOL.'10-10')->hasPassed());
+        $this->assertTrue($this->object->validateValue('2009-' . PHP_EOL . '10-10')->hasPassed());
         $this->assertEquals('2009-10-10', $this->object->getLastSanitizedValue());
         $this->assertFalse($this->object->validateValue('2009-02-30')->hasPassed());
         $this->assertEquals('2009-02-30', $this->object->getLastSanitizedValue());
@@ -134,4 +123,5 @@ class DateTest extends \PHPUnit_Framework_TestCase {
                 'This test has not been implemented yet.'
         );
     }
+
 }

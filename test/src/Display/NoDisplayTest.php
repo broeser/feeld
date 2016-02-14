@@ -30,24 +30,13 @@ class NoDisplayTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\Display\NoDisplay::__toString
-     * @todo   Implement test__toString().
+     * @covers Feeld\Display\NoDisplay::informAboutStructure
      */
     public function test__toString() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertEmpty((string)$this->object);
+        $this->assertEmpty($this->object->__toString());
+        $this->object->informAboutStructure(new \Feeld\Field\Select(new \Feeld\DataType\URL()));
+        $this->assertEmpty((string)$this->object);
+        $this->assertEmpty($this->object->__toString());
     }
-
-    /**
-     * @covers Feeld\Display\NoDisplay::informAboutStructure
-     * @todo   Implement testInformAboutStructure().
-     */
-    public function testInformAboutStructure() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }

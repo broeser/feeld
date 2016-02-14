@@ -30,24 +30,13 @@ class IntegerTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Integer::getSanitizer
-     * @todo   Implement testGetSanitizer().
+     * @covers Feeld\DataType\Integer::setSanitizer
      */
     public function testGetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::setSanitizer
-     * @todo   Implement testSetSanitizer().
-     */
-    public function testSetSanitizer() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertInstanceOf(get_class(new \Sanitor\Sanitizer(FILTER_DEFAULT)), $this->object->getSanitizer());
+        $this->assertNotEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
+        $this->object->setSanitizer(new \Sanitor\Sanitizer(FILTER_SANITIZE_URL));
+        $this->assertEquals(FILTER_SANITIZE_URL, $this->object->getSanitizer()->getSanitizeFilter());
     }
 
     /**
@@ -107,6 +96,8 @@ class IntegerTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Integer::setMinLength
+     * @covers Feeld\DataType\Integer::getMinLength
+     * @covers Feeld\DataType\Integer::hasMinLength
      * @todo   Implement testSetMinLength().
      */
     public function testSetMinLength() {
@@ -118,6 +109,8 @@ class IntegerTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @covers Feeld\DataType\Integer::setMaxLength
+     * @covers Feeld\DataType\Integer::getMaxLength
+     * @covers Feeld\DataType\Integer::hasMaxLength
      * @todo   Implement testSetMaxLength().
      */
     public function testSetMaxLength() {
@@ -128,106 +121,55 @@ class IntegerTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers Feeld\DataType\Integer::getMinLength
-     * @todo   Implement testGetMinLength().
-     */
-    public function testGetMinLength() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::getMaxLength
-     * @todo   Implement testGetMaxLength().
-     */
-    public function testGetMaxLength() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::hasMinLength
-     * @todo   Implement testHasMinLength().
-     */
-    public function testHasMinLength() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::hasMaxLength
-     * @todo   Implement testHasMaxLength().
-     */
-    public function testHasMaxLength() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers Feeld\DataType\Integer::setMin
-     * @todo   Implement testSetMin().
+     * @covers Feeld\DataType\Integer::getMin
+     * @covers Feeld\DataType\Integer::hasMin
+     * @covers Feeld\DataType\Integer::getValidators
+     * @covers Feeld\DataType\Integer::validateValue
      */
     public function testSetMin() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getMin());
+        $this->assertFalse($this->object->hasMin());
+        $this->assertCount(1, $this->object->getValidators());
+        $this->assertInstanceOf(get_class($this->object), $this->object->setMin(0));
+        $this->assertTrue($this->object->hasMin());
+        $this->assertEquals(0, $this->object->getMin());
+        $validators = $this->object->getValidators();
+        $this->assertCount(2, $validators);
+        $lastValidator = end($validators);
+        $this->assertInstanceOf('\Wellid\Validator\Min', $lastValidator);
+        $this->assertTrue($this->object->validateValue(0)->hasPassed());
+        $this->assertFalse($this->object->validateValue(-1)->hasPassed());
+        $this->assertTrue($this->object->validateValue(1)->hasPassed());
     }
 
     /**
      * @covers Feeld\DataType\Integer::setMax
-     * @todo   Implement testSetMax().
+     * @covers Feeld\DataType\Integer::getMax
+     * @covers Feeld\DataType\Integer::hasMax
+     * @covers Feeld\DataType\Integer::getValidators
+     * @covers Feeld\DataType\Integer::validateValue
      */
     public function testSetMax() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::getMin
-     * @todo   Implement testGetMin().
-     */
-    public function testGetMin() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::getMax
-     * @todo   Implement testGetMax().
-     */
-    public function testGetMax() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::getStep
-     * @todo   Implement testGetStep().
-     */
-    public function testGetStep() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $this->assertNull($this->object->getMax());
+        $this->assertFalse($this->object->hasMax());
+        $this->assertCount(1, $this->object->getValidators());
+        $this->assertInstanceOf(get_class($this->object), $this->object->setMax(42));
+        $this->assertEquals(42, $this->object->getMax());
+        $this->assertTrue($this->object->hasMax());
+        $validators = $this->object->getValidators();
+        $this->assertCount(2, $validators);
+        $lastValidator = end($validators);
+        $this->assertInstanceOf('\Wellid\Validator\Max', $lastValidator);
+        $this->assertTrue($this->object->validateValue(42)->hasPassed());
+        $this->assertTrue($this->object->validateValue(-100)->hasPassed());
+        $this->assertFalse($this->object->validateValue(44)->hasPassed());
     }
 
     /**
      * @covers Feeld\DataType\Integer::setStep
+     * @covers Feeld\DataType\Integer::getStep
+     * @covers Feeld\DataType\Integer::hasStep
      * @todo   Implement testSetStep().
      */
     public function testSetStep() {
@@ -236,38 +178,4 @@ class IntegerTest extends \PHPUnit_Framework_TestCase {
                 'This test has not been implemented yet.'
         );
     }
-
-    /**
-     * @covers Feeld\DataType\Integer::hasStep
-     * @todo   Implement testHasStep().
-     */
-    public function testHasStep() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::hasMin
-     * @todo   Implement testHasMin().
-     */
-    public function testHasMin() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\DataType\Integer::hasMax
-     * @todo   Implement testHasMax().
-     */
-    public function testHasMax() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
 }

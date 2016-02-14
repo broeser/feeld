@@ -73,69 +73,26 @@ class FieldCollectionTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers Feeld\FieldCollection\FieldCollection::current
-     * @todo   Implement testCurrent().
-     */
-    public function testCurrent() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\FieldCollection\FieldCollection::key
-     * @todo   Implement testKey().
-     */
-    public function testKey() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\FieldCollection\FieldCollection::next
-     * @todo   Implement testNext().
-     */
-    public function testNext() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\FieldCollection\FieldCollection::rewind
-     * @todo   Implement testRewind().
-     */
-    public function testRewind() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Feeld\FieldCollection\FieldCollection::valid
-     * @todo   Implement testValid().
-     */
-    public function testValid() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-
-    /**
      * @covers Feeld\FieldCollection\FieldCollection::count
-     * @todo   Implement testCount().
+     * @covers Feeld\FieldCollection\FieldCollection::current
+     * @covers Feeld\FieldCollection\FieldCollection::key
+     * @covers Feeld\FieldCollection\FieldCollection::next
+     * @covers Feeld\FieldCollection\FieldCollection::key
+     * @covers Feeld\FieldCollection\FieldCollection::rewind
      */
-    public function testCount() {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
+    public function testForeach() {
+        $this->assertEquals(0, count($this->object));
+        $this->object->addField(new \Feeld\Field\Select(new \Feeld\DataType\URL()));
+        $this->object->addFields(
+            new \Feeld\Field\Select(new \Feeld\DataType\URL()),
+            new \Feeld\Field\CloakedEntry(new \Feeld\DataType\Str())
         );
+        $this->assertEquals(3, count($this->object));
+        
+        foreach($this->object as $key => $value) {
+            $this->assertInstanceOf('\Feeld\FieldInterface', $value);
+            $this->assertInternalType('int', $key);
+        }
     }
 
     /**
