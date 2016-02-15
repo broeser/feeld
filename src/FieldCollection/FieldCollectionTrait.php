@@ -118,10 +118,10 @@ trait FieldCollectionTrait {
         $mappedProperties = array();
         foreach($this->getFields() as $field) {
             if($field instanceof IdentifierInterface && $field->hasId()) {
-                $mappedProperties[$field->getId()] = FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID;
+                $mappedProperties[] = $field->getId();
             }
         }
-        $vm = new ValueMapper($object, $mappedProperties, $strategy);
+        $vm = new ValueMapper($object, $strategy, $mappedProperties);
         $vm->setId(FieldCollectionInterface::VALUE_MAPPER_DEFAULT_ID);
         $this->addValueMapper($vm);
     }

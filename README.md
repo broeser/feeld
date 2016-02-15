@@ -235,52 +235,64 @@ If you also use UI (Displays), you can use the method
 in the collection with the given field-identifier.
 
 It is possible to **validate()** the whole FieldCollection at once. The values
-of the validated fields will be stored in an object (\stdClass() by default, by
-assigning a ValueMapper (see below). Answers can be retrieved after 
-validation with **getValidAnswers()**. As the name of the method says, only
-values that have passed validation will be contained in the answer object.
+of the validated fields will be stored in an object (\stdClass() by default, can
+be configured by assigning a ValueMapper (see below)). Answers can be retrieved 
+after validation with **getValidAnswers()**. As the name of the method says, 
+only values that have passed validation will be contained in the answer object.
 
-#### ValueMapper
+### ValueMapper and ValueMapStrategy
 
-The ValueMapper defines how validated values from a FieldCollection shall be
-stored. It can be assigned by calling **addValueMapper($valueMapper)** on a 
-FieldCollection. This should be done before validation.
+A **ValueMapper** sets properties of an object to a certain value. While the most
+important use case is defining how validated values from a FieldCollection shall
+be stored, ValueMappers can also be used without FieldCollections.
 
-If all properties of the object that shall contain the validated answers are
-accessed in the same way (e.g. by setters or by reflection), a new ValueManager
-can be created like this:
-
+In this simple example the ValueMapper sets the property "email" of a MyClass-
+object, but none of the other properties.
+ 
 ```PHP
 <?php
+use Feeld\FieldCollection\ValueMapper;
+use Feeld\FieldCollection\ValueMapStrategy;
+
 class MyClass {
-   private $email;
+   public $name;
+   protected $email;
+   private $internalCounter;
 }
 
-$valueMapper = new Feeld\FieldCollection\ValueMapper(new MyClass(), array('email' => 'this string does not matter'), FieldCollection\ValueMapStrategy::MAP_REFLECTION);
+$valueMapper = new \ValueMapper(new MyClass(), ValueMapStrategy::MAP_REFLECTION, array('email'));
+
+// Sets the email
+$valueMapper->set('email' => 'test@example.org');
+
+// Does nothing and returns false, because "name" is not registered with the ValueMapper
+$valueMapper->set('name' => 'MyName');
 ```
 
-The third parameter is the default ValueMapStrategy, that is used on all Fields
-that do not have a specific ValueMapStrategy assigned.
-These are the ValueMapStrategies that can be used:
+The first parameter of the constructor takes the object whose properties should
+be changed. The second parameter is the default type of a ValueMapStrategy. This
+means that the ValueMapper can use different techniques to set values:
  1. MAP_REFLECTION: Uses Reflection, can be used to set private/protected properties
- 2. MAP_PUBLIC: Can be used to set public properties
- 3. MAP_SETTER: Uses a setter method (the default for this example would be setEmail, can be configured)
+ 2. MAP_PUBLIC: Can be used to set public properties (default)
+ 3. MAP_SETTER: Uses a setter method (the default for this example would be "setEmail", can be configured)
 
-By assigning specific ValueMapStrategies instead of using the default, it is possible to
- - Use a different strategy for each Field
- - Use a different Field id then the property name within the class
-
-Example:
+The third (optional) parameter is an array of all properties that should be
+handled by the ValueMapper. Additional properties can be added by using the
+**addProperty('name')**-method. That method also allows to use a different 
+**ValueMapStrategy** for each property:
 
 ```PHP
 <?php
+use Feeld\FieldCollection\ValueMapper;
+use Feeld\FieldCollection\ValueMapStrategy;
+
 class MyClass {
-   private $email;
+   private $mailAdress;
    public $homepage;
    public $name;
 
    public function saveEmailAndStuff($mail) {
-      $this->email = $mail;
+      $this->mailAddress = $mail;
 
       if($mail==='red_flag@donotuse.example.org') {
          $message = new InformManager('Someone used the secret email!');
@@ -290,12 +302,30 @@ class MyClass {
 
 }
 
-$valueMapper = new Feeld\FieldCollection\ValueMapper(new MyClass(), array(
-    'name' => 'xyz',
-    'emailaddress' => new FieldCollection\ValueMapStrategy(FieldCollection\ValueMapStrategy::MAP_SETTER, 'saveEmailAndStuff'),
-    'url' => new FieldCollection\ValueMapStrategy(FieldCollection\ValueMapStrategy::MAP_PUBLIC, 'homepage')
+$valueMapper = new ValueMapper(new MyClass(), ValueMapStrategy::MAP_PUBLIC, array(
+    'name',
+    'url' => 'homepage'
 ));
+
+$valueMapper->addProperty('email', new ValueMapStrategy(ValueMapStrategy::MAP_SETTER, 'saveEmailAndStuff'));
+
+// calls saveEmailAndStuff with with parameter mail@example.org
+$valueMapper->set('email', 'mail@example.org');
+
+// Sets the public property $homepage to http://example.org
+$valueMapper->set('url', 'http://example.org');
+
+// Sets the public property name to MyName
+$valueMapper->set('name', 'MyName');
 ```
+
+A ValueMapper can be assigned to a FieldCollection by calling 
+**addValueMapper($valueMapper)** on the FieldCollection. 
+This should be done before validation.
+
+It is possible to assign an id to a ValueMapper to distinguish several different
+ValueMappers: **setId()**, **hasId()** and **getId()** can be used.
+
 
 ### Interview
 

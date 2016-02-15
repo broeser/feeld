@@ -156,9 +156,10 @@ class HTMLForm extends Interview {
             
             $valueMapper = new ValueMapper(
                                 new HTMLFormInternalFields(),
+                                ValueMapStrategy::MAP_SETTERS,
                                 array(
-                                    self::PREFIX_FIELD_PAGE.$this->getId() => new ValueMapStrategy(ValueMapStrategy::MAP_SETTERS, 'setPageNumber'),
-                                    $this->getId() => new ValueMapStrategy(ValueMapStrategy::MAP_SETTERS, 'setUID')
+                                    self::PREFIX_FIELD_PAGE.$this->getId() => 'PageNumber',
+                                    $this->getId() => 'UID'
                                 )
                            );
             

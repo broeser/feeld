@@ -17,7 +17,7 @@ class ValueMapperTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $this->object = new ValueMapper(new \stdClass(), array('a' => new ValueMapStrategy(ValueMapStrategy::MAP_PUBLIC, 'b')));
+        $this->object = new ValueMapper(new \stdClass(), ValueMapStrategy::MAP_PUBLIC, array('a' => 'b'));
     }
 
     /**
