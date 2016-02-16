@@ -104,7 +104,7 @@ class SymfonyConsole extends AbstractTreeInterview {
      * whole FieldCollection is valid
      */
     public function onValidationSuccess(\Feeld\FieldInterface $lastField = null) {
-        $this->output->writeln('Thank you for your time.');
+        $this->output->writeln('Thank you for your answer.');
     }
 
     /**
@@ -114,7 +114,8 @@ class SymfonyConsole extends AbstractTreeInterview {
      * otherwise
      */
     public function retrieveAnswers() {
-        $answer = $this->questionHelper->ask($this->input, $this->output, $this->currentField->getSymfonyQuestion());
+        $this->currentField->refreshDisplay();
+        $answer = $this->questionHelper->ask($this->input, $this->output, $this->currentField->getDisplay()->getSymfonyQuestion());
         
         if($this->currentField instanceof \Feeld\Field\CommonProperties\IdentifierInterface && $this->currentField->hasId()) {
             foreach($this->getCurrentCollection()->getValueMapper() as $vm) {

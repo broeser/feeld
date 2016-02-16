@@ -137,11 +137,6 @@ These Fields are supplied with feeld:
  - Entry        – default data entry
  - Select       – data entry by selecting one (or more) of several values
 
-These Fields are supplied with feeld, if you are also using symfony/console:
-
- - SymfonyConsoleEntry
- - SymfonyConsoleCheckbox
- - SymfonyConsoleSelect
 
 If you want to create your own Fields, you can either use the 
 **CommonProperties\Field**-trait (in combination with the 
@@ -157,6 +152,9 @@ They can be used to display the UI for Fields (of the field itself, not necessar
 of field values). This can be in form of a question string ('Are you sure [y/N]?'),
 in form of HTML ('\<input type="checkbox" name="sure" value="y">'), a 
 GtkEntry-widget or any other form you can think of.
+
+A **SymfonyConsoleDisplay** is provided for usage of Feeld with the Symfony
+Console component.
 
 Note, that one Display instance only displays one Field, so for a form with two
 Fields you'll also need two Displays.
@@ -241,7 +239,7 @@ be configured by assigning a ValueMapper (see below)). Answers can be retrieved
 after validation with **getValidAnswers()**. As the name of the method says, 
 only values that have passed validation will be contained in the answer object.
 
-### ValueMapper and ValueMapStrategy
+### ValueMappers and ValueMapStrategies
 
 A **ValueMapper** sets properties of an object to a certain value. While the most
 important use case is defining how validated values from a FieldCollection shall
@@ -328,10 +326,10 @@ It is possible to assign an id to a ValueMapper to distinguish several different
 ValueMappers: **setId()**, **hasId()** and **getId()** can be used.
 
 
-### Interview
+### Interviews
 
-Interviews usually build upon FieldCollections. They present each Fields 
-contained within the FieldCollections to the user, in the form of a question.
+Interviews usually build upon FieldCollections. They present each Field 
+contained within their FieldCollections to the user, in the form of a question.
 The user is invited to answer these questions, the answers are sanitized,
 validated and can be stored.
 
@@ -372,9 +370,15 @@ following way:
  - Status codes: STATUS_VALIDATION_ERROR (invalid data), STATUS_AFTER_INTERVIEW 
    (success) or STATUS_BEFORE_INTERVIEW (form was not submitted yet)
 
-You can find a working example of the HTMLForm-Interview in examples.php
-
 **SymfonyConsole** uses the Symfony Console component to pose the questions.
+
+You can find a working examples of both Interview implementations in the
+examples/-directory (example_html5_form.php and example_symfony_console.php).
+The latter can be run by:
+
+```
+php example_symfony_console.php run
+```
 
 
 ## Feeld?

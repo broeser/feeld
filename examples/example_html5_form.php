@@ -23,7 +23,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
+
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,28 +34,11 @@ require_once __DIR__.'/vendor/autoload.php';
     <body>
         <h1>Blog Example</h1>
 <?php
-class BlogPost {
-    public $nickname;
-    public $email;
-    public $text;
-    public $hasNothingToDoWithTheForm;
-    
-    public function __toString() {
-        return $this->nickname.' ('.$this->email.') wrote:'.PHP_EOL.$this->text.PHP_EOL;
-    }
-}
-
 // Data model:
-// A FieldCollection that holds all the Fields:
-$formForBlogPost = new \Feeld\FieldCollection\FieldCollection();
-$formForBlogPost->addFields(
-    (new Feeld\Field\Entry((new Feeld\DataType\Str())->setMinLength(3), 'nickname'))->setRequired(),
-    (new Feeld\Field\Entry(new Feeld\DataType\Email(), 'email'))->setDefault('mail@example.org'),
-    (new Feeld\Field\Entry(new Feeld\DataType\Str(), 'text'))->setRequired()
-);
-// A ValueMapper to map Fields to properties of an object:
-// All Fields of the FieldCollection will use the same ValueMapStrategy and their ID as object's property ("DefaultValueMapper"); form data will be inserted into a new BlogPost() – properties are public, therefore the MAP_PUBLIC-strategy can be used
-$formForBlogPost->addDefaultValueMapper(new BlogPost(), Feeld\FieldCollection\ValueMapStrategy::MAP_PUBLIC);
+// A FieldCollection that holds all the Fields.
+// Have a look into the BlogPostand BlogPostFieldCollection-classes for more 
+// details
+$formForBlogPost = new FeeldUsageExamples\BlogPostFieldCollection();
 
 // An ErrorContainer for validation errors:
 $validationErrors = new \Feeld\Interview\ErrorContainer();
@@ -75,7 +59,7 @@ $formForBlogPost->setFieldDisplay('email', $emailUI);
 $formForBlogPost->setFieldDisplay('text', $textUI);
 $validationErrors->setDisplay($errorDiv);
 
-// "Business" logic: The Interviewer "HTMLForm" is executed
+// The Interviewer "HTMLForm" is executed
 $htmlForm = new \Feeld\Interview\HTMLForm(0, $validationErrors, $formForBlogPost);
 $htmlForm->setSuccessDisplay($successDiv);
 $htmlForm->execute();
