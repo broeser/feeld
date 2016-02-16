@@ -34,7 +34,7 @@ use \Feeld\FieldCollection\FieldCollectionInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class SymfonyConsole extends Feeld\Interview\AbstractTreeInterview {
+class SymfonyConsole extends AbstractTreeInterview {
     /**
      * CLI Input
      * 
@@ -114,7 +114,7 @@ class SymfonyConsole extends Feeld\Interview\AbstractTreeInterview {
      * otherwise
      */
     public function retrieveAnswers() {
-        $answer = $this->questionHelper->ask($this->input, $this->output, $this->currentField);
+        $answer = $this->questionHelper->ask($this->input, $this->output, $this->currentField->getSymfonyQuestion());
         
         if($this->currentField instanceof \Feeld\Field\CommonProperties\IdentifierInterface && $this->currentField->hasId()) {
             foreach($this->getCurrentCollection()->getValueMapper() as $vm) {
