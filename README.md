@@ -140,7 +140,7 @@ These Fields are supplied with feeld:
 These Fields are supplied with feeld, if you are also using symfony/console:
 
  - SymfonyConsoleEntry
- - SymfonyConsoleCheckbox _planned, coming soon_
+ - SymfonyConsoleCheckbox
  - SymfonyConsoleSelect _planned, coming soon_
 
 If you want to create your own Fields, you can either use the 
