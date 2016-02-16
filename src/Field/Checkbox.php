@@ -32,20 +32,22 @@ namespace Feeld\Field;
 class Checkbox extends \Feeld\AbstractField implements CommonProperties\OptionsInterface {   
     use CommonProperties\Options;
 
-
     /**
      * Constructor
      * 
-     * @param DataType\DataTypeInterface $dataType
+     * @param \Feeld\Field\DataType\DataTypeInterface $dataType
+     * @param array $options
      * @param mixed $id
+     * @param \Feeld\Display\DisplayInterface $display
+     * @throws \Wellid\Exception\DataType
      */
-    public function __construct(DataType\DataTypeInterface $dataType = null, $options = array('yes' => 1, 'no' => 0), $id = null, \Feeld\Display\DisplayInterface $display = null) {
+    public function __construct(DataType\DataTypeInterface $dataType = null, array $options = array('yes' => 1, 'no' => 0), $id = null, \Feeld\Display\DisplayInterface $display = null) {
         if(count($options)!==2) {
             throw new \Wellid\Exception\DataType('options', 'array with two values', $options);
         }
         
         if(is_null($dataType)) {
-            $dataType = (new \Feeld\DataType\Integer())->setMax(1)->setMin(0);
+            $dataType = new \Feeld\DataType\Boolean(new \Sanitor\Sanitizer(FILTER_SANITIZE_NUMBER_INT));
             $options = array('yes' => 1, 'no' => 0);
         }
         
