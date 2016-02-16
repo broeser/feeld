@@ -4,7 +4,7 @@ use \Symfony\Component\Console\Question\Question as SymfonyQuestion;
 use \Feeld\Field\CommonProperties\DefaultValueInterface;
 
 /**
- * Description of Question
+ * Field that allows entering text and uses the Symfony Console Component
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
