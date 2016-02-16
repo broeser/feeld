@@ -141,7 +141,7 @@ These Fields are supplied with feeld, if you are also using symfony/console:
 
  - SymfonyConsoleEntry
  - SymfonyConsoleCheckbox
- - SymfonyConsoleSelect _planned, coming soon_
+ - SymfonyConsoleSelect
 
 If you want to create your own Fields, you can either use the 
 **CommonProperties\Field**-trait (in combination with the 
