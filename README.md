@@ -330,24 +330,36 @@ ValueMappers: **setId()**, **hasId()** and **getId()** can be used.
 
 ### Interview
 
-Interviews build upon FieldCollections. At least one FieldCollection has to be
-assigned to an Interview. After construction the main entry point of the
-Interview is the **execute()**-method.
+Interviews usually build upon FieldCollections. They present each Fields 
+contained within the FieldCollections to the user, in the form of a question.
+The user is invited to answer these questions, the answers are sanitized,
+validated and can be stored.
+
+After construction the main entry point of the Interview is the
+**execute()**-method.
 
 As soon as an Interview-class is **execute()**ed, it manages the logic behind:
  - inviting an user to answer questions ( **inviteAnswers()**)
  - retrieving the answers from the user ( **retrieveAnswers()**)
- - sanitizing and validating these answers ( **handleAnswers()**, but might be 
-   done differently in your own implementation)
+ - sanitizing and validating these answers
  - doing different things **onValidationError()** and **onValidationSuccess()**
- - setting a status code, depending on whether the answers were valid or not
+ - setting a status code, depending on whether the answers were valid or not,
+   retrievable via **getStatus()**
  - optionally branch to another set of answers or conclude the interview
 
-You can use the **InterviewInterface** in conjunction with the **InterviewTrait**
-(or the abstract class **AbstractInterview**) to create your own logic how those
-steps shall work exactly.
+You can use the **InterviewInterface** in conjunction with the **InterviewStatusTrait**
+ to create your own logic how those steps shall work exactly. If you prefer 
+extending an abstract class, you can use **AbstractInterview**.
 
-One example implementation currently available is Interview/HTMLForm. It poses
+For a multi-page/branching Interview, use the **TreeInterviewInterface** 
+(instead of InterviewInterface) and **TreeInterviewTrait**.
+An **AbstractTreeInterview** is provided as well.
+
+There are currently two example implementations of Interviews available:
+ - HTMLForm
+ - SymfonyConsole
+
+**HTMLForm** poses
 questions in the context of an HTML5 form. It handles the above steps in the
 following way:
  - inviting an user to answer questions: by displaying them in the source code
@@ -357,11 +369,12 @@ following way:
    Interview
  - onValidationError: All error messages are displayed in an unordered list
    onValidationSuccess: A success message is displayed
- - The status code can be retrieved with **getStatus()** and is one of
-   STATUS_VALIDATION_ERROR (invalid data), STATUS_AFTER_INTERVIEW (success) or 
-   STATUS_BEFORE_INTERVIEW (form was not submitted yet)
+ - Status codes: STATUS_VALIDATION_ERROR (invalid data), STATUS_AFTER_INTERVIEW 
+   (success) or STATUS_BEFORE_INTERVIEW (form was not submitted yet)
 
 You can find a working example of the HTMLForm-Interview in examples.php
+
+**SymfonyConsole** uses the Symfony Console component to pose the questions.
 
 
 ## Feeld?

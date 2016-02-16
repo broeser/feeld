@@ -185,6 +185,15 @@ trait FieldCollectionTrait {
         
         return $retArray;
     }
+    
+    /**
+     * Returns all assigned ValueMappers
+     * 
+     * @return ValueMapper[]
+     */
+    public function getValueMapper() {
+        return $this->valueMapper;
+    }    
 
     /**
      * Returns all Fields of a certain data type

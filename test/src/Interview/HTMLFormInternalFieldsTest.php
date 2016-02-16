@@ -47,4 +47,5 @@ class HTMLFormInternalFieldsTest extends \PHPUnit_Framework_TestCase {
         $this->object->setPageNumber(2);
         $this->assertEquals(2, $this->object->getPageNumber());
     }
+
 }

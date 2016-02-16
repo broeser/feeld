@@ -95,5 +95,12 @@ interface FieldCollectionInterface extends \Countable, \Feeld\Display\DisplayDat
      * 
      * @param \Feeld\FieldCollection\ValueMapper $valueMapper
      */
-    public function addValueMapper(ValueMapper $valueMapper);    
+    public function addValueMapper(ValueMapper $valueMapper);
+    
+    /**
+     * Returns all assigned ValueMappers
+     * 
+     * @return ValueMapper[]
+     */
+    public function getValueMapper();
 }

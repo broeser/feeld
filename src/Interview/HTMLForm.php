@@ -34,7 +34,9 @@ use Feeld\FieldCollection\ValueMapStrategy;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class HTMLForm extends Interview {
+class HTMLForm extends AbstractTreeInterview implements \Feeld\Field\CommonProperties\IdentifierInterface {
+    use \Feeld\Field\CommonProperties\Identifier;
+    
     /**
      * Either \INPUT_POST, \INPUT_GET or \INPUT_REQUEST
      * 
@@ -75,7 +77,7 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections
      */
     public function __construct($id = 0, ErrorContainer $errorContainer = null, \Feeld\FieldCollection\FieldCollectionInterface ...$fieldCollections) {
-        parent::__construct(parent::VALIDATE_PER_COLLECTION, ...$fieldCollections);
+        parent::__construct(...$fieldCollections);
         $this->setId(self::PREFIX_FIELD_FORM.$id);
         $this->addInternalFields();
         $this->errorContainer = is_null($errorContainer)?new ErrorContainer():$errorContainer;
@@ -175,7 +177,7 @@ class HTMLForm extends Interview {
      * @return string
      */
     protected function getUniqueID() {  
-        if($this->getStatus()===self::STATUS_AFTER_INTERVIEW && !is_null($this->uniqueID())) {
+        if($this->getStatus()===InterviewInterface::STATUS_AFTER_INTERVIEW && !is_null($this->uniqueID())) {
             $answers = $this->getCurrentCollection()->getValidAnswers();
             $this->uniqueID = $answers[self::PREFIX_VALUE_MAPPER.$this->getId()]->{$this->getId()};
         } elseif(is_null($this->uniqueID)) {
@@ -209,6 +211,7 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldInterface $lastField
      */
     public function onValidationError(\Feeld\FieldInterface $lastField = null) {
+        $this->status = InterviewInterface::STATUS_VALIDATION_ERROR;
         $this->errorContainer->clear();
         $this->errorContainer->addSet($this->getCurrentCollection()->validate());
         $this->inviteAnswers();
@@ -220,10 +223,12 @@ class HTMLForm extends Interview {
      * @param \Feeld\FieldInterface $lastField
      */
     public function onValidationSuccess(\Feeld\FieldInterface $lastField = null) {
+        $this->status = InterviewInterface::STATUS_AFTER_INTERVIEW;
         $this->getUniqueID();
         $this->errorContainer->clear();
         $this->getSuccessDisplay()->setVisible();
         $this->getCurrentCollection()->getDisplay()->setInvisible();
+        $this->lastAnsweredCollection = $this->currentCollectionId;
     }
 
     /**
@@ -309,4 +314,51 @@ class HTMLForm extends Interview {
         }
         return $hiddenFields;
     }
+    
+    /**
+     * Executes the Interview in the following manner:
+     * - If at least one answer was given, the answer(s) are validated
+     * - If no answers were given, the user is invited to answer the question(s),
+     *   e.g. by displaying them to the user
+     * - In either case the current status of the Interview is returned
+     * 
+     * @param int $pageNumber Set the number of the page you want to execute for
+     *  multi-page-forms; NOTE: first page is number 0
+     * @return int
+     */
+    public function execute($pageNumber = 0) {
+        $this->skipToCollection($pageNumber);
+        
+        if($this->retrieveAnswers()) {
+            $this->handleAnswers();
+        } else {
+            $this->inviteAnswers();
+        }
+        
+        return $this->getStatus();
+    }
+    
+    /**
+     * Filters (sanitizes) data and validates it, sets the Interview status
+     * accordingly
+     */
+    protected function handleAnswers() {        
+        if($this->getCurrentCollection()->validate()->hasPassed()) {
+            $this->onValidationSuccess();
+        } else {
+            /*  If there is at least one validation error, let's assume that 
+                all passing fields
+                that can have a default value should use the passing value
+                that has just been entered as new default value
+             */
+            foreach($this->getCurrentCollection()->getFields() as $field) {
+                if(!$field instanceof \Feeld\Field\CommonProperties\DefaultValueInterface || !$field->validateBool() || $field instanceof \Feeld\Field\CloakedEntry) {
+                    continue;
+                }
+
+                $field->setDefault($field->getFilteredValue());
+            }
+            $this->onValidationError();
+        }
+    }    
 }

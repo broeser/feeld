@@ -90,7 +90,7 @@ print($successDiv);
 print($htmlForm->getCurrentCollection());
 
 // Proof that it worked (not really necessary)
-if($htmlForm->getStatus()===Feeld\Interview\Interview::STATUS_AFTER_INTERVIEW) {
+if($htmlForm->getStatus()===Feeld\Interview\InterviewInterface::STATUS_AFTER_INTERVIEW) {
     print('<h1>Most recent blog post</h1>');
     print(nl2br($htmlForm->getCurrentValidAnswers()));
 }
