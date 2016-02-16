@@ -43,9 +43,7 @@ class SymfonyConsoleCheckbox extends \Feeld\Field\Checkbox {
     }
     
     /**
-     * Creates and returns a Console\Question\Question
-     *
-     * @return \Symfony\Component\Console\Question\Question 
+     * Creates and returns a Console\Question\ConfirmationQuestion
      */
     protected function buildSymfonyQuestion() {
         $this->symfonyQuestion = new SymfonyQuestion((string)$this->display, ($this instanceof DefaultValueInterface && $this->hasDefault())?$this->getDefault():true, $this->trueRegExp);
