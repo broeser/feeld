@@ -36,7 +36,7 @@ THE SOFTWARE.
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
           <directory suffix=".php">../src</directory>
-          <directory suffix=".php">../examples</directory>
+          <directory suffix=".php">../examples/BlogPost*</directory>
         </whitelist>
     </filter>
 </phpunit>
