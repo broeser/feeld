@@ -46,13 +46,14 @@ basic methods to specify boundaries (e.g. setMinLength() and setMaxLength()).
 
 These DataTypes are supplied with feeld in the src/DataType-directory:
 
+ - Boolean
  - Country
  - Date
  - Email
  - File
  - FloatingPoint
  - Integer
- - Str
+ - Str (String)
  - URL
 
 #### Sanitization and validation with data types
