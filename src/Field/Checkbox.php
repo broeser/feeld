@@ -57,4 +57,23 @@ class Checkbox extends \Feeld\AbstractField implements CommonProperties\OptionsI
             $this->addOption($key, $value);
         }
     }
+    
+    /**
+     * Returns the description of the Option that corresponds to the TRUE/checked
+     * state
+     * 
+     * @return string
+     * @throws Exception
+     */
+    public function getTrueOption() {
+        foreach($this->getOptions() as $key => $val) {
+            $boolVal = filter_var($val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            
+            if($boolVal===null) {
+                throw new Exception('Could not determine Option for TRUE');
+            } elseif($boolVal) {
+                return $key;
+            }
+        }
+    }
 }
