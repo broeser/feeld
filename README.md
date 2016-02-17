@@ -14,12 +14,12 @@ sanitization and validation and example UI implementations.
 
 ## Goals
 
-- feeld aims for a strict separation between data model and display, it should 
+- Feeld aims for a strict separation between data model and display, it should 
   be possible to display the same fields in HTML, GTK or the CLI with minimal 
   changes to your code
-- feeld aims to be reasonably extensible with your own DataTypes, Field types, 
+- Feeld aims to be reasonably extensible with your own DataTypes, Field types, 
   Displays (UI components) and other enhancements
-- feeld should be as easy to learn and as easy to use as possible without 
+- Feeld should be as easy to learn and as easy to use as possible without 
   loosing flexibility
 
 ## Note
@@ -44,7 +44,7 @@ The package can be installed via composer:
 A DataType is a combination of a default sanitizer, default validators and some 
 basic methods to specify boundaries (e.g. setMinLength() and setMaxLength()).
 
-These DataTypes are supplied with feeld in the src/DataType-directory:
+These DataTypes are supplied with Feeld in the src/DataType-directory:
 
  - Boolean
  - Country
@@ -129,7 +129,7 @@ if($myStringSelector->validateBool()) {
 }
 ```
 
-These Fields are supplied with feeld:
+These Fields are supplied with Feeld:
 
  - Checkbox     – data entry by checked-or-not-checked-principle/yes-or-no-principle
  - CloakedEntry – cloaked data entry, the UI shall not display the same data as is entered (e.g. password fields)
