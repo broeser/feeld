@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The MIT License
  *
@@ -24,38 +25,44 @@
  */
 namespace Feeld\Display\HTML;
 
-use Feeld\Display\DisplayDataSourceInterface;
 /**
- * Description of Form
+ * HTML Element
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Form extends Element implements \Feeld\Display\DisplayInterface { 
+class TextNode extends HTMLBuildingBlock {
+    /**
+     * Text content
+     * 
+     * @var string
+     */
+    protected $content;
+    
     /**
      * Constructor
+     * 
+     * @param string $content
      */
-    public function __construct($method = 'post') {
-        parent::__construct('form');
-        $this->setAttribute('method', $method);
+    public function __construct($content = '') {
+        $this->content = $content;
     }
     
     /**
-     * Takes information from the FieldCollection and uses it in this display
-     * 
-     * @param \Feeld\FieldCollection\FieldCollectionInterface $field
-     * @throws \Wellid\Exception\DataType
+     * Returns a string representation of this textNode
      */
-    public function informAboutStructure(DisplayDataSourceInterface $field) {
-        if(!$field instanceof \Feeld\FieldCollection\FieldCollectionInterface) {
-            throw new \Wellid\Exception\DataType('field', 'FieldCollectionInterface', $field);
-        }
+    public function __toString() {       
+        return $this->content;
+    }
+    
+    /**
+     * Sets the content
+     * 
+     * @param string $content
+     * @return Element
+     */
+    public function setContent($content) {
+        $this->content = $content;
         
-        if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
-            $this->setAttribute('enctype', 'multipart/form-data');
-        }
-        
-        foreach($field->getFields() as $field) {
-            $this->appendChild($field->getDisplay());
-        }
+        return $this;
     }
 }

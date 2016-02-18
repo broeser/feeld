@@ -30,9 +30,7 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Element {
-    use \Feeld\Display\DisplayTrait;
-    
+class Element extends HTMLBuildingBlock {
     /**
      * Attributes as key => value pairs, e. g. accesskey, tabindex, spellcheck,
      * autofocus, disabled, style etc.
@@ -56,11 +54,11 @@ class Element {
     protected $cssClasses;
     
     /**
-     * Content
+     * Children
      * 
-     * @var string
+     * @var HTMLBuildingBlock[]
      */
-    protected $content;
+    protected $children = array();
     
     /**
      * Sets a CSS class for this Element
@@ -100,7 +98,7 @@ class Element {
      * Returns a string representation of this element (HTML)
      */
     public function __toString() {
-        if($this instanceof \Feeld\Display\DisplayInterface && !$this->isVisible()) {
+        if($this instanceof HTMLDisplayInterface && !$this->isVisible()) {
             return '';
         }
         
@@ -109,7 +107,7 @@ class Element {
             $attributes .= ' '.$key.'="'.htmlspecialchars($value).'"';
         }
         
-        return '<'.$this->nodeName.$attributes.'>'.($this->isVoid()?'':$this->content.'</'.$this->nodeName.'>');
+        return '<'.$this->nodeName.$attributes.'>'.($this->isVoid()?'':$this->content.implode('', $this->children).'</'.$this->nodeName.'>');
     }
     
     /**
@@ -126,37 +124,55 @@ class Element {
     }
     
     /**
-     * Sets the content
+     * Sets the content of this element, removing all previously existing content
      * 
      * @param string $content
      * @return Element
      */
     public function setContent($content) {
-        $this->content = $content;
+        if(!is_string($content)) {
+            throw new \Wellid\Exception\DataType('content', 'string', $content);
+        }
+        
+        $this->children = array(new TextNode($content));
         
         return $this;
     }
     
     /**
-     * Appends content
+     * Appends child
      * 
-     * @param string $content
+     * @param HTMLBuildingBlock $element
      * @return Element
      */
-    public function appendContent($content) {
-        $this->content .= $content;
+    public function appendChild(HTMLBuildingBlock $element) {
+        $this->children[] = $element;
         
         return $this;        
     }
     
     /**
-     * Prepends content
+     * Appends children
      * 
-     * @param string $content
+     * @param HTMLBuildingBlock ...$elements
      * @return Element
      */
-    public function prependContent($content) {
-        $this->content = $content.$this->content;
+    public function appendChildren(HTMLBuildingBlock ...$elements) {
+        foreach($elements as $element) {
+            $this->appendChild($element);
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Prepends content
+     * 
+     * @param HTMLBuildingBlock $element
+     * @return Element
+     */
+    public function prependChild(HTMLBuildingBlock $element) {
+        array_unshift($this->children, $element);
         
         return $this;        
     }

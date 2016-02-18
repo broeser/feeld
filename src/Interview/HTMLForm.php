@@ -62,7 +62,7 @@ class HTMLForm extends AbstractTreeInterview implements \Feeld\Field\CommonPrope
     /**
      * Optional Display that success messages are displayed on
      * 
-     * @var \Feeld\Display\DisplayInterface
+     * @var \Feeld\Display\HTML\Element
      */
     protected $successDisplay = null;
     
@@ -99,7 +99,7 @@ class HTMLForm extends AbstractTreeInterview implements \Feeld\Field\CommonPrope
      * @return \Feeld\Display\DisplayInterface
      */
     public function getSuccessDisplay() {
-        if($this->successDisplay instanceof \Feeld\Display\DisplayInterface) {
+        if($this->successDisplay instanceof \Feeld\Display\HTML\Element) {
             return $this->successDisplay;
         }
         
@@ -111,9 +111,9 @@ class HTMLForm extends AbstractTreeInterview implements \Feeld\Field\CommonPrope
     /**
      * Sets the display success messages shall be displayed on
      * 
-     * @param \Feeld\Display\DisplayInterface $successDisplay
+     * @param \Feeld\Display\HTML\Element $successDisplay
      */
-    public function setSuccessDisplay(\Feeld\Display\DisplayInterface $successDisplay) {
+    public function setSuccessDisplay(\Feeld\Display\HTML\Element $successDisplay) {
         $this->successDisplay = $successDisplay;
     }
     

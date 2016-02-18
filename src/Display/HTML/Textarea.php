@@ -33,7 +33,7 @@ use Feeld\DataType\Boundaries\LengthBoundariesInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Textarea extends Element implements \Feeld\Display\DisplayInterface {
+class Textarea extends Element implements HTMLDisplayInterface {
     public function __construct() {
         parent::__construct('textarea');
     }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The MIT License
  *
@@ -22,40 +23,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Feeld\Display\HTML;
 
-use Feeld\Display\DisplayDataSourceInterface;
 /**
- * Description of Form
- *
+ * Interface for HTML Elements that are Feeld Displays
+ * 
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Form extends Element implements \Feeld\Display\DisplayInterface { 
-    /**
-     * Constructor
-     */
-    public function __construct($method = 'post') {
-        parent::__construct('form');
-        $this->setAttribute('method', $method);
-    }
-    
-    /**
-     * Takes information from the FieldCollection and uses it in this display
-     * 
-     * @param \Feeld\FieldCollection\FieldCollectionInterface $field
-     * @throws \Wellid\Exception\DataType
-     */
-    public function informAboutStructure(DisplayDataSourceInterface $field) {
-        if(!$field instanceof \Feeld\FieldCollection\FieldCollectionInterface) {
-            throw new \Wellid\Exception\DataType('field', 'FieldCollectionInterface', $field);
-        }
-        
-        if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
-            $this->setAttribute('enctype', 'multipart/form-data');
-        }
-        
-        foreach($field->getFields() as $field) {
-            $this->appendChild($field->getDisplay());
-        }
-    }
-}
+interface HTMLDisplayInterface extends \Feeld\Display\DisplayInterface {}

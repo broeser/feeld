@@ -30,7 +30,7 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class ErrorContainer extends Element implements \Feeld\Display\DisplayInterface {
+class ErrorContainer extends Element implements HTMLDisplayInterface {
     /**
      * Constructor
      */
@@ -51,7 +51,7 @@ class ErrorContainer extends Element implements \Feeld\Display\DisplayInterface 
         
         $errorMessages = $errorMessagesLi = array();
         foreach($field->getErrorMessages() as $entry) {
-            $errorMessages[] = '<span class="bg-danger error">'.htmlspecialchars($entry).'</span>';
+            $errorMessages[] = htmlspecialchars($entry);
             $errorMessagesLi[] = '<li>'.htmlspecialchars($entry).'</li>';
         }
         
@@ -63,11 +63,12 @@ class ErrorContainer extends Element implements \Feeld\Display\DisplayInterface 
         $this->setVisible();
         
         if(count($errorMessages)===1) {
-            $this->setContent($errorMessages[0]);
-            return;
+            $innerWrapper = (new Element('span'))->setContent($errorMessages[0]);
+        } else {
+            $innerWrapper = (new Element('ul'))->setContent(implode('', $errorMessagesLi));
         }
         
-        $this->setContent('<ul class="bg-danger error">'.implode('', $errorMessagesLi).'</ul>');
+        $this->appendChild($innerWrapper->addCssClass('bg-danger error'));
     }
 
 }

@@ -32,7 +32,7 @@ use Feeld\Display\DisplayDataSourceInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Button extends Element implements \Feeld\Display\DisplayInterface {
+class Button extends Element implements HTMLDisplayInterface {
     /**
      * Constructor
      */

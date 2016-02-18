@@ -31,12 +31,8 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Div extends Element implements \Feeld\Display\DisplayInterface {   
+class Div extends Element {   
     public function __construct() {
         parent::__construct('div');
-    }
-    
-    public function informAboutStructure(\Feeld\Display\DisplayDataSourceInterface $field) {
-        
     }
 }

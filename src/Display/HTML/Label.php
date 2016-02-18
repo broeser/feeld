@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The MIT License
  *
@@ -22,40 +23,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 namespace Feeld\Display\HTML;
 
-use Feeld\Display\DisplayDataSourceInterface;
 /**
- * Description of Form
+ * Description of Label
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Form extends Element implements \Feeld\Display\DisplayInterface { 
+class Label extends Element {
     /**
      * Constructor
-     */
-    public function __construct($method = 'post') {
-        parent::__construct('form');
-        $this->setAttribute('method', $method);
-    }
-    
-    /**
-     * Takes information from the FieldCollection and uses it in this display
      * 
-     * @param \Feeld\FieldCollection\FieldCollectionInterface $field
+     * @param HTMLDisplayInterface$fieldDisplayElement
+     * @param string $labelText
      * @throws \Wellid\Exception\DataType
+     * @throws \Wellid\Exception\NotFound
      */
-    public function informAboutStructure(DisplayDataSourceInterface $field) {
-        if(!$field instanceof \Feeld\FieldCollection\FieldCollectionInterface) {
-            throw new \Wellid\Exception\DataType('field', 'FieldCollectionInterface', $field);
+    public function __construct(HTMLDisplayInterface $fieldDisplayElement, $labelText = null) {
+        if($fieldDisplayElement instanceof Form || $fieldDisplayElement instanceof ErrorContainer) {
+            throw new \Wellid\Exception\DataType('fieldDisplayElement', 'may not be Form or ErrorContainer', $fieldDisplayElement);
         }
         
-        if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
-            $this->setAttribute('enctype', 'multipart/form-data');
+        if(!isset($fieldDisplayElement->attributes['id']) || $fieldDisplayElement['id']==='') {
+            throw new \Wellid\Exception\NotFound('id', 'fieldDisplayElement');
         }
         
-        foreach($field->getFields() as $field) {
-            $this->appendChild($field->getDisplay());
+        parent::__construct('label');
+        $this->setAttribute('for', $fieldDisplayElement->attributes['id']);
+        if(!is_null($labelText)) {
+            $this->setContent($labelText);
         }
     }
 }

@@ -34,7 +34,7 @@ use Feeld\Display\DisplayDataSourceInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Select extends Element implements \Feeld\Display\DisplayInterface {
+class Select extends Element implements HTMLDisplayInterface {
     public function __construct() {
         parent::__construct('select');
     }
@@ -63,16 +63,15 @@ class Select extends Element implements \Feeld\Display\DisplayInterface {
         }
         
         if($field instanceof OptionsInterface) {
-            $options = array();
             foreach($field->getOptions() as $value => $label) {
                 $newOption = new Option($label, $value);
                 
                 if($field instanceof DefaultValueInterface && $field->hasDefault() && $field->getDefault()===$value) {
                     $newOption->setDefault();
                 }
-                $options[] = $newOption;
+
+                $this->appendChild($newOption);
             }
-            $this->setContent(implode('', $options));
         }
     }    
 }

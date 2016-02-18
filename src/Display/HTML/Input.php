@@ -35,7 +35,7 @@ use Feeld\DataType\Boundaries\NumericBoundariesInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Input extends Element implements \Feeld\Display\DisplayInterface {
+class Input extends Element implements HTMLDisplayInterface {
     /**
      * Constructor
      * 

@@ -48,9 +48,9 @@ $nicknameUI = (new Feeld\Display\HTML\Input('text'))->setAttribute('placeholder'
 $emailUI = new Feeld\Display\HTML\Input('email');
 $textUI = new Feeld\Display\HTML\Textarea();
 $formUI = new Feeld\Display\HTML\Form('post');
-$formUI->surround(null, (new \Feeld\Display\HTML\Button('submit'))->setContent('Publish!'));
 $errorDiv = new Feeld\Display\HTML\ErrorContainer();
 $successDiv = (new Feeld\Display\HTML\Div())->addCssClass('has-success')->setContent('<p>Your blog entry was submitted!</p>');
+$formUI->appendChild((new \Feeld\Display\HTML\Button('submit'))->setContent('Publish!'));
 
 // Putting data model and UI together
 $formForBlogPost->setDisplay($formUI);
