@@ -55,7 +55,6 @@ interface DisplayInterface {
      */
     public function setInvisible();
     
-    
     /**
      * Makes this display visible
      * Displays are visible by default
