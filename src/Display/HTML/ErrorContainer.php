@@ -30,12 +30,12 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class ErrorContainer extends Element implements HTMLDisplayInterface {
+class ErrorContainer extends Div implements HTMLDisplayInterface {
     /**
      * Constructor
      */
     public function __construct() {
-        parent::__construct('div');
+        parent::__construct();
         $this->addCssClass('has-error validationerrors');
     }
 
@@ -45,6 +45,8 @@ class ErrorContainer extends Element implements HTMLDisplayInterface {
      * @param DisplayDataSourceInterface $field
      */
     public function informAboutStructure(\Feeld\Display\DisplayDataSourceInterface $field) {
+        parent::informAboutStructure($field);
+        
         if(!$field instanceof \Feeld\Interview\ErrorContainer) {
             throw new \Wellid\Exception\DataType('field', 'ErrorContainer', $field);
         }
