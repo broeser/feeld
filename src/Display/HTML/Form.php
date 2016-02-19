@@ -30,7 +30,14 @@ use Feeld\Display\DisplayDataSourceInterface;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Form extends Element implements \Feeld\Display\DisplayInterface { 
+class Form extends Element implements \Feeld\Display\DisplayInterface {
+    /**
+     * DataSource
+     * 
+     * @var \Feeld\FieldCollection\FieldCollectionInterface
+     */
+    private $dataSource;
+    
     /**
      * Constructor
      */
@@ -50,6 +57,8 @@ class Form extends Element implements \Feeld\Display\DisplayInterface {
             throw new \Wellid\Exception\DataType('field', 'FieldCollectionInterface', $field);
         }
         
+        $this->dataSource = $field;
+        
         if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
             $this->setAttribute('enctype', 'multipart/form-data');
         }
@@ -57,5 +66,19 @@ class Form extends Element implements \Feeld\Display\DisplayInterface {
         foreach($field->getFields() as $field) {
             $this->appendChild($field->getDisplay());
         }
+    }
+    
+    /**
+     * Makes sure that alle Field Displays are updated before a string
+     * representation of the Form containing those Fields are returned
+     * 
+     * @return string
+     */
+    public function __toString() {
+        foreach($this->dataSource->getFields() as $field) {
+            $field->refreshDisplay();
+        }
+        
+        return parent::__toString();
     }
 }
