@@ -107,7 +107,7 @@ class Element extends HTMLBuildingBlock {
             $attributes .= ' '.$key.'="'.htmlspecialchars($value).'"';
         }
         
-        return '<'.$this->nodeName.$attributes.'>'.($this->isVoid()?'':$this->content.implode('', $this->children).'</'.$this->nodeName.'>');
+        return '<'.$this->nodeName.$attributes.'>'.($this->isVoid()?'':implode('', $this->children).'</'.$this->nodeName.'>');
     }
     
     /**
