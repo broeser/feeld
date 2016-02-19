@@ -37,7 +37,7 @@ class Fieldset extends Element {
      * 
      * @param string $legend
      */
-    public function __construct($legend) {
+    public function __construct($legend = null) {
         parent::__construct('fieldset');
         
         if(!is_null($legend)) {
