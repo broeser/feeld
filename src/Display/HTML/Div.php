@@ -31,7 +31,10 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Div extends Element {   
+class Div extends Element {
+    /**
+     * Constructor
+     */
     public function __construct() {
         parent::__construct('div');
     }
