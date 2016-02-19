@@ -25,12 +25,14 @@
  */
 namespace Feeld\Display\HTML;
 
+use \Feeld\Field\CommonProperties\IdentifierInterface;
+
 /**
  * HTML Element
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Element extends HTMLBuildingBlock {
+class Element extends HTMLBuildingBlock implements IdentifierInterface {
     /**
      * Attributes as key => value pairs, e. g. accesskey, tabindex, spellcheck,
      * autofocus, disabled, style etc.
@@ -146,9 +148,48 @@ class Element extends HTMLBuildingBlock {
      * @return Element
      */
     public function appendChild(HTMLBuildingBlock $element) {
-        $this->children[] = $element;
+        if($element instanceof IdentifierInterface && $element->hasId()) {
+            $this->children[$element->getId()] = $element;
+        } else {
+            $this->children[] = $element;
+        }
         
         return $this;        
+    }
+    
+    /**
+     * Returns a child Element by id or null
+     * If it can't find an Element immediately, it re-creates the children-
+     * array to see, if an id appeared
+     * 
+     * @param string $id
+     * @return Element
+     * @throws \Wellid\Exception\DataType
+     */
+    public function getChildById($id) {
+        if(!is_string($id)) {
+            throw new \Wellid\Exception\DataType('id', 'string', $id);
+        }
+        
+        if(isset($this->children[$id])) {
+            return $this->children[$id];
+        }
+        
+        $newArr = array();
+        foreach($this->children as $child) {
+            if($child instanceof IdentifierInterface && $child->hasId()) {
+                $newArr[$child->getId()] = $child;
+            } else {
+                $newArr[] = $child;
+            }
+        }
+        $this->children = $newArr;
+        
+        if(isset($this->children[$id])) {
+            return $this->children[$id];
+        }
+        
+        return null;
     }
     
     /**
@@ -172,8 +213,44 @@ class Element extends HTMLBuildingBlock {
      * @return Element
      */
     public function prependChild(HTMLBuildingBlock $element) {
-        array_unshift($this->children, $element);
+        if($element instanceof IdentifierInterface && $element->hasId()) {
+            $this->children = array_merge(array($element->getId() => $element), $this->children);
+        } else {
+            $this->children = array_merge(array($element), $this->children);
+        }        
         
         return $this;        
     }
+
+    /**
+     * Returns the value of the id-attribute of this element (or null)
+     * 
+     * @return string
+     */
+    public function getId() {
+        if(!$this->hasId()) {
+            return null;
+        }
+        
+        return $this->attributes['id'];
+    }
+
+    /**
+     * Returns whether this Element has an id-attribute
+     * 
+     * @return boolean
+     */
+    public function hasId() {
+        return isset($this->attributes['id']);
+    }
+
+    /**
+     * Sets the id-attribute of this Element
+     * 
+     * @param string $id
+     */
+    public function setId($id) {
+        $this->setAttribute('id', $id);
+    }
+
 }

@@ -59,12 +59,8 @@ class Form extends Element implements \Feeld\Display\DisplayInterface {
         
         $this->dataSource = $field;
         
-        if(count($field->getFieldsByDataType('\Feeld\DataType\File'))>0) {
+        if(count($field->getFieldsByDataType('Feeld\DataType\File'))>0) {
             $this->setAttribute('enctype', 'multipart/form-data');
-        }
-        
-        foreach($field->getFields() as $field) {
-            $this->appendChild($field->getDisplay());
         }
     }
     
@@ -77,6 +73,12 @@ class Form extends Element implements \Feeld\Display\DisplayInterface {
     public function __toString() {
         foreach($this->dataSource->getFields() as $field) {
             $field->refreshDisplay();
+            
+            /* Make sure that all Fields that have a Display (other than NoDisplay)
+               attached will be displayed somewhere */            
+            if($field instanceof \Feeld\Field\CommonProperties\IdentifierInterface && $field->hasId() && is_null($this->getChildById($field->getId()))) {
+                $this->prependChild($field->getDisplay());
+            }
         }
         
         return parent::__toString();

@@ -50,6 +50,7 @@ $textUI = new Feeld\Display\HTML\Textarea();
 $formUI = new Feeld\Display\HTML\Form('post');
 $errorDiv = new Feeld\Display\HTML\ErrorContainer();
 $successDiv = (new Feeld\Display\HTML\Div())->addCssClass('has-success')->setContent('<p>Your blog entry was submitted!</p>');
+$formUI->appendChildren($nicknameUI, $emailUI, $textUI);
 $formUI->appendChild((new \Feeld\Display\HTML\Button('submit'))->setContent('Publish!'));
 
 // Putting data model and UI together
