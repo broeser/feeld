@@ -177,7 +177,7 @@ class HTMLForm extends AbstractTreeInterview implements \Feeld\Field\CommonPrope
      * @return string
      */
     protected function getUniqueID() {  
-        if($this->getStatus()===InterviewInterface::STATUS_AFTER_INTERVIEW && !is_null($this->uniqueID())) {
+        if($this->getStatus()===InterviewInterface::STATUS_AFTER_INTERVIEW && !is_null($this->uniqueID)) {
             $answers = $this->getCurrentCollection()->getValidAnswers();
             $this->uniqueID = $answers[self::PREFIX_VALUE_MAPPER.$this->getId()]->{$this->getId()};
         } elseif(is_null($this->uniqueID)) {
