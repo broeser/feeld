@@ -98,7 +98,7 @@ class Element extends HTMLBuildingBlock {
      * Returns a string representation of this element (HTML)
      */
     public function __toString() {
-        if($this instanceof HTMLDisplayInterface && !$this->isVisible()) {
+        if(!$this->isVisible()) {
             return '';
         }
         
