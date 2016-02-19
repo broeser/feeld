@@ -74,10 +74,12 @@ class Form extends Element implements \Feeld\Display\DisplayInterface {
         foreach($this->dataSource->getFields() as $field) {
             $field->refreshDisplay();
             
-            /* Make sure that all Fields that have a Display (other than NoDisplay)
-               attached will be displayed somewhere */            
+            /* Make sure that all hidden fields will be displayed somewhere */            
             if($field instanceof \Feeld\Field\CommonProperties\IdentifierInterface && $field->hasId() && is_null($this->getChildById($field->getId()))) {
-                $this->prependChild($field->getDisplay());
+                $fieldDisplay = $field->getDisplay();
+                if($fieldDisplay instanceof Input && isset($fieldDisplay->attributes['type']) && $fieldDisplay->attributes['type']==='hidden') {
+                    $this->prependChild($field->getDisplay());
+                }
             }
         }
         

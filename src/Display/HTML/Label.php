@@ -31,28 +31,33 @@ namespace Feeld\Display\HTML;
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Label extends Element {
+class Label extends Element implements HTMLDisplayInterface {
     /**
      * Constructor
      * 
      * @param HTMLDisplayInterface$fieldDisplayElement
      * @param string $labelText
-     * @throws \Wellid\Exception\DataType
-     * @throws \Wellid\Exception\NotFound
      */
-    public function __construct(HTMLDisplayInterface $fieldDisplayElement, $labelText = null) {
-        if($fieldDisplayElement instanceof Form || $fieldDisplayElement instanceof ErrorContainer) {
-            throw new \Wellid\Exception\DataType('fieldDisplayElement', 'may not be Form or ErrorContainer', $fieldDisplayElement);
-        }
-        
-        if(!isset($fieldDisplayElement->attributes['id']) || $fieldDisplayElement['id']==='') {
-            throw new \Wellid\Exception\NotFound('id', 'fieldDisplayElement');
-        }
-        
+    public function __construct($labelText = null) {
         parent::__construct('label');
-        $this->setAttribute('for', $fieldDisplayElement->attributes['id']);
+        
         if(!is_null($labelText)) {
             $this->setContent($labelText);
         }
     }
+
+    /**
+     * Takes information from the Field and uses it in this display
+     * 
+     * @param \Feeld\Display\DisplayDataSourceInterface $field
+     * @throws \Wellid\Exception\NotFound
+     */
+    public function informAboutStructure(\Feeld\Display\DisplayDataSourceInterface $field) {
+        if(!$field instanceof \Feeld\Field\CommonProperties\IdentifierInterface || !$field->hasId()) {
+            throw new \Wellid\Exception\NotFound('id', 'fieldDisplayElement');
+        }
+        
+        $this->setAttribute('for', $field->getId());
+    }
+
 }

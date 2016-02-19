@@ -29,11 +29,17 @@ require_once __DIR__.'/../vendor/autoload.php';
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="bootstrap.min.css">
         <title>Blog Example</title>
     </head>
-    <body>
+    <body class="container">
         <h1>Blog Example</h1>
 <?php
+use Feeld\Display\HTML;
+use Feeld\Interview;
+use FeeldUsageExamples\BootstrapFormGroup as Group;
+use FeeldUsageExamples\BootstrapDiv as Div;
+
 // Data model:
 // A FieldCollection that holds all the Fields.
 // Have a look into the BlogPostand BlogPostFieldCollection-classes for more 
@@ -41,17 +47,29 @@ require_once __DIR__.'/../vendor/autoload.php';
 $formForBlogPost = new FeeldUsageExamples\BlogPostFieldCollection();
 
 // An ErrorContainer for validation errors:
-$validationErrors = new \Feeld\Interview\ErrorContainer();
+$validationErrors = new Interview\ErrorContainer();
 
 // UI
-$nicknameUI = (new Feeld\Display\HTML\Input('text'))->setAttribute('placeholder', 'Your username');
-$emailUI = new Feeld\Display\HTML\Input('email');
-$textUI = new Feeld\Display\HTML\Textarea();
-$formUI = new Feeld\Display\HTML\Form('post');
-$errorDiv = new Feeld\Display\HTML\ErrorContainer();
-$successDiv = (new Feeld\Display\HTML\Div())->addCssClass('has-success')->setContent('<p>Your blog entry was submitted!</p>');
+$nicknameUI = new Group(
+                (new HTML\Label('Your Name'))->addCssClass('col-sm-2'), 
+                (new Div((new HTML\Input('text'))->setAttribute('placeholder', 'Your username')))->addCssClass('col-sm-10')
+              );
+
+$emailUI = new Group(
+                (new HTML\Label('Your Email'))->addCssClass('col-sm-2'),
+                (new Div(new HTML\Input('email')))->addCssClass('col-sm-10')
+           );
+
+$textUI = new Group(
+                (new HTML\Label('Your Text'))->addCssClass('col-sm-2'),
+                (new Div(new HTML\Textarea))->addCssClass('col-sm-10')
+          );
+
+$formUI = (new HTML\Form('post'))->addCssClass('form-horizontal');
+$errorDiv = new HTML\ErrorContainer();
+$successDiv = (new Div())->addCssClass('has-success')->setContent('<p>Your blog entry was submitted!</p>');
 $formUI->appendChildren($nicknameUI, $emailUI, $textUI);
-$formUI->appendChild((new \Feeld\Display\HTML\Button('submit'))->setContent('Publish!'));
+$formUI->appendChild((new HTML\Button('submit'))->setContent('Publish!'));
 
 // Putting data model and UI together
 $formForBlogPost->setDisplay($formUI);
@@ -61,7 +79,7 @@ $formForBlogPost->setFieldDisplay('text', $textUI);
 $validationErrors->setDisplay($errorDiv);
 
 // The Interviewer "HTMLForm" is executed
-$htmlForm = new \Feeld\Interview\HTMLForm(0, $validationErrors, $formForBlogPost);
+$htmlForm = new Interview\HTMLForm(0, $validationErrors, $formForBlogPost);
 $htmlForm->setSuccessDisplay($successDiv);
 $htmlForm->execute();
 
@@ -75,8 +93,11 @@ print($successDiv);
 print($htmlForm->getCurrentCollection());
 
 // Proof that it worked (not really necessary)
-if($htmlForm->getStatus()===Feeld\Interview\InterviewInterface::STATUS_AFTER_INTERVIEW) {
-    print('<h1>Most recent blog post</h1>');
-    print(nl2br($htmlForm->getCurrentValidAnswers()));
+if($htmlForm->getStatus()===Interview\InterviewInterface::STATUS_AFTER_INTERVIEW) {
+    $article = new HTML\Element('article');
+    $article->addCssClass('blog');
+    $article->appendChild((new HTML\Element('h2'))->setContent('Most recent blog post'));
+    $article->appendChild(new HTML\TextNode(nl2br($htmlForm->getCurrentValidAnswers())));
+    print($article);
 }
 ?></body></html>

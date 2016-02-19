@@ -24,33 +24,25 @@
  * THE SOFTWARE.
  */
 
-namespace Feeld\Display\HTML;
+namespace FeeldUsageExamples;
+
+use Feeld\Display\HTML\Select;
+use Feeld\Display\HTML\Textarea;
+use Feeld\Display\HTML\Input;
 
 /**
- * A Div Element optionally containing a Label Element and/or an 
- * Input/Select/Textarea Element
+ * Description of BootstrapDiv
  *
  * @author Benedict Roeser <b-roeser@gmx.net>
  */
-class Div extends Element implements HTMLDisplayInterface {
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        parent::__construct('div');
-    }
-    
-    /**
-     * Takes information from the Field and passes it to all displays of
-     * children
-     * 
-     * @param \Feeld\Display\DisplayDataSourceInterface $field
-     */
-    public function informAboutStructure(\Feeld\Display\DisplayDataSourceInterface $field) {
-        foreach($this->children as $child) {
-            if($child instanceof HTMLDisplayInterface) {
-                $child->informAboutStructure($field);
+class BootstrapDiv extends \Feeld\Display\HTML\Div {
+    public function __construct(\Feeld\Display\HTML\Element ...$elements) {
+        parent::__construct();
+        foreach($elements as $element) {
+            if($element instanceof Input || $element instanceof Select || $element instanceof Textarea) {
+                $element->addCssClass('form-control');
             }
+            $this->appendChild($element);
         }
     }
 }
